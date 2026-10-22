@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Di Antara Hujan - Web Novel Romantis</title>
-    <!-- Tailwind CSS -->
+    <title>Web Novel - Jalonbaikhati</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -12,729 +12,550 @@
             theme: {
                 extend: {
                     colors: {
-                        rainslate: { 50: '#f4f6f9', 100: '#eef2f7', 800: '#1e293b', 900: '#0f172a' },
-                        sepia: { bg: '#fbf0d9', text: '#5f4b32', card: '#f5e4c3' }
+                        romantic: {
+                            50: '#fff5f7',
+                            100: '#ffe3ec',
+                            200: '#fccada',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            800: '#9f1239',
+                            900: '#4c0519',
+                        },
+                        paper: {
+                            light: '#faf8f5',
+                            dark: '#121212',
+                            cardLight: '#ffffff',
+                            cardDark: '#1e1e1e'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
-    <!-- Google Fonts: Inter & Playfair Display -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
+        .story-text {
+            line-height: 1.8;
+            transition: font-size 0.2s ease-in-out;
         }
-        .font-serif-title {
-            font-family: 'Playfair Display', serif;
-        }
-        /* Custom rain canvas styling */
-        #rain-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 10;
-        }
-        /* Custom scrollbar */
+        /* Custom Scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.05);
+            background: transparent;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(100,116,139,0.3);
-            border-radius: 4px;
+            background: #cbd5e1;
+            border-radius: 3px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(100,116,139,0.5);
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
         }
     </style>
 </head>
-<body class="bg-rainslate-50 text-slate-800 dark:bg-rainslate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300 relative selection:bg-indigo-500 selection:text-white">
+<body class="bg-paper-light dark:bg-paper-dark text-gray-800 dark:text-gray-200 font-sans transition-colors duration-300 min-h-screen flex flex-col">
 
-    <!-- Canvas for Rain Effect -->
-    <canvas id="rain-canvas"></canvas>
-
-    <!-- Custom Notification / Message Box -->
-    <div id="toast-box" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-3 text-sm font-medium">
-        <span id="toast-icon">✨</span>
-        <span id="toast-message">Pesan notifikasi</span>
-    </div>
-
-    <!-- Header Navigation -->
-    <header class="sticky top-0 z-40 backdrop-blur-md bg-white/80 dark:bg-rainslate-800/80 border-b border-slate-200 dark:border-slate-700 transition-colors">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="goToHome()">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-600 to-sky-400 flex items-center justify-center text-white shadow-md">
-                    ☂️
-                </div>
-                <div>
-                    <h1 class="font-serif-title font-bold text-lg sm:text-xl tracking-wide bg-gradient-to-r from-indigo-600 to-sky-500 bg-clip-text text-transparent">Di Antara Hujan</h1>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Oleh Jalonbaikhati</p>
+    <!-- Header / Navbar Top -->
+    <header class="sticky top-0 z-30 bg-white/90 dark:bg-paper-cardDark/90 backdrop-blur-md shadow-md border-b border-rose-100 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            
+            <!-- Left Side: Menu Toggle & Title -->
+            <div class="flex items-center space-x-3">
+                <button id="toggleSidebar" class="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-rose-100 dark:hover:bg-gray-800 transition focus:outline-none" title="Daftar Bab">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <div class="flex flex-col">
+                    <h1 class="font-bold text-lg sm:text-xl text-rose-600 dark:text-rose-400 font-serif leading-tight truncate max-w-[180px] sm:max-w-xs md:max-w-md">
+                        Cinta & Takdir
+                    </h1>
+                    <span class="text-xs text-gray-500 dark:text-gray-400">Oleh: <strong class="text-gray-700 dark:text-gray-300">Jalonbaikhati</strong></span>
                 </div>
             </div>
 
+            <!-- Toolbar Controls: Font Size, Theme, Download -->
             <div class="flex items-center space-x-2 sm:space-x-3">
-                <button onclick="toggleRainEffect()" id="rain-toggle-btn" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-200 transition text-sm flex items-center space-x-1" title="Matikan/Nyalakan Hujan">
-                    <span>🌧️</span>
-                    <span class="hidden md:inline text-xs" id="rain-status-text">Hujan: On</span>
+                
+                <!-- Font Controls -->
+                <div class="flex items-center bg-gray-100 dark:bg-gray-800 rounded-lg p-1 border border-gray-200 dark:border-gray-700">
+                    <button id="fontDecrease" class="w-8 h-8 flex items-center justify-center font-bold text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700 rounded transition" title="Kecilkan Font">
+                        A-
+                    </button>
+                    <span id="fontSizeDisplay" class="px-2 text-xs font-semibold text-rose-600 dark:text-rose-400 min-w-[45px] text-center">
+                        100%
+                    </span>
+                    <button id="fontIncrease" class="w-8 h-8 flex items-center justify-center font-bold text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700 rounded transition" title="Besarkan Font">
+                        A+
+                    </button>
+                </div>
+
+                <!-- Dark / Light Theme Toggle -->
+                <button id="toggleTheme" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-yellow-400 hover:bg-rose-100 dark:hover:bg-gray-700 transition" title="Ganti Mode Tampilan">
+                    <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
                 </button>
-                <button onclick="openChapterModal()" class="px-3 py-2 rounded-lg bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 font-medium text-xs sm:text-sm transition flex items-center space-x-1">
-                    <span>📚</span>
-                    <span class="hidden sm:inline">Daftar Bab</span>
-                </button>
-                <button onclick="downloadWebNovel()" class="px-3 py-2 rounded-lg bg-emerald-50 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 font-medium text-xs sm:text-sm transition flex items-center space-x-1" title="Unduh Web Ini">
-                    <span>📥</span>
-                    <span class="hidden sm:inline">Download Web</span>
+
+                <!-- Download Website Button -->
+                <button id="downloadBtn" class="flex items-center space-x-1.5 px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg shadow-sm font-medium text-xs sm:text-sm transition transform active:scale-95">
+                    <i class="fa-solid fa-download"></i>
+                    <span class="hidden md:inline">Unduh Web</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 py-6 z-20 relative">
-
-        <!-- HOME VIEW (Cover & Synopsis) -->
-        <div id="home-view" class="space-y-8 animate-fadeIn">
-            <!-- Hero Cover Card -->
-            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-900 via-slate-900 to-sky-950 text-white p-6 sm:p-12 shadow-2xl border border-indigo-500/20">
-                <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl">☂️</div>
-                <div class="relative z-10 max-w-2xl space-y-4">
-                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-sky-300 text-xs font-semibold tracking-wider uppercase">
-                        <span>✨ Genre: Romantis • Drama • Persahabatan</span>
-                    </div>
-                    <h2 class="font-serif-title text-3xl sm:text-5xl font-bold leading-tight tracking-wide">
-                        Di Antara Hujan
-                    </h2>
-                    <p class="text-sm sm:text-base text-sky-200/90 italic font-light">
-                        "Ketika setiap rintik air membawa kenangan, rindu, dan rahasia yang belum sempat terucap."
-                    </p>
-                    <div class="flex items-center space-x-4 pt-2 text-xs sm:text-sm text-slate-300">
-                        <span>✍️ Pencipta: <strong class="text-white">Jalonbaikhati</strong></span>
-                        <span>📖 35 Bab Lengkap</span>
-                    </div>
-                    <div class="pt-4 flex flex-wrap gap-3">
-                        <button onclick="startReading(1)" class="px-6 py-3 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white font-semibold shadow-lg shadow-indigo-500/30 transform hover:-translate-y-0.5 transition flex items-center space-x-2">
-                            <span>📖</span>
-                            <span>Mulai Membaca Bab 1</span>
-                        </button>
-                        <button onclick="openChapterModal()" class="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-semibold border border-white/20 transition flex items-center space-x-2">
-                            <span>📑</span>
-                            <span>Pilih Bab (1 - 35)</span>
-                        </button>
-                    </div>
+    <!-- Main Content Layout -->
+    <div class="flex-grow flex max-w-7xl w-full mx-auto relative">
+        
+        <!-- Sidebar Navigation (35 Bab) -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 sm:w-80 bg-white dark:bg-paper-cardDark border-r border-rose-100 dark:border-gray-800 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col pt-16 lg:pt-0 lg:static lg:translate-x-0 shadow-lg lg:shadow-none">
+            
+            <!-- Sidebar Header -->
+            <div class="p-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
+                <div>
+                    <h2 class="font-bold text-base text-rose-600 dark:text-rose-400">Daftar Bab</h2>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">35 Bab Lengkap</p>
                 </div>
-            </div>
-
-            <!-- Synopsis & Detail Section -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Synopsis Box -->
-                <div class="md:col-span-2 bg-white dark:bg-rainslate-800 rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100 dark:border-slate-700/60 space-y-4">
-                    <h3 class="font-serif-title text-2xl font-bold text-indigo-600 dark:text-indigo-400 flex items-center space-x-2">
-                        <span>📜</span>
-                        <span>Sinopsis Novel</span>
-                    </h3>
-                    <div class="space-y-3 text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-300">
-                        <p>
-                            <strong>Rizal</strong> adalah seorang pemuda sederhana yang tidak pandai mengungkapkan perasaan. Baginya, mencintai seseorang berarti menjaga dan memastikan orang itu bahagia, meskipun dirinya sendiri harus menyimpan banyak luka sendirian di balik senyum tenang.
-                        </p>
-                        <p>
-                            <strong>Mila</strong> berbeda. Ia ceria, ramah, dan selalu menyebarkan tawa kepada siapa pun di sekitarnya. Namun, di balik keceriaan itu, ada ketakutan mendalam akan kehilangan orang yang paling berarti dalam hidupnya.
-                        </p>
-                        <p>
-                            Pertemuan mereka bermula pada sebuah sore ketika hujan turun deras di halaman sekolah. Sebuah payung sederhana mempertemukan dua hati yang tidak pernah menyangka bahwa pertemuan singkat itu akan mengubah hidup mereka selamanya.
-                        </p>
-                        <p>
-                            Namun, cinta tidak selalu berjalan seperti yang diharapkan. Hadirnya orang ketiga, kesalahpahaman yang berlarut-larut, jarak ruang dan waktu, serta rahasia masa lalu yang terkubur perlahan menguji ketulusan hubungan mereka. Di antara rintikan hujan, akankah cinta mereka menemukan arah pulang?
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Quick Chapter List Card -->
-                <div class="bg-white dark:bg-rainslate-800 rounded-3xl p-6 shadow-xl border border-slate-100 dark:border-slate-700/60 flex flex-col justify-between space-y-4">
-                    <div>
-                        <h3 class="font-serif-title text-xl font-bold mb-2 flex items-center space-x-2">
-                            <span>✨</span>
-                            <span>Daftar Cepat</span>
-                        </h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Pilih bab awal atau jelajahi keseluruhan kisah dari Bab 1 hingga 35.</p>
-                        <div class="space-y-2 max-h-60 overflow-y-auto pr-1" id="quick-chapters-list">
-                            <!-- Populated dynamically -->
-                        </div>
-                    </div>
-                    <button onclick="openChapterModal()" class="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 font-medium text-xs sm:text-sm text-center transition">
-                        Buka Semua Bab (35 Bab)
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- READER VIEW -->
-        <div id="reader-view" class="hidden space-y-6 animate-fadeIn">
-            <!-- Reader Top Bar & Controls -->
-            <div class="bg-white dark:bg-rainslate-800 rounded-2xl p-4 shadow-lg border border-slate-100 dark:border-slate-700/60 flex flex-wrap items-center justify-between gap-4 sticky top-20 z-30 backdrop-blur-md bg-white/90 dark:bg-rainslate-800/90">
-                <!-- Back to Home / Chapter Selector -->
-                <div class="flex items-center space-x-2">
-                    <button onclick="goToHome()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 transition text-sm" title="Kembali ke Beranda">
-                        🏠
-                    </button>
-                    <button onclick="openChapterModal()" class="px-3 py-2 rounded-xl bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-xs sm:text-sm font-semibold transition flex items-center space-x-1">
-                        <span id="current-chapter-title-btn">Bab 1</span>
-                        <span>▼</span>
-                    </button>
-                </div>
-
-                <!-- Font & Theme Controls -->
-                <div class="flex items-center space-x-3 sm:space-x-4">
-                    <!-- Font Resize -->
-                    <div class="flex items-center space-x-1 bg-slate-100 dark:bg-slate-700 rounded-xl p-1">
-                        <button onclick="adjustFontSize(-10)" class="w-8 h-8 rounded-lg bg-white dark:bg-slate-600 hover:bg-slate-50 dark:hover:bg-slate-500 font-bold text-xs shadow-sm transition" title="Perkecil Font (A-)">
-                            A-
-                        </button>
-                        <span id="font-size-indicator" class="text-xs font-semibold px-2 text-slate-600 dark:text-slate-300">100%</span>
-                        <button onclick="adjustFontSize(10)" class="w-8 h-8 rounded-lg bg-white dark:bg-slate-600 hover:bg-slate-50 dark:hover:bg-slate-500 font-bold text-sm shadow-sm transition" title="Perbesar Font (A+)">
-                            A+
-                        </button>
-                    </div>
-
-                    <!-- Theme Switcher -->
-                    <div class="flex items-center space-x-1 bg-slate-100 dark:bg-slate-700 rounded-xl p-1">
-                        <button onclick="setTheme('light')" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-white text-slate-800 shadow-sm transition" id="theme-btn-light" title="Tema Terang">
-                            ☀️
-                        </button>
-                        <button onclick="setTheme('sepia')" class="px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-700 transition" id="theme-btn-sepia" title="Tema Sepia">
-                            📜
-                        </button>
-                        <button onclick="setTheme('dark')" class="px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-300 transition" id="theme-btn-dark" title="Tema Gelap">
-                            🌙
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Reader Content Card -->
-            <div id="reader-card" class="bg-white dark:bg-rainslate-800 rounded-3xl p-6 sm:p-12 shadow-2xl border border-slate-100 dark:border-slate-700/60 transition-colors">
-                <div class="max-w-2xl mx-auto space-y-6">
-                    <!-- Chapter Header -->
-                    <div class="text-center pb-6 border-b border-slate-200 dark:border-slate-700 space-y-2">
-                        <span id="reader-chapter-badge" class="text-xs font-semibold uppercase tracking-widest text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/40 px-3 py-1 rounded-full">
-                            Bab 1
-                        </span>
-                        <h2 id="reader-chapter-title" class="font-serif-title text-2xl sm:text-4xl font-bold">
-                            Judul Bab
-                        </h2>
-                        <p class="text-xs text-slate-400 italic">Di Antara Hujan • Jalonbaikhati</p>
-                    </div>
-
-                    <!-- Chapter Text Body -->
-                    <div id="reader-text-content" class="space-y-6 text-slate-700 dark:text-slate-300 leading-relaxed font-normal transition-all" style="font-size: 1rem;">
-                        <!-- Content injected via JS -->
-                    </div>
-
-                    <!-- Chapter Navigation Bottom -->
-                    <div class="pt-8 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between">
-                        <button onclick="navigateChapter(-1)" id="prev-chapter-btn" class="px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-xs sm:text-sm font-semibold transition flex items-center space-x-1">
-                            <span>←</span>
-                            <span>Bab Sebelumnya</span>
-                        </button>
-                        <button onclick="openChapterModal()" class="px-4 py-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100 text-xs sm:text-sm font-semibold transition">
-                            Daftar Bab
-                        </button>
-                        <button onclick="navigateChapter(1)" id="next-chapter-btn" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-semibold shadow-md transition flex items-center space-x-1">
-                            <span>Bab Selanjutnya</span>
-                            <span>→</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="mt-auto py-8 text-center text-xs text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-800 z-20 relative">
-        <p>© 2026 Di Antara Hujan • Diciptakan dengan cinta oleh <strong class="text-indigo-600 dark:text-indigo-400">Jalonbaikhati</strong></p>
-        <p class="mt-1">Genre: Romantis • Drama • Persahabatan</p>
-    </footer>
-
-    <!-- CHAPTER SELECTOR MODAL -->
-    <div id="chapter-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="bg-white dark:bg-rainslate-800 rounded-3xl max-w-xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden animate-scaleUp">
-            <!-- Modal Header -->
-            <div class="p-5 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between bg-slate-50 dark:bg-rainslate-900/50">
-                <div class="flex items-center space-x-2">
-                    <span class="text-xl">📚</span>
-                    <h3 class="font-serif-title font-bold text-lg">Daftar Bab (Bab 1 - 35)</h3>
-                </div>
-                <button onclick="closeChapterModal()" class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 flex items-center justify-center font-bold text-sm transition">
-                    ✕
+                <button id="closeSidebar" class="lg:hidden text-gray-500 hover:text-rose-600 dark:text-gray-400 p-1">
+                    <i class="fa-solid fa-xmark text-xl"></i>
                 </button>
             </div>
-            <!-- Modal Search/Filter -->
-            <div class="p-4 border-b border-slate-100 dark:border-slate-700/60 bg-white dark:bg-rainslate-800">
-                <input type="text" id="chapter-search-input" oninput="filterChapters()" placeholder="Cari nomor bab atau judul..." class="w-full px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 border-none text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+
+            <!-- Novel Metadata Summary -->
+            <div class="p-4 bg-rose-50/50 dark:bg-gray-800/40 border-b border-rose-100 dark:border-gray-800">
+                <div class="text-xs space-y-1">
+                    <p><span class="font-semibold text-gray-600 dark:text-gray-400">Genre:</span> Romantis, Drama, Persahabatan</p>
+                    <p><span class="font-semibold text-gray-600 dark:text-gray-400">Penulis:</span> Jalonbaikhati</p>
+                </div>
             </div>
-            <!-- Modal Chapter List -->
-            <div class="p-4 overflow-y-auto space-y-2 flex-grow" id="modal-chapter-container">
-                <!-- Injected via JS -->
+
+            <!-- Chapter List Scrollable -->
+            <div id="chapterList" class="flex-grow overflow-y-auto p-3 space-y-1">
+                <!-- Chapters JS Rendered Here -->
             </div>
-            <!-- Modal Footer -->
-            <div class="p-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-rainslate-900/50 text-center">
-                <p class="text-xs text-slate-500">Pilih salah satu bab untuk mulai membaca.</p>
+        </aside>
+
+        <!-- Overlay for Mobile Sidebar -->
+        <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-30 hidden lg:hidden backdrop-blur-sm"></div>
+
+        <!-- Main Reading Area -->
+        <main class="flex-grow px-4 sm:px-8 py-8 max-w-3xl mx-auto flex flex-col justify-between">
+            
+            <!-- Chapter Title Header -->
+            <div>
+                <!-- Character Cards Modal / Info Box -->
+                <div class="mb-8 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-rose-50 to-pink-50 dark:from-gray-800 dark:to-gray-800/80 border border-rose-100 dark:border-gray-700 shadow-sm">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-rose-500 dark:text-rose-400 mb-2 flex items-center gap-1.5">
+                        <i class="fa-solid fa-users"></i> Tokoh Utama
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+                        <div class="p-2.5 rounded-xl bg-white/70 dark:bg-gray-900/50 border border-rose-100/50 dark:border-gray-700">
+                            <span class="font-bold text-rose-600 dark:text-rose-400">Rizal:</span> Pendiam, sederhana, sedikit keras kepala, tetapi setia dan selalu berusaha menepati janji.
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-white/70 dark:bg-gray-900/50 border border-rose-100/50 dark:border-gray-700">
+                            <span class="font-bold text-pink-600 dark:text-pink-400">Putri:</span> Gadis ceria, lembut, perhatian, tetapi sering menyembunyikan kesedihannya di balik senyuman.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Chapter Details -->
+                <div class="text-center mb-8 border-b border-rose-100 dark:border-gray-800 pb-6">
+                    <span id="chapterNumberDisplay" class="inline-block px-3 py-1 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-xs font-bold tracking-wide mb-2">
+                        BAB 1
+                    </span>
+                    <h2 id="chapterTitleDisplay" class="text-2xl sm:text-3xl font-bold font-serif text-gray-900 dark:text-white leading-tight">
+                        Pertemuan yang Tak Disengaja
+                    </h2>
+                </div>
+
+                <!-- Story Text Content Container -->
+                <article id="storyContent" class="story-text font-serif text-gray-800 dark:text-gray-200 space-y-5 text-justify">
+                    <!-- Text content inserted by JS -->
+                </article>
             </div>
-        </div>
+
+            <!-- Bottom Navigation Bar -->
+            <div class="mt-12 pt-6 border-t border-rose-100 dark:border-gray-800 flex items-center justify-between">
+                <button id="prevBtn" class="flex items-center space-x-2 px-4 py-2.5 bg-gray-100 dark:bg-gray-800 hover:bg-rose-100 dark:hover:bg-gray-700 rounded-xl text-gray-700 dark:text-gray-300 text-sm font-semibold transition disabled:opacity-40 disabled:cursor-not-allowed">
+                    <i class="fa-solid fa-chevron-left"></i>
+                    <span>Sebelumnya</span>
+                </button>
+
+                <div id="chapterProgress" class="text-xs font-medium text-gray-500 dark:text-gray-400">
+                    1 / 35
+                </div>
+
+                <button id="nextBtn" class="flex items-center space-x-2 px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-sm font-semibold transition shadow-md hover:shadow-rose-500/20 disabled:opacity-40 disabled:cursor-not-allowed">
+                    <span>Selanjutnya</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+
+        </main>
     </div>
 
-    <!-- SCRIPT APPLICATION LOGIC -->
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-paper-cardDark border-t border-rose-100 dark:border-gray-800 py-6 text-center text-xs text-gray-500 dark:text-gray-400">
+        <p>&copy; 2026 Web Novel Karya <strong>Jalonbaikhati</strong>. Hak Cipta Dilindungi.</p>
+    </footer>
+
+    <!-- Novel JavaScript Logic -->
     <script>
-        // --- NOVEL DATABASE: 35 CHAPTERS ---
-        const novelChapters = [
-            { id: 1, title: "Sore di Halaman Sekolah", content: [
-                "Hujan turun begitu mendadak sore itu, mengubah langit senja yang tadinya jingga keemasan menjadi kelabu pekat yang dramatis. Di halaman SMA Harapan Bangsa, para siswa berlarian mencari tempat teduh. Namun, Rizal tetap berdiri tenang di bawah koridor, matanya menatap butir-butir air yang jatuh menghantam tanah.",
-                "Di dekatnya, Mila tampak kebingungan meraba tas ranselnya. Payungnya tertinggal di dalam loker kelas yang sudah dikunci. Tanpa banyak bicara, Rizal melangkah mendekat, membuka payung lipat sederhana miliknya, dan memayungi gadis itu.",
-                "'Hujan ini deras sekali, kamu bisa basah kuyup,' kata Rizal dengan suara pelan, nyaris tenggelam oleh suara gemuruh guntur.",
-                "Mila menoleh, terkejut sekaligus terpesona oleh kebaikan tulus yang terpancar dari mata pemuda sederhana itu. 'Terima kasih, Rizal. Aku benar-benar ceroboh hari ini,' balas Mila dengan senyuman cerianya yang khas."
-            ]},
-            { id: 2, title: "Payung Sederhana", content: [
-                "Perjalanan singkat di bawah satu payung kecil itu menjadi awal mula cerita yang tak pernah mereka duga. Jarak yang begitu dekat membuat detak jantung berdegup lebih cepat, bukan karena dinginnya udara sore, melainkan karena debar perasaan asing yang mulai tumbuh.",
-                "Rizal adalah pemuda pendiam yang hidup dalam kesederhanaan. Ia terbiasa memikul beban tanggung jawab keluarga tanpa pernah mengeluh. Bagi Rizal, mencintai seseorang tidak perlu diucapkan dengan kata-kata manis, melainkan dibuktikan dengan tindakan nyata dan penjagaan.",
-                "Sementara Mila adalah matahari bagi setiap orang di sekitarnya. Tawa renyahnya selalu menghidupkan suasana kelas. Namun, malam hari di rumah, Mila sering merenung dalam kesunyian, menyimpan ketakutan terbesar dalam hidupnya: kehilangan orang-orang yang ia kasihi.",
-                "Payung sederhana berwarna biru tua itu kini tersimpan rapi di sudut kamar Mila, menjadi saksi bisu pertemuan dua jiwa yang berbeda latar belakang namun disatukan oleh takdir."
-            ]},
-            { id: 3, title: "Tawa di Balik Jendela", content: [
-                "Hari-hari sekolah berikutnya tidak lagi terasa sama. Kursi di sebelah perpustakaan sekolah kini sering menjadi tempat mereka bertukar cerita. Mila selalu berhasil memancing senyum tipis di bibir Rizal yang kaku.",
-                "'Kamu tahu tidak, Rizal? Hidup ini terlalu singkat jika dihabiskan hanya untuk termenung di bawah hujan,' ucap Mila suatu siang sambil tertawa kecil melihat ekspresi serius Rizal.",
-                "Rizal hanya menggeleng pelan, namun tatapannya menyiratkan kekaguman yang mendalam. Di hadapan Mila, dinding pertahanan sunyi yang dibangun Rizal runtuh perlahan. Ia mulai belajar cara menikmati hidup, meski bayang-bayang kesulitan keluarganya selalu mengikutinya.",
-                "Persahabatan mereka tumbuh begitu erat, menjadi perbincangan hangat di antara teman sekelas yang melihat betapa serasinya si ceria Mila dan si tenang Rizal."
-            ]},
-            { id: 4, title: "Rahasia yang Disimpan", content: [
-                "Di balik senyum lebarnya, Mila memikul beban emosional yang berat. Ayahnya sering jatuh sakit, dan ancaman kesulitan ekonomi membuat keluarganya goyah. Namun, Mila memilih menutupi semua itu rapat-rapat dari siapa pun, termasuk Rizal.",
-                "Rizal, dengan kepekaan batinnya yang luar biasa, sering melihat sorot mata sedih yang coba disembunyikan Mila di balik tawa buatannya. 'Jika ada hal berat, kamu tidak harus selalu tersenyum sendirian, Mila,' ucap Rizal suatu sore ketika mereka duduk berdua di bangku taman.",
-                "Kata-kata itu membuat pertahanan Mila nyaris runtuh. Air mata hampir menetes di pipinya, namun ia segera menghapusnya dan kembali tersenyum. 'Aku baik-baik saja, Rizal. Sungguh.'",
-                "Meskipun Mila berkata demikian, Rizal tahu ada rahasia besar yang sedang meremukkan jiwa gadis itu secara perlahan."
-            ]},
-            { id: 5, title: "Gerimis di Simpang Jalan", content: [
-                "Musim hujan tiba dengan intensitas yang lebih sering. Simpang jalan dekat halte bus menjadi saksi bisu perpisahan sore mereka setiap kali jam pulang sekolah usai.",
-                "Suatu hari, gerimis turun rintik-rintik. Mila membonceng sepeda angin milik Rizal. Tangan gadis itu mencengkeram erat jaket tebal Rizal karena jalanan yang licin.",
-                "'Dingin ya?' tanya Rizal tanpa menoleh ke belakang.",
-                "'Sedikit! Tapi hangat karena ada payung dan jaketmu,' jawab Mila riang, menyandarkan kepalanya sejenak di punggung tegap Rizal. Saat itu, waktu seakan berhenti berputar, menyisakan debar rindu yang teramat sangat di dada keduanya."
-            ]},
-            { id: 6, title: "Kehadiran Bayangan Masa Lalu", content: [
-                "Kedamaian persahabatan mereka diuji oleh kehadiran Dimas, teman masa kecil Mila yang baru saja kembali dari kota seberang. Dimas adalah pemuda berandalan yang karismatik, percaya diri, dan sangat vokal menunjukkan ketertarikannya pada Mila.",
-                "Mila merasa tidak enak hati menolak kehadiran Dimas karena keluarga mereka sudah saling mengenal sejak kecil. Namun, kedekatan Dimas membuat Rizal memilih menarik diri, kembali ke cangkang kesunyiannya.",
-                "'Kenapa kamu jadi jarang menemaniku ke perpus, Zal?' tanya Mila suatu hari dengan nada kecewa.",
-                "'Dimas lebih cocok menemanimu. Ia tahu banyak hal seru,' jawab Rizal dingin, menyembunyikan rasa cemburu dan minder yang membakar hatinya."
-            ]},
-            { id: 7, title: "Kesalahpahaman di Koridor", content: [
-                "Puncak kesalahpahaman terjadi ketika Dimas sengaja merangkul bahu Mila di depan Rizal saat jam istirahat. Mila berusaha melepaskan rangkulan itu, namun terlambat—mata Rizal telanjur melihat adegan tersebut dengan pandangan sendu.",
-                "Rizal berbalik arah tanpa berkata sepatah pun. Mila mencoba mengejarnya, namun langkah Rizal begitu cepat menghilang di balik tikungan lorong kelas.",
-                "'Zal, tunggu! Ini tidak seperti yang kamu lihat!' teriak Mila dalam hati, napasnya memburu diiringi gemuruh petir di luar jendela sekolah yang kembali menurunkan hujan lebat.",
-                "Malam itu, pesan singkat dari Mila tidak kunjung dibalas oleh Rizal. Rasa takut kehilangan mulai mencengkeram dada Mila dengan kuat."
-            ]},
-            { id: 8, title: "Badai di Malam Hari", content: [
-                "Badai besar menerjang kota malam itu. Pohon-pohon tumbang dan aliran listrik di lingkungan rumah Rizal sempat terputus. Di kamarnya yang temaram ditemani cahaya lilin, Rizal merenungkan kembali sikapnya.",
-                "Ia menyadari bahwa dirinya bukan siapa-siapa bagi Mila—hanya seorang teman sekelas yang meminjamkan payung di sore hari. Rasa minder membuat Rizal memilih untuk mundur sebelum terluka lebih dalam.",
-                "Namun, di sisi lain kota, Mila menangis di balik jendela kamarnya, memandangi derasnya hujan sambil memegang erat payung biru pemberian Rizal. Ia takut kesalahpahaman ini akan memutus ikatan indah di antara mereka selamanya."
-            ]},
-            { id: 9, title: "Pagi yang Dingin",content: [
-                "Mentari pagi bersinar pucat setelah badai semalam. Udara terasa sangat dingin menggigit kulit. Di sekolah, suasana antara Rizal dan Mila terasa kaku dan penuh kecanggungan.",
-                "Mila mencoba menyapa Rizal di loker, namun Rizal hanya menunduk dan berlalu begitu saja membawa buku-buku pelajarannya. Sikap dingin itu terasa lebih menyakitkan daripada tetesan air hujan mana pun bagi Mila.",
-                "Sahabat dekat Mila, Siska, mencoba menasihati. 'Kalau kamu benar-benar peduli padanya, Mila, kejar dan jelaskan semuanya. Jangan biarkan ego merusak ketulusan.'"
-            ]},
-            { id: 10, title: "Keputusan Berat", content: [
-                "Tekanan ekonomi keluarga Mila semakin memuncak. Ayahnya harus menjalani operasi darurat di rumah sakit kota sebelah. Dalam keputusasaan, Dimas menawarkan bantuan finansial yang besar dengan syarat tertentu—syarat yang membuat Mila merasa terikat.",
-                "Mila merasa terjepit di antara rasa terima kasih kepada Dimas dan kerinduan mendalam kepada Rizal yang kini menjaga jarak darinya.",
-                "Malam itu, di bawah guyuran hujan gerimis, Mila memutuskan untuk menemui Rizal di rumah sederhananya, membawa serta air mata yang tak lagi mampu ia bendung."
-            ]},
-            { id: 11, title: "Pengakuan di Depan Pintu", content: [
-                "Ketukan pelan terdengar di pintu rumah Rizal. Saat Rizal membukanya, ia terkejut mendapati Mila berdiri basah kuyup tanpa payung, air mata bercampur dengan air hujan di wajah pucatnya.",
-                "'Mila? Kenapa kamu ke sini malam-malam begini dalam kondisi hujan?' tanya Rizal panik, segera menarik gadis itu masuk ke teras rumah yang teduh.",
-                "Tanpa aba-aba, Mila langsung memeluk Rizal erat, menangis tersedu-sedu di dada pemuda itu. 'Aku takut, Rizal... Aku takut kehilangan segalanya, termasuk kamu,' lirih Mila penuh kepedihan.",
-                "Rizal terpaku sejenak, namun kelembutan hatinya langsung merespons. Ia membalas pelukan itu, membiarkan kehangatan tubuhnya meredakan gemetar ketakutan di tubuh Mila."
-            ]},
-            { id: 12, title: "Janji di Bawah Payung Biru", content: [
-                "Di teras rumah berlampu kuning temaram itu, Mila menceritakan semua beban keluarganya dan dilema yang ia hadapi terkait bantuan Dimas.",
-                "Mendengar cerita itu, rasa cemburu Rizal serta-merta menguap, digantikan oleh rasa iba dan cinta yang teramat besar. Ia memegang kedua tangan Mila yang masih dingin.",
-                "'Kamu tidak sendirian, Mila. Apapun yang terjadi, kita akan hadapi bersama. Aku mungkin tidak kaya, tapi aku berjanji akan selalu menjagamu di setiap musim hujan maupun panas,' ucap Rizal dengan suara tegas dan penuh keyakinan.",
-                "Senyum tulus kembali terukir di bibir Mila, menjadi pelangi terindah setelah badai kesedihan."
-            ]},
-            { id: 13, title: "Menghadapi Dimas", content: [
-                "Keesokan harinya, Mila menemui Dimas di kafe dekat sekolah. Dengan berani dan tenang, Mila mengembalikan cek bantuan finansial yang diberikan Dimas, sambil menegaskan batas hubungan mereka.",
-                "'Terima kasih atas niat baikmu, Dimas. Tapi aku tidak bisa menerima bantuan ini dengan cara mengikat perasaanku,' ucap Mila tegas.",
-                "Dimas terkejut dan merasa tersinggung. Ia menatap Mila tajam. 'Apakah karena pemuda miskin itu, Rizal? Kamu memilih hidup dalam kesusahan bersamanya?'",
-                "'Ini bukan soal kaya atau miskin, Dimas. Ini soal ketulusan hati,' jawab Mila mantap sebelum meninggalkan kafe tersebut."
-            ]},
-            { id: 14, title: "Ujian Kelulusan", content: [
-                "Bulan-bulan berlalu dengan cepat. Ujian akhir sekolah di depan mata. Rizal dan Mila menghabiskan malam-malam panjang dengan belajar bersama di perpustakaan kota.",
-                "Kedekatan mereka semakin kuat dan tak tergoyahkan. Setiap kali hujan turun di luar jendela kaca perpustakaan, mereka tersenyum mengingat awal mula pertemuan canggung di bawah payung biru.",
-                "Ayah Mila juga mulai menunjukkan pemulihan kesehatan berkat kerja keras Mila dan dukungan moril dari Rizal."
-            ]},
-            { id: 15, title: "Kelulusan dan Harapan Baru", content: [
-                "Hari pengumuman kelulusan tiba dengan meriah. Nama Rizal dan Mila tercatat sebagai lulusan terbaik di sekolah mereka. Kebahagiaan terpancar di wajah orang tua mereka yang hadir.",
-                "Di halaman sekolah yang sama tempat mereka pertama kali bertemu, di bawah langit sore yang cerah, Rizal memberikan sebuah hadiah kecil kepada Mila—sebuah buku catatan bersampul biru tua dengan lukisan payung kecil di sudutnya.",
-                "'Terima kasih telah menjadi pelangi di setiap hujanku,' ucap Rizal tulus.",
-                "Mila memeluk buku itu erat-erat dengan mata berkaca-kaca penuh haru."
-            ]},
-            { id: 16, title: "Jarak yang Memisahkan", content: [
-                "Kebahagiaan kelulusan harus diuji ketika Rizal harus merantau ke ibu kota untuk bekerja sambil kuliah malam demi membantu perekonomian keluarganya. Sementara Mila diterima di universitas seni di kota kembang.",
-                "Pagi hari di stasiun kereta api, suasana terasa begitu berat. Pelukan perpisahan di antara deru kereta yang bersiap berangkat menyisakan sesak di dada.",
-                "'Jaga diri baik-baik di sana, Rizal. Jangan lupa mengabari aku setiap malam,' pesan Mila dengan suara bergetar.",
-                "'Pasti, Mila. Jarak ini hanya menguji seberapa kuat akar cinta kita,' jawab Rizal sambil mencium puncak kepala Mila."
-            ]},
-            { id: 17, title: "Malam-Malam Panjang di Kota Orang", content: [
-                "Kehidupan di ibu kota tidak ramah bagi Rizal. Siang hari ia bekerja sebagai buruh gudang yang melelahkan, malam hari ia berlari mengejar kuliah demi menggapai masa depan yang layak.",
-                "Seringkali, saat hujan turun membasahi jendela kamar kos sempitnya, Rizal menatap ponsel tuanya, menunggu pesan atau panggilan dari Mila. Lelah fisik dan rindu yang membuncit sering membuatnya meneteskan air mata dalam sunyi.",
-                "Namun, setiap kali suara lembut Mila terdengar diujung telepon, segala lelah itu seakan lenyap seketika."
-            ]},
-            { id: 18, title: "Kanvas Hujan Mila", content: [
-                "Di kota lain, Mila menyalurkan kerinduannya pada Rizal melalui kanvas-kanvas lukisan bertema hujan. Pameran seni pertamanya menampilkan puluhan lukisan pemandangan hujan yang dramatis, dengan siluet seorang pemuda memegang payung biru di setiap sudut karyanya.",
-                "Lukisan-lukisan itu mendapat pujian luas dari kritikus seni nasional. Namun, di balik kesuksesan itu, Mila merasa hampa karena orang yang paling ingin ia lihat di barisan penonton terhalang oleh jarak dan kesibukan kerja.",
-                "'Lukisan ini untukmu, Rizal... di mana pun kamu berada saat hujan turun,' batin Mila penuh rindu."
-            ]},
-            { id: 19, title: "Kesalahpahaman Jarak Jauh", content: [
-                "Kesibukan yang teramat sangat membuat frekuensi komunikasi mereka mulai berkurang. Suatu malam, Mila menelepon Rizal, namun panggilan itu dijawab oleh suara seorang rekan kerja wanita di kosan Rizal yang salah mengangkat telepon.",
-                "Darah Mila berdesir hebat. Pikiran buruk dan rasa cemburu langsung menguasai benaknya. Ketika Rizal menelepon balik beberapa jam kemudian dengan suara serak kelelahan, Mila menyambutnya dengan nada dingin dan penuh tuduhan.",
-                "'Siapa wanita itu, Rizal? Kamu mulai berubah di sana!'",
-                "Rizal yang sedang sangat lelah merasa tersinggung. 'Kamu tidak tahu seberapa berat perjuanganku di sini, Mila! Jangan bersikap egois!'"
-            ]},
-            { id: 20, title: "Hening yang Menyakitkan", content: [
-                "Pertengkaran lewat sambungan telepon itu berujung pada keheningan yang panjang. Selama hampir sebulan, tidak ada pesan maupun panggilan di antara mereka.",
-                "Rizal tenggelam dalam tumpukan tugas kuliah dan pekerjaan pabrik, sementara Mila menghabiskan malam-malamnya menangis di depan kanvas kosong.",
-                "Sahabat-sahabat mereka di kampus mencoba menghibur, namun hati keduanya terasa hampa dan kehilangan arah. Hujan yang turun di luar jendela tidak lagi terasa romantis, melainkan menusuk tulang."
-            ]},
-            { id: 21, title: "Surat dari Masa Lalu", content: [
-                "Suatu hari, ketika membersihkan kamar kosnya, Rizal menemukan kembali sepucuk surat kecil yang pernah diberikan Mila saat kelulusan dulu.",
-                "Membaca kembali kata-kata penuh cinta di surat itu menyadarkan Rizal bahwa kebodohan dan egonya hampir menghancurkan hal paling berharga dalam hidupnya. Hubungan mereka tidak boleh putus hanya karena salah paham jarak.",
-                "Tanpa pikir panjang, Rizal mengajukan cuti dua hari kerja dan membeli tiket kereta malam menuju kota tempat Mila berada."
-            ]},
-            { id: 22, title: "Kejutan di Bawah Guyuran Hujan Kota",content: [
-                "Sore itu, hujan turun sangat lebat di depan gedung galeri seni tempat Mila sedang mengadakan pameran tunggalnya. Mila berdiri di teras galeri, memandang rintik air dengan tatapan sendu mengenang Rizal.",
-                "Tiba-tiba, sesosok pemuda berjaket basah kuyup berdiri di hadapannya, membentangkan payung biru tua yang sudah sedikit pudar warnanya.",
-                "'Maaf aku terlambat, Mila. Dan maaf karena sempat meragukan kesetiaan kita,' ucap Rizal dengan napas tersengal dan senyuman tulus.",
-                "Mila terbelalak tak percaya. Tanpa memedulikan orang-orang di sekitar galeri, ia langsung berlari memeluk tubuh basah Rizal sambil menangis bahagia."
-            ]},
-            { id: 23, title: "Pameran 'Di Antara Hujan'", content: [
-                "Malam harinya, di hadapan para pengunjung galeri seni, Mila memperkenalkan lukisan utamanya yang diberi judul 'Di Antara Hujan'.",
-                "Lukisan itu menggambarkan seorang pemuda sederhana dan seorang gadis ceria berdiri berdampingan di bawah satu payung biru, di tengah badai hujan yang megah.",
-                "'Lukisan ini saya dedikasikan untuk seseorang yang mengajarkan saya arti kesetiaan, ketulusan, dan bagaimana bertahan di antara badai kehidupan,' ucap Mila di atas panggung sambil menatap ke arah Rizal yang tersenyum hangat di barisan kursi penonton."
-            ]},
-            { id: 24, title: "Masa Depan yang Dirintis", content: [
-                "Hubungan mereka kini kembali pulih dengan fondasi yang jauh lebih kuat dari sebelumnya. Jarak dan ujian yang telah mereka lewati justru mendewasakan cinta di antara Rizal dan Mila.",
-                "Rizal berhasil menyelesaikan kuliah sarjananya dengan predikat memuaskan berkat kerja keras tanpa kenal lelah, sementara karier seni Mila sebagai pelukis ternama mulai diakui secara nasional.",
-                "Mereka mulai menabung dan merencanakan masa depan bersama, membangun mimpi kecil di sudut kota impian."
-            ]},
-            { id: 25, title: "Pertemuan Keluarga", content: [
-                "Musim hujan kembali tiba tahun berikutnya. Kali ini, dalam suasana yang hangat dan penuh kekeluargaan, Rizal datang secara resmi ke rumah orang tua Mila untuk melamar sang gadis.",
-                "Ayah dan ibu Mila menyambut Rizal dengan penuh rasa hormat dan kebanggaan. Mereka tahu persis bagaimana perjuangan pemuda sederhana itu dari nol hingga menjadi sosok yang bertanggung jawab dan mandiri.",
-                "Mila yang mengintip dari balik pintu dapur tersenyum lebar dengan mata berkaca-kaca penuh rasa syukur."
-            ]},
-            { id: 26, title: "Undangan di Musim Hujan", content: [
-                "Persiapan pernikahan berjalan lancar. Konsep pernikahan mereka dirancang dengan tema yang sangat personal: nuansa romantis di bawah naungan dekorasi payung-payung cantik dan rintik buatan yang estetik.",
-                "Tempat-tempat kenangan masa sekolah, mulai dari koridor kelas hingga halte bus, diabadikan dalam kartu undangan yang dicetak khusus dengan ilustrasi payung biru.",
-                "Semua sahabat lama, termasuk Siska dan Dimas—yang kini telah meminta maaf dan datang sebagai tamu terhormat—turut berbahagia menyambut hari istimewa tersebut."
-            ]},
-            { id: 27, title: "Hari Bahagia", content: [
-                "Hari pernikahan tiba. Pagi itu, gerimis lembut turun menyapa bumi, seolah alam turut memberkati ikatan suci dua insan yang telah lama berjuang di antara badai kehidupan.",
-                "Mila mengenakan gaun putih yang anggun, tersenyum manis saat berjalan menuju altar sederhana namun elegan. Rizal berdiri tegak mengenakan jas rapi, tatapannya penuh cinta tak bertepi menyambut kedatangan sang kekasih hati.",
-                "Di hadapan penghulu dan para saksi, janji suci terucap dengan lantang dan khidmat."
-            ]},
-            { id: 28, title: "Janji Suci di Bawah Payung Putih", content: [
-                "'Saya terima nikah dan kawinnya Mila Karmila dengan mas kawin tersebut dibayar tunai!' ucap Rizal mantap dalam satu tarikan napas.",
-                "Cincin perak disematkan di jari manis masing-masing. Riuh tepuk tangan keluarga dan sahabat membahana di ruangan yang hangat.",
-                "Ketika sesi foto bersama, hujan di luar turun semakin deras. Rizal secara spontan merangkul pinggang Mila dan membentangkan payung putih besar di atas kepala mereka, mengulangi pose bersejarah di hari pertama mereka bertemu di halaman sekolah dulu."
-            ]},
-            { id: 29, title: "Rumah Kecil Kita",content: [
-                "Beberapa bulan setelah menikah, Rizal dan Mila menempati sebuah rumah mungil berhalaman asri di pinggiran kota. Halaman depan rumah itu ditanami berbagai bunga kesukaan Mila.",
-                "Setiap kali sore menjelang dan awan mulai menghitam, mereka sering duduk berdua di teras, menyeruput teh hangat sambil menikmati aroma petrikor—bau tanah basah yang disiram hujan.",
-                "Tidak ada lagi rasa takut akan kehilangan atau jarak yang memisahkan. Yang ada hanyalah rasa aman dalam dekapan pelukan pasangan tercinta."
-            ]},
-            { id: 30, title: "Ujian Baru Kehidupan Rumah Tangga",content: [
-                "Kehidupan pernikahan tidak selalu berjalan tanpa riak. Suatu ketika, perusahaan tempat Rizal bekerja mengalami krisis hebat yang berujung pada pemangkasan karyawan.",
-                "Rizal sempat merasa terpuruk dan khawatir tidak dapat mencukupi kebutuhan keluarga kecilnya. Ia memilih diam dan termenung di ruang kerja hingga larut malam.",
-                "Mila, dengan kelembutan hatinya, mendekati suaminya, meletakkan secangkir teh hangat di meja, lalu menggenggam erat tangan Rizal yang kasar karena kerja keras."
-            ]},
-            { id: 31, title: "Badai Pasti Berlalu", content: [
-                "'Ingatkah kamu saat kita pertama kali bertemu di bawah hujan, Rizal? Kita melewati badai yang jauh lebih besar dari ini,' ucap Mila menatap mata suaminya dengan penuh keyakinan.",
-                "Kata-kata itu membangkitkan kembali semangat juang di dada Rizal. Ia tersenyum, menyadari bahwa ia memiliki istri yang luar biasa tangguh dan setia mendampingi dalam suka maupun duka.",
-                "Tidak lama kemudian, berkat portofolio dan koneksi yang baik, Rizal diterima di perusahaan multinasional dengan posisi yang jauh lebih mapan."
-            ]},
-            { id: 32, title: "Anugerah Terindah",content: [
-                "Tahun ketiga pernikahan mereka diwarnai oleh tangisan bayi mungil berjenis kelamin perempuan yang lahir di suatu sore berhujan deras.",
-                "Bayi cantik itu mereka beri nama Rainira—gabungan dari kata 'Rain' (hujan) dan 'Ira' (bagian dari nama Mila dan simbol kedamaian).",
-                "Rizal menggendong bayi kecilnya dengan hati-hati, air mata kebahagiaan menetes di pipinya. Mila tertawa bahagia melihat sisi rapuh dan penuh haru dari suami tercintanya."
-            ]},
-            { id: 33, title: "Musim Berganti, Cinta Abadi",content: [
-                "Waktu berjalan begitu cepat. Rainira tumbuh menjadi anak perempuan yang ceria dan ramah seperti ibunya, serta memiliki ketenangan berpikir seperti ayahnya.",
-                "Keluarga kecil mereka menjadi simbol kehangatan di tengah kompleks perumahan. Setiap kali musim hujan tiba, Rainira selalu meminta ayahnya menceritakan kisah tentang 'Payung Biru dan Hujan di Sekolah'.",
-                "Rizal dan Mila akan saling bertukar pandang penuh makna, tersenyum mengingat perjalanan panjang cinta mereka yang diuji oleh waktu dan jarak."
-            ]},
-            { id: 34, title: "Lukisan Abadi di Langit Senja",content: [
-                "Di usianya yang kini matang, Mila mengadakan pameran retrospektif akbar merayakan 10 tahun perjalanan karier seninya. Seluruh dinding galeri dipenuhi karya-karya terbaik bertema hujan.",
-                "Di tengah ruangan utama, terpajang lukisan terbesar dan paling megah: potret dirinya, Rizal, dan putri kecil mereka berdiri di bawah satu payung besar, tersenyum bahagia di bawah langit senja yang basah oleh sisa hujan.",
-                "Karya itu terjual dengan harga fantastis kepada seorang kolektor seni nasional, namun Mila menolak menjual lukisan utamanya karena lukisan itu adalah jiwa dan sejarah hidupnya."
-            ]},
-            { id: 35, title: "Epilog: Di Bawah Payung Yang Sama",content: [
-                "Sore itu, bertahun-tahun setelah pertemuan pertama di halaman sekolah, hujan kembali turun dengan lebatnya. Rizal dan Mila berjalan berdampingan di trotoar kota, berbagi satu payung biru yang kini sudah sedikit usang namun penuh kenangan.",
-                "Rizal merangkul pundak Mila erat, melindungi istrinya dari terpaan angin dingin. Mila menyandarkan kepalanya di bahu Rizal sambil tersenyum damai.",
-                "Bagi mereka, hujan bukan lagi simbol kesedihan atau perpisahan, melainkan saksi bisu dari sebuah takdir terindah—tentang dua hati sederhana yang saling menjaga di antara rintikan hujan, selamanya."
-            ]}
+        // Database 35 Bab Novel
+        const chapters = [
+            {
+                id: 1,
+                title: "Pertemuan yang Tak Disengaja",
+                content: `Hujan gerimis baru saja mereda di pelataran perpustakaan Desa. Rizal, seorang pemuda pendiam berpakaian sederhana, berdiri mematung sambil merapikan tumpukan buku tua di tangannya. Tiba-tiba, seorang gadis berlari kecil menghindari genangan air dan tak sengaja menyenggol bahunya. Tumpukan buku itu jatuh berserakan.<br><br>
+                "Ah, maafkan aku! Aku tidak sengaja," ucap gadis itu dengan nada lembut dan panik. Gadis itu adalah Putri. Dengan sigap Putri berlutut memungut buku-buku tersebut. Ketika pandangan mereka bertemu untuk pertama kalinya, Rizal hanya bisa terdiam. Keras kepalanya menghilang seketika saat melihat matanya yang jernih. Pertemuan tak sengaja itu menjadi awal dari takdir yang tak pernah mereka bayangkan.`
+            },
+            {
+                id: 2,
+                title: "Senyuman Pertama Putri",
+                content: `Keesokan harinya di sudut perpustakaan yang sama, Rizal kembali bertemu dengan Putri. Kali ini, Putri menyapanya terlebih dahulu sambil mengembalikan sebuah selipan buku yang tertinggal.<br><br>
+                Saat memberikan selipan itu, Putri mengukir senyuman terpancar hangat. Senyuman pertama yang memecahkan kebekuan hati Rizal yang pendiam. Rizal menyadari bahwa ada sesuatu yang istimewa dari binar mata gadis tersebut.`
+            },
+            {
+                id: 3,
+                title: "Pesan di Malam Hari",
+                content: `Setelah saling bertukar nomor telepon, malam itu gawai sederhana Rizal bergetar. Sebuah pesan pendek dari Putri masuk: <em>"Terima kasih untuk buku rekomendasi hari ini, Rizal."</em><br><br>
+                Rizal yang biasanya tak peduli dengan ponselnya, kini menatap layar dengan jantung berdebar lebih cepat. Percakapan hangat hingga larut malam pun dimulai.`
+            },
+            {
+                id: 4,
+                title: "Mulai Saling Merindukan",
+                content: `Hari-hari berlalu. Ketika satu hari saja tidak bertemu di perpustakaan atau saling berkabar, ada perasaan hampa yang menyusup di dada Rizal. Begitu pula dengan Putri yang selalu mencari keberadaan Rizal setiap kali menginjakkan kaki di pelataran desa.`
+            },
+            {
+                id: 5,
+                title: "Rahasia di Balik Senyuman",
+                content: `Meski selalu tampil ceria dan perhatian kepada semua orang, Rizal memperhatikan ada guratan lelah dan kesedihan yang kerap disembunyikan Putri. Di balik tawa renyahnya, Putri menyimpan beban berat tentang ekspektasi keluarganya yang belum pernah ia ceritakan pada siapa pun.`
+            },
+            {
+                id: 6,
+                title: "Hujan dan Sebuah Janji",
+                content: `Hujan deras mengguyur desa. Berdua di bawah naungan halte tua, Rizal melihat Putri menggigil perlahan. Rizal melepas jaket sederhananya lalu menyampirkan ke bahu Putri.<br><br>
+                "Aku tidak akan membiarkanmu menghadapi dingin sendirian," janji Rizal singkat, dengan karakter keras kepala dan setianya yang mulai terlihat.`
+            },
+            {
+                id: 7,
+                title: "Ketika Cemburu Datang",
+                content: `Suatu sore, Rizal melihat Putri berbincang akrab dengan seorang pemuda kota yang tampak jauh lebih berkecukupan darinya. Perasaan asing dan sesak timbul di dada Rizal. Keras kepalanya membuat Rizal memilih menghindar tanpa bertanya.`
+            },
+            {
+                id: 8,
+                title: "Pengakuan di Bawah Langit",
+                content: `Malam festival desa di bawah hamparan bintang, Putri mengejar Rizal dan meluruskan segalanya. Merasa bersalah atas sikap dinginnya, Rizal akhirnya menatap mata jernih Putri dan mengungkapkan perasaannya secara jujur dan sederhana.`
+            },
+            {
+                id: 9,
+                title: "Hari-Hari Paling Bahagia",
+                content: `Masa-masa manis menyelimuti mereka. Bersepeda bersama menyusuri pematang sawah, membaca buku berdua, dan saling berbagi mimpi menjadi rutinitas paling membahagiakan dalam hidup mereka.`
+            },
+            {
+                id: 10,
+                title: "Hadiah Kecil untuk Putri",
+                content: `Dari hasil kerja kerasnya menabung, Rizal memberikan sebuah pembatas buku dari kayu ukir buatan tangannya sendiri. Bagi Putri, hadiah kecil sederhana itu jauh lebih berharga daripada perhiasan mahal manapun.`
+            },
+            {
+                id: 11,
+                title: "Seseorang dari Masa Lalu",
+                content: `Ketenangan hubungan mereka mulai teruji saat sesosok kawan lama dari masa lalu Putri kembali hadir dan membawa ingatan lama yang rumit bagi Putri.`
+            },
+            {
+                id: 12,
+                title: "Kesalahpahaman Pertama",
+                content: `Sebuah ketidakjujuran kecil berbuntut panjang. Sifat keras kepala Rizal berbenturan dengan sikap sensitif Putri yang memilih menarik diri saat merasa tertekan.`
+            },
+            {
+                id: 13,
+                title: "Diam yang Menyakitkan",
+                content: `Beberapa hari berlalu tanpa kata. Perpustakaan terasa begitu dingin dan sepi. Keduanya saling menunggu siapa yang akan menurunkan gengsi terlebih dahulu.`
+            },
+            {
+                id: 14,
+                title: "Air Mata Putri",
+                content: `Rizal akhirnya menemui Putri di bangku taman. Di sana, ia melihat Putri menangis dalam diam. Kesedihan Putri yang terbiasa tersembunyi runtuh seketika, meluluhkan seluruh pertahanan keras kepala Rizal.`
+            },
+            {
+                id: 15,
+                title: "Rizal Memilih Bertahan",
+                content: `Meskipun konflik dan ketidakpastian memuncak, Rizal membuktikan kesetiannya. Ia tidak meninggalkan Putri dan berjanji akan selalu ada di sisinya dalam situasi terburuk sekalipun.`
+            },
+            {
+                id: 16,
+                title: "Janji di Tepi Danau",
+                content: `Di tepi danau desa yang tenang saat matahari terbenam, mereka saling menggenggam jemari dan berjanji untuk saling terbuka dan berjuang bersama menyongsong masa depan.`
+            },
+            {
+                id: 17,
+                title: "Kabar yang Mengubah Segalanya",
+                content: `Sebuah surat penerimaan beasiswa universitas di ibu kota tiba untuk Putri. Pilihan sulit membentang di hadapan mereka.`
+            },
+            {
+                id: 18,
+                title: "Jarak di Antara Kita",
+                content: `Keberangkatan Putri menandai dimulainya hubungan jarak jauh. Perbedaan rutinitas dan zona waktu menjadi tantangan baru yang menguji ketahanan cinta pertama mereka.`
+            },
+            {
+                id: 19,
+                title: "Pesan yang Tak Terbalas",
+                content: `Kesibukan Putri di kota membuat pesan-pesan Rizal sering kali terlambat dibalas. Rasa cemas dan ketakutan akan kehilangan perlahan merayapi pikiran Rizal.`
+            },
+            {
+                id: 20,
+                title: "Rindu yang Tak Terucapkan",
+                content: `Rizal hanya bisa memandangi foto dan pembatas buku buatan tangannya di kamar. Rindu itu begitu dalam, namun ia tak ingin membebani Putri yang sedang berjuang menuntut ilmu.`
+            },
+            {
+                id: 21,
+                title: "Pertemuan yang Tertunda",
+                content: `Rencana kepulangan Putri saat libur semester mendadak batal karena tugas akademik yang mendesak. Rasa kecewa membayangi hari-hari Rizal.`
+            },
+            {
+                id: 22,
+                title: "Kebenaran yang Terungkap",
+                content: `Rizal menyusul ke kota secara diam-diam dan mengetahui alasan sebenarnya mengapa Putri jarang memberi kabar: Putri bekerja paruh waktu hingga larut malam demi membantu pengobatan keluarganya.`
+            },
+            {
+                id: 23,
+                title: "Maafkan Aku, Putri",
+                content: `Rizal merasa bersalah karena sempat berburuk sangka. Ia memeluk Putri rapat-rapat, mengikis segala kesalahpahaman yang sempat menumpuk.`
+            },
+            {
+                id: 24,
+                title: "Kesempatan Kedua",
+                content: `Mereka memulai kembali komitmen dengan kedewasaan baru. Rizal bertekad untuk bekerja lebih keras agar bisa menyusul kesuksesan Putri.`
+            },
+            {
+                id: 25,
+                title: "Cinta yang Lebih Dewasa",
+                content: `Bukan lagi sekadar romansa cinta monyet, rasa di antara mereka telah berkembang menjadi persahabatan sejati dan saling dukung terhadap cita-cita masing-masing.`
+            },
+            {
+                id: 26,
+                title: "Mimpi dan Pengorbanan",
+                content: `Rizal bekerja siang dan malam menabung usaha mandirinya, sementara Putri fokus menyelesaikan studinya dengan predikat terbaik.`
+            },
+            {
+                id: 27,
+                title: "Saat Dunia Terasa Berbeda",
+                content: `Perubahan sudut pandang dan lingkungan sempat membuat mereka merasa asing satu sama lain, namun fondasi kenangan masa lalu selalu menarik mereka kembali.`
+            },
+            {
+                id: 28,
+                title: "Pilihan yang Sulit",
+                content: `Putri mendapat tawaran pekerjaan di luar negeri, sementara Rizal telah berhasil membangun usaha kecilnya di desa kelahiran mereka.`
+            },
+            {
+                id: 29,
+                title: "Surat dari Rizal",
+                content: `Rizal menuliskan surat tertulis tangan: <em>"Mengejarlah mimpimu, Putri. Jika hatimu masih milikku, sejauh apa pun kamu terbang, kamu tahu ke mana jalan untuk pulang."</em>`
+            },
+            {
+                id: 30,
+                title: "Hari Perpisahan",
+                content: `Di bandara, pelukan hangat dan derai air mata mengiringi langkah Putri. Sebuah perpisahan sementara yang menguji janji keabadian.`
+            },
+            {
+                id: 31,
+                title: "Menunggu dengan Setia",
+                content: `Tahun demi tahun berlalu. Rizal membuktikan kesetiaan karakternya. Ia tetap menunggu dan konsisten mengirimkan kabar sederhana setiap harinya.`
+            },
+            {
+                id: 32,
+                title: "Pertemuan Setelah Sekian Lama",
+                content: `Di pelataran perpustakaan desa yang telah diperbarui, sosok gadis dengan senyuman hangat berdiri membawa payung di tengah gerimis tipis.`
+            },
+            {
+                id: 33,
+                title: "Cinta yang Diuji Sekali Lagi",
+                content: `Kembali bersamanya Putri membawa memori lama, namun kini dengan kepribadian yang lebih matang dan tekad yang bulat untuk menetap.`
+            },
+            {
+                id: 34,
+                title: "Di Bawah Langit yang Sama",
+                content: `Sore itu di tepi danau, mereka menyadari bahwa waktu dan jarak tak pernah berhasil mengikis rasa yang tumbuh sejak pertemuan tak sengaja di perpustakaan.`
+            },
+            {
+                id: 35,
+                title: "Selamanya, Jika Kau Mau",
+                content: `Rizal berlutut di hadapan Putri, menyodorkan kotak kayu kecil berisi cincin sederhana dan pembatas buku kenangan mereka.<br><br>
+                "Aku tidak berjanji hidup ini akan selalu mudah, Putri. Tapi aku berjanji akan selalu menggenggam tanganmu selamanya, jika kau mau," bisik Rizal.<br><br>
+                Dengan air mata bahagia dan senyuman paling indahnya, Putri mengangguk mantap. Takdir cinta pertama mereka akhirnya berlabuh dalam kepastian yang abadi.`
+            }
         ];
 
-        // --- APPLICATION STATE ---
-        let currentView = 'home'; // 'home' or 'reader'
-        let currentChapterId = 1;
-        let currentFontSize = 100; // percent
-        let currentTheme = 'light'; // 'light', 'sepia', 'dark'
-        let isRainActive = true;
+        // App State
+        let currentChapterIndex = 0;
+        let fontSizePercent = 100; // Base 100% (1rem / 16px)
 
-        // --- DOM ELEMENTS ---
-        const homeView = document.getElementById('home-view');
-        const readerView = document.getElementById('reader-view');
-        const chapterModal = document.getElementById('chapter-modal');
-        const quickChaptersList = document.getElementById('quick-chapters-list');
-        const modalChapterContainer = document.getElementById('modal-chapter-container');
-        
-        // --- INITIALIZATION ---
-        window.onload = function() {
-            initRainAnimation();
-            renderQuickChapters();
-            renderModalChapters();
-            updateThemeUI();
-        };
+        // DOM Elements
+        const chapterListEl = document.getElementById('chapterList');
+        const chapterNumberDisplay = document.getElementById('chapterNumberDisplay');
+        const chapterTitleDisplay = document.getElementById('chapterTitleDisplay');
+        const storyContent = document.getElementById('storyContent');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const chapterProgress = document.getElementById('chapterProgress');
+        const fontSizeDisplay = document.getElementById('fontSizeDisplay');
+        const fontDecreaseBtn = document.getElementById('fontDecrease');
+        const fontIncreaseBtn = document.getElementById('fontIncrease');
+        const sidebar = document.getElementById('sidebar');
+        const toggleSidebarBtn = document.getElementById('toggleSidebar');
+        const closeSidebarBtn = document.getElementById('closeSidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const toggleThemeBtn = document.getElementById('toggleTheme');
+        const themeIcon = document.getElementById('themeIcon');
+        const downloadBtn = document.getElementById('downloadBtn');
 
-        // --- NAVIGATION FUNCTIONS ---
-        function goToHome() {
-            currentView = 'home';
-            homeView.classList.remove('hidden');
-            readerView.classList.add('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Render Chapter List in Sidebar
+        function renderSidebar() {
+            chapterListEl.innerHTML = '';
+            chapters.forEach((ch, index) => {
+                const item = document.createElement('button');
+                item.className = `w-full text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition flex items-center justify-between ${
+                    index === currentChapterIndex
+                        ? 'bg-rose-600 text-white shadow-md'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-gray-800'
+                }`;
+                item.innerHTML = `
+                    <span class="truncate pr-2">${ch.id}. ${ch.title}</span>
+                    ${index === currentChapterIndex ? '<i class="fa-solid fa-book-open text-xs"></i>' : ''}
+                `;
+                item.onclick = () => {
+                    loadChapter(index);
+                    closeMobileSidebar();
+                };
+                chapterListEl.appendChild(item);
+            });
         }
 
-        function startReading(chapterId) {
-            currentView = 'reader';
-            homeView.classList.add('hidden');
-            readerView.classList.remove('hidden');
-            loadChapter(chapterId);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        // Load Active Chapter
+        function loadChapter(index) {
+            if (index < 0 || index >= chapters.length) return;
+            currentChapterIndex = index;
+            const ch = chapters[index];
 
-        function loadChapter(chapterId) {
-            if (chapterId < 1 || chapterId > 35) return;
-            currentChapterId = chapterId;
-            const chapter = novelChapters.find(c => c.id === chapterId);
-            if (!chapter) return;
+            chapterNumberDisplay.textContent = `BAB ${ch.id}`;
+            chapterTitleDisplay.textContent = ch.title;
+            storyContent.innerHTML = ch.content;
+            chapterProgress.textContent = `${ch.id} / ${chapters.length}`;
 
-            // Update UI texts
-            document.getElementById('current-chapter-title-btn').innerText = `Bab ${chapter.id}`;
-            document.getElementById('reader-chapter-badge').innerText = `Bab ${chapter.id} dari 35`;
-            document.getElementById('reader-chapter-title').innerText = chapter.title;
+            // Update Navigation Buttons Status
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === chapters.length - 1;
 
-            // Render content paragraphs
-            const contentContainer = document.getElementById('reader-text-content');
-            contentContainer.innerHTML = chapter.content.map(p => `<p class="indent-8">${p}</p>`).join('');
-
-            // Update navigation buttons state
-            document.getElementById('prev-chapter-btn').disabled = (chapterId === 1);
-            document.getElementById('prev-chapter-btn').style.opacity = (chapterId === 1) ? '0.5' : '1';
-            document.getElementById('next-chapter-btn').disabled = (chapterId === 35);
-            document.getElementById('next-chapter-btn').style.opacity = (chapterId === 35) ? '0.5' : '1';
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function navigateChapter(direction) {
-            const nextId = currentChapterId + direction;
-            if (nextId >= 1 && nextId <= 35) {
-                loadChapter(nextId);
-            }
-        }
-
-        // --- CHAPTER MODAL FUNCTIONS ---
-        function openChapterModal() {
-            chapterModal.classList.remove('hidden');
-            chapterModal.classList.add('flex');
-        }
-
-        function closeChapterModal() {
-            chapterModal.classList.add('hidden');
-            chapterModal.classList.remove('flex');
-        }
-
-        function renderQuickChapters() {
-            // Show first 5 chapters in home quick list
-            quickChaptersList.innerHTML = novelChapters.slice(0, 5).map(c => `
-                <div onclick="startReading(${c.id})" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-700/50 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 cursor-pointer transition flex items-center justify-between text-xs sm:text-sm">
-                    <span class="font-medium">Bab ${c.id}: ${c.title}</span>
-                    <span class="text-indigo-600 dark:text-indigo-400">→</span>
-                </div>
-            `).join('');
-        }
-
-        function renderModalChapters(filter = '') {
-            const filtered = novelChapters.filter(c => 
-                c.id.toString().includes(filter) || c.title.toLowerCase().includes(filter.toLowerCase())
-            );
-
-            modalChapterContainer.innerHTML = filtered.map(c => `
-                <div onclick="closeChapterModal(); startReading(${c.id});" class="p-3 rounded-2xl bg-slate-50 dark:bg-rainslate-900/40 hover:bg-indigo-50 dark:hover:bg-indigo-900/40 cursor-pointer transition flex items-center justify-between border border-slate-100 dark:border-slate-700/50">
-                    <div class="flex items-center space-x-3">
-                        <span class="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/60 text-indigo-600 dark:text-indigo-300 font-bold text-xs flex items-center justify-center">${c.id}</span>
-                        <span class="font-medium text-sm sm:text-base">${c.title}</span>
-                    </div>
-                    <span class="text-xs text-slate-400">Baca →</span>
-                </div>
-            `).join('');
-        }
-
-        function filterChapters() {
-            const query = document.getElementById('chapter-search-input').value;
-            renderModalChapters(query);
-        }
-
-        // --- FONT & THEME CONTROLS ---
-        function adjustFontSize(delta) {
-            currentFontSize = Math.min(150, Math.max(80, currentFontSize + delta));
-            document.getElementById('font-size-indicator.innerText') || null;
-            document.getElementById('font-size-indicator').innerText = `${currentFontSize}%`;
-            document.getElementById('reader-text-content').style.fontSize = `${currentFontSize}%`;
-            showToast(`Ukuran font diubah ke ${currentFontSize}%`, '🔤');
-        }
-
-        function setTheme(theme) {
-            currentTheme = theme;
-            const body = document.body;
-            const readerCard = document.getElementById('reader-card');
+            renderSidebar();
             
-            // Reset theme classes
-            body.classList.remove('dark', 'sepia-mode');
-            
-            // Buttons style toggle
-            document.getElementById('theme-btn-light').className = "px-2.5 py-1.5 rounded-lg text-xs font-medium transition text-slate-600 dark:text-slate-300";
-            document.getElementById('theme-btn-sepia').className = "px-2.5 py-1.5 rounded-lg text-xs font-medium transition text-slate-600 dark:text-slate-300";
-            document.getElementById('theme-btn-dark').className = "px-2.5 py-1.5 rounded-lg text-xs font-medium transition text-slate-600 dark:text-slate-300";
+            // Auto Save Bookmark Progress in LocalStorage
+            localStorage.setItem('jalonbaikhati_novel_chapter', index);
 
-            if (theme === 'light') {
-                body.style.backgroundColor = '#f4f6f9';
-                body.style.color = '#1e293b';
-                document.getElementById('theme-btn-light').className = "px-2.5 py-1.5 rounded-lg text-xs font-medium bg-white text-slate-800 shadow-sm transition";
-                showToast("Beralih ke Tema Terang", '☀️');
-            } else if (theme === 'sepia') {
-                body.style.backgroundColor = '#fbf0d9';
-                body.style.color = '#5f4b32';
-                document.getElementById('theme-btn-sepia').className = "px-2.5 py-1.5 rounded-lg text-xs font-medium bg-[#f5e4c3] text-[#5f4b32] shadow-sm transition";
-                showToast("Beralih ke Tema Sepia", '📜');
-            } else if (theme === 'dark') {
-                body.classList.add('dark');
-                body.style.backgroundColor = '#0f172a';
-                body.style.color = '#f1f5f9';
-                document.getElementById('theme-btn-dark').className = "px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-white shadow-sm transition";
-                showToast("Beralih ke Tema Gelap", '🌙');
-            }
+            // Scroll to Top Reading Area
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function updateThemeUI() {
-            setTheme('light');
+        // Font Size Adjustments
+        function updateFontSize() {
+            storyContent.style.fontSize = `${fontSizePercent}%`;
+            fontSizeDisplay.textContent = `${fontSizePercent}%`;
+            localStorage.setItem('jalonbaikhati_novel_fontsize', fontSizePercent);
         }
 
-        // --- RAIN EFFECT ANIMATION CANVAS ---
-        function initRainAnimation() {
-            const canvas = document.getElementById('rain-canvas');
-            const ctx = canvas.getContext('2d');
-
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+        fontIncreaseBtn.addEventListener('click', () => {
+            if (fontSizePercent < 160) {
+                fontSizePercent += 10;
+                updateFontSize();
             }
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
+        });
 
-            // Raindrops particles
-            const raindrops = [];
-            const count = 60;
-
-            for (let i = 0; i < count; i++) {
-                raindrops.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    length: Math.random() * 20 + 10,
-                    speed: Math.random() * 4 + 4,
-                    opacity: Math.random() * 0.3 + 0.1
-                });
+        fontDecreaseBtn.addEventListener('click', () => {
+            if (fontSizePercent > 80) {
+                fontSizePercent -= 10;
+                updateFontSize();
             }
+        });
 
-            function animateRain() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                if (isRainActive) {
-                    ctx.strokeStyle = document.body.classList.contains('dark') ? 'rgba(148, 163, 184, 0.25)' : 'rgba(99, 102, 241, 0.2)';
-                    ctx.lineWidth = 1.2;
-                    ctx.lineCap = 'round';
-
-                    for (let drop of raindrops) {
-                        ctx.beginPath();
-                        ctx.moveTo(drop.x, drop.y);
-                        ctx.lineTo(drop.x - 1, drop.y + drop.length);
-                        ctx.stroke();
-
-                        drop.y += drop.speed;
-                        drop.x -= 0.3; // Slight wind slant
-
-                        if (drop.y > canvas.height) {
-                            drop.y = -20;
-                            drop.x = Math.random() * canvas.width;
-                        }
-                    }
-                }
-                requestAnimationFrame(animateRain);
-            }
-            animateRain();
-        }
-
-        function toggleRainEffect() {
-            isRainActive = !isRainActive;
-            const statusText = document.getElementById('rain-status-text');
-            if (isRainActive) {
-                statusText.innerText = "Hujan: On";
-                showToast("Efek hujan diaktifkan 🌧️", '🌧️');
+        // Theme Toggle (Dark / Light)
+        function initTheme() {
+            const savedTheme = localStorage.getItem('jalonbaikhati_novel_theme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                themeIcon.className = 'fa-solid fa-sun text-lg';
             } else {
-                statusText.innerText = "Hujan: Off";
-                showToast("Efek hujan dinonaktifkan ☀️", '☀️');
+                document.documentElement.classList.remove('dark');
+                themeIcon.className = 'fa-solid fa-moon text-lg';
             }
         }
 
-        // --- DOWNLOAD WEB OFFLINE ---
-        function downloadWebNovel() {
+        toggleThemeBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            themeIcon.className = isDark ? 'fa-solid fa-sun text-lg' : 'fa-solid fa-moon text-lg';
+            localStorage.setItem('jalonbaikhati_novel_theme', isDark ? 'dark' : 'light');
+        });
+
+        // Sidebar Navigation Mobile Controls
+        function openMobileSidebar() {
+            sidebar.classList.remove('-translate-x-full');
+            sidebarOverlay.classList.remove('hidden');
+        }
+
+        function closeMobileSidebar() {
+            sidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+        }
+
+        toggleSidebarBtn.addEventListener('click', openMobileSidebar);
+        closeSidebarBtn.addEventListener('click', closeMobileSidebar);
+        sidebarOverlay.addEventListener('click', closeMobileSidebar);
+
+        // Next & Prev Buttons Click Handlers
+        prevBtn.addEventListener('click', () => {
+            if (currentChapterIndex > 0) loadChapter(currentChapterIndex - 1);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentChapterIndex < chapters.length - 1) loadChapter(currentChapterIndex + 1);
+        });
+
+        // Download Web App as Full HTML File
+        downloadBtn.addEventListener('click', () => {
             const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-            const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+            const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = "Di_Antara_Hujan_Novel.html";
+            a.download = 'Novel_Cinta_dan_Takdir_Jalonbaikhati.html';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            showToast("File web novel berhasil diunduh untuk offline! 📥", '💾');
-        }
+        });
 
-        // --- TOAST NOTIFICATION ---
-        function showToast(message, icon = '✨') {
-            const toast = document.getElementById('toast-box');
-            document.getElementById('toast-message').innerText = message;
-            document.getElementById('toast-icon').innerText = icon;
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            initTheme();
 
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
+            // Load Saved Font Size
+            const savedFont = localStorage.getItem('jalonbaikhati_novel_fontsize');
+            if (savedFont) {
+                fontSizePercent = parseInt(savedFont, 10);
+            }
+            updateFontSize();
 
-            setTimeout(() => {
-                toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
-        }
+            // Load Saved Chapter Progress
+            const savedChapter = localStorage.getItem('jalonbaikhati_novel_chapter');
+            if (savedChapter !== null) {
+                currentChapterIndex = parseInt(savedChapter, 10);
+            }
+
+            loadChapter(currentChapterIndex);
+        });
     </script>
 </body>
 </html>
