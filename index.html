@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Takdir dan Kesetiaan di Masjid Al Fajar - Karya JalonStarboy</title>
-    <!-- Tailwind CSS -->
+    <title>Takdir dan Kesetiaan di Masjid Al Fajar - JalonStarboy</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -13,884 +13,874 @@
                 extend: {
                     colors: {
                         emerald: {
-                            850: '#064e3b',
-                            900: '#022c22',
-                        },
-                        amber: {
-                            450: '#f59e0b',
-                        },
-                        sand: '#fdfbf7',
-                        sanddark: '#121816'
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        }
                     },
                     fontFamily: {
-                        serif: ['Georgia', 'Cambria', 'serif'],
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                        arabic: ['Amiri', 'serif']
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
                     }
                 }
             }
         }
     </script>
-    <!-- Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
-        /* Custom Pattern Backgrounds */
-        .islamic-pattern {
-            background-color: #fdfbf7;
-            background-image: radial-gradient(#d97706 0.75px, transparent 0.75px), radial-gradient(#d97706 0.75px, #fdfbf7 0.75px);
-            background-size: 30px 30px;
-            background-position: 0 0, 15px 15px;
-            background-opacity: 0.05;
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
         }
-        .dark .islamic-pattern {
-            background-color: #0f1715;
-            background-image: radial-gradient(#059669 0.75px, transparent 0.75px), radial-gradient(#059669 0.75px, #0f1715 0.75px);
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
         }
-        
-        /* Font Styles */
-        .font-reading-sans { font-family: 'Inter', sans-serif; }
-        .font-reading-serif { font-family: 'Lora', Georgia, serif; }
-        .font-reading-arabic { font-family: 'Amiri', serif; }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.05);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #059669;
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(5, 150, 105, 0.3);
             border-radius: 4px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #047857;
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(5, 150, 105, 0.6);
         }
     </style>
 </head>
-<body class="bg-sand dark:bg-sanddark text-slate-800 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col font-sans antialiased islamic-pattern">
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 font-sans transition-colors duration-300 min-h-screen flex flex-col justify-between">
 
-    <!-- READING PROGRESS BAR -->
-    <div id="progressBar" class="fixed top-0 left-0 h-1.5 bg-gradient-to-r from-amber-500 via-emerald-500 to-teal-400 z-50 transition-all duration-150 w-0"></div>
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-emerald-800 text-white px-6 py-3 rounded-xl shadow-xl flex items-center space-x-3">
+        <i class="fa-solid fa-circle-check text-emerald-300 text-xl"></i>
+        <span id="toast-message" class="font-medium text-sm">Pesan berhasil ditampilkan</span>
+    </div>
 
-    <!-- HEADER / NAVIGATION -->
-    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-amber-500/20 shadow-sm transition-colors">
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            
-            <!-- Logo & Title -->
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="showChapterList()">
-                <div class="w-10 h-10 rounded-full bg-emerald-800 dark:bg-emerald-600 flex items-center justify-center text-amber-400 shadow-md">
-                    <i class="fa-solid fa-mosque text-lg"></i>
-                </div>
-                <div>
-                    <h1 class="text-base sm:text-lg font-bold bg-gradient-to-r from-emerald-800 via-emerald-600 to-amber-600 dark:from-emerald-400 dark:to-amber-300 bg-clip-text text-transparent leading-tight">
-                        Takdir & Kesetiaan
-                    </h1>
-                    <p class="text-xs text-amber-700 dark:text-amber-400 font-medium">
-                        Karya: <span class="font-semibold underline tracking-wide">JalonStarboy</span>
-                    </p>
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleSidebar()" class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-slate-700 transition" aria-label="Buka Daftar Bab">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+                <div class="flex items-center space-x-2 cursor-pointer" onclick="showHome()">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-bold shadow-md shadow-emerald-600/30">
+                        <i class="fa-solid fa-mosque"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-sm sm:text-base leading-tight line-clamp-1">Takdir & Kesetiaan</h1>
+                        <p class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Masjid Al Fajar • JalonStarboy</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Controls (Font size, Theme, Chapter Drawer) -->
-            <div class="flex items-center space-x-1 sm:space-x-2">
-                
-                <!-- Font Controls -->
-                <div class="hidden sm:flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-1 border border-slate-200 dark:border-slate-700 mr-2">
-                    <button onclick="changeFontSize(-1)" title="Mengecilkan Teks (A-)" class="px-2 py-1 text-xs font-semibold rounded hover:bg-white dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">A-</button>
-                    <button onclick="resetFontSize()" id="btnResetFont" title="Ukuran Default (100%)" class="px-2 py-1 text-xs font-bold rounded hover:bg-white dark:hover:bg-slate-700 text-emerald-600 dark:text-emerald-400 transition">100%</button>
-                    <button onclick="changeFontSize(1)" title="Membesarkan Teks (A+)" class="px-2 py-1 text-xs font-semibold rounded hover:bg-white dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition">A+</button>
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <!-- Badge A+ / 100% -->
+                <div class="hidden sm:flex items-center bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 px-3 py-1 rounded-full text-xs font-bold border border-emerald-300 dark:border-emerald-700 shadow-sm">
+                    <span class="mr-1.5"><i class="fa-solid fa-award"></i></span>
+                    <span>100% • A+</span>
                 </div>
 
                 <!-- Theme Toggle -->
-                <button onclick="toggleDarkMode()" class="p-2 text-slate-600 dark:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition" title="Ganti Mode Gelap/Terang">
-                    <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
+                <button onclick="toggleDarkMode()" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-emerald-100 dark:hover:bg-slate-600 transition" aria-label="Ganti Tema">
+                    <i id="theme-icon" class="fa-solid fa-moon"></i>
                 </button>
 
-                <!-- Chapter List Toggle Mobile/Desktop -->
-                <button onclick="toggleSidebar()" class="p-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg transition flex items-center space-x-1 shadow-sm">
-                    <i class="fa-solid fa-list-ul text-sm"></i>
-                    <span class="text-xs font-medium hidden md:inline">Daftar Bab</span>
+                <!-- Font Size Modal Toggle -->
+                <button onclick="toggleSettingsModal()" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-emerald-100 dark:hover:bg-slate-600 transition" aria-label="Pengaturan Baca">
+                    <i class="fa-solid fa-font"></i>
                 </button>
 
                 <!-- Download Offline Button -->
-                <button onclick="openDownloadModal()" class="p-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg transition flex items-center space-x-1 shadow-sm" title="Unduh Cerita / Website Offline">
-                    <i class="fa-solid fa-download text-sm"></i>
-                    <span class="text-xs font-medium hidden md:inline">Unduh</span>
+                <button onclick="downloadWebsite()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-3.5 py-2 rounded-xl text-xs sm:text-sm flex items-center space-x-2 shadow-md shadow-emerald-600/30 transition transform active:scale-95">
+                    <i class="fa-solid fa-download"></i>
+                    <span class="hidden md:inline">Unduh Web</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- MOBILE FONT CONTROL BAR (Fixed Bottom Floating if reading) -->
-    <div class="sm:hidden fixed bottom-4 right-4 z-30 flex items-center bg-slate-900/90 backdrop-blur-md text-white p-1.5 rounded-full shadow-lg border border-amber-500/40">
-        <button onclick="changeFontSize(-1)" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold hover:bg-slate-800">A-</button>
-        <span id="mobileFontScale" class="text-[10px] px-2 font-mono text-amber-400">100%</span>
-        <button onclick="changeFontSize(1)" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold hover:bg-slate-800">A+</button>
-    </div>
-
-    <!-- MAIN CONTAINER -->
-    <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex gap-8">
-
-        <!-- SIDEBAR DAFTAR BAB (Drawer / Sidebar) -->
-        <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 bg-white dark:bg-slate-900 shadow-2xl transform translate-x-full lg:relative lg:translate-x-0 lg:z-0 lg:w-80 lg:shadow-none lg:bg-transparent lg:dark:bg-transparent transition-transform duration-300 ease-in-out flex flex-col border-l lg:border-l-0 border-slate-200 dark:border-slate-800">
-            <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between lg:hidden bg-emerald-900 text-white">
+    <!-- Main Content Area -->
+    <main class="flex-grow flex relative">
+        <!-- Sidebar Daftar Bab -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-80 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-2xl">
+            <div class="p-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between bg-emerald-50/50 dark:bg-slate-800">
                 <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-book-bookmark text-amber-400"></i>
-                    <h3 class="font-bold text-sm">Daftar Bab (1 - 35)</h3>
+                    <i class="fa-solid fa-book-open text-emerald-600 dark:text-emerald-400"></i>
+                    <h2 class="font-bold text-slate-800 dark:text-white">Daftar Bab (1 - 35)</h2>
                 </div>
-                <button onclick="toggleSidebar()" class="text-slate-300 hover:text-white p-1">
+                <button onclick="toggleSidebar()" class="p-2 text-slate-500 hover:text-slate-700 dark:hover:text-white rounded-lg">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
-
-            <div class="p-4 bg-white dark:bg-slate-800/80 rounded-2xl shadow-sm border border-emerald-900/10 dark:border-slate-700 flex-1 flex flex-col h-full max-h-[calc(100vh-6rem)]">
-                <div class="hidden lg:flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-700">
-                    <div class="flex items-center space-x-2">
-                        <i class="fa-solid fa-book-open text-emerald-600 dark:text-emerald-400"></i>
-                        <h2 class="font-bold text-slate-800 dark:text-slate-200 text-base">Daftar Bab</h2>
-                    </div>
-                    <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 font-semibold">35 Bab</span>
+            <!-- Search Bab -->
+            <div class="p-3 border-b border-slate-200 dark:border-slate-700">
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <i class="fa-solid fa-search text-xs"></i>
+                    </span>
+                    <input type="text" id="search-chapter" placeholder="Cari bab..." oninput="filterChapters(this.value)" class="w-full pl-9 pr-4 py-2 text-xs bg-slate-100 dark:bg-slate-700 rounded-xl border-none focus:ring-2 focus:ring-emerald-500 text-slate-800 dark:text-slate-100 placeholder-slate-400">
                 </div>
-
-                <!-- Search / Filter Bab -->
-                <div class="relative mb-3">
-                    <input type="text" id="searchBab" onkeyup="filterChapters()" placeholder="Cari bab atau kata kunci..." class="w-full text-xs pl-8 pr-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                    <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-xs text-slate-400"></i>
-                </div>
-
-                <!-- Chapter Scroll Area -->
-                <div id="chapterListContainer" class="flex-1 overflow-y-auto space-y-1.5 pr-1">
-                    <!-- Dynamic Chapter Buttons generated via JS -->
-                </div>
-
-                <!-- Quick Info Box -->
-                <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700/60 text-xs text-slate-500 dark:text-slate-400 space-y-1">
-                    <div class="flex justify-between">
-                        <span>Penulis:</span>
-                        <span class="font-medium text-slate-700 dark:text-slate-300">JalonStarboy</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span>Pemeran Utama:</span>
-                        <span class="font-medium text-amber-600 dark:text-amber-400">Rizal & Aisyah</span>
-                    </div>
-                </div>
+            </div>
+            <!-- Chapter List Container -->
+            <div id="chapter-list" class="flex-grow overflow-y-auto custom-scrollbar p-3 space-y-1">
+                <!-- Populated via JS -->
+            </div>
+            <div class="p-3 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-center text-xs text-slate-500">
+                Karya: JalonStarboy • 100% A+
             </div>
         </aside>
 
-        <!-- BACKDROP FOR MOBILE SIDEBAR -->
-        <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 hidden lg:hidden"></div>
+        <!-- Overlay for Sidebar -->
+        <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/50 z-40 hidden backdrop-blur-sm transition-opacity"></div>
 
-        <!-- MAIN CONTENT AREA -->
-        <main class="flex-1 min-w-0">
-
-            <!-- HOME / HERO SCREEN (Default View if no chapter active or cover clicked) -->
-            <div id="homeView" class="bg-white dark:bg-slate-800/90 rounded-3xl p-6 sm:p-10 shadow-lg border border-amber-500/20 text-center relative overflow-hidden transition-all">
-                <!-- Decorative Top Banner -->
-                <div class="absolute top-0 left-0 right-0 h-3 bg-gradient-to-r from-emerald-700 via-amber-500 to-emerald-800"></div>
-
-                <div class="max-w-2xl mx-auto space-y-6 pt-4">
-                    <div class="inline-block p-4 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-amber-400 border border-emerald-200 dark:border-emerald-800/40">
-                        <i class="fa-solid fa-kaaba text-4xl sm:text-5xl"></i>
+        <!-- Dynamic View Container -->
+        <div class="w-full max-w-4xl mx-auto px-4 py-8">
+            
+            <!-- HOME VIEW: Sinopsis & Detail Novel -->
+            <div id="home-view" class="space-y-8 animate-fadeIn">
+                <!-- Hero Section -->
+                <div class="relative bg-gradient-to-br from-emerald-800 via-emerald-700 to-teal-900 rounded-3xl p-6 sm:p-10 text-white shadow-xl overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl">
+                        <i class="fa-solid fa-mosque"></i>
                     </div>
-
-                    <div class="space-y-2">
-                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800">
-                            Novel Romance Islami
-                        </span>
-                        <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
+                    <div class="relative z-10 max-w-2xl">
+                        <div class="inline-flex items-center space-x-2 bg-emerald-600/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold mb-4 border border-emerald-500/50">
+                            <span class="text-amber-300"><i class="fa-solid fa-star"></i></span>
+                            <span>Novel Romance Islami • 35 Bab Lengkap</span>
+                        </div>
+                        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-3 font-serif">
                             Takdir dan Kesetiaan di Masjid Al Fajar
                         </h1>
-                        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 italic">
-                            "Ketika keikhlasan mendoakan dalam diam bertemu dengan ketetapan takdir yang dipersatukan di rumah-Nya."
+                        <p class="text-emerald-100 text-sm sm:text-base mb-6 font-light">
+                            Penulis: <span class="font-semibold text-white">JalonStarboy</span> | Tokoh Utama: <span class="font-semibold text-white">Rizal & Aisyah</span>
                         </p>
-                    </div>
-
-                    <!-- Meta details -->
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 py-4 border-y border-slate-100 dark:border-slate-700/60 text-xs text-slate-600 dark:text-slate-400">
-                        <div class="p-2 bg-slate-50 dark:bg-slate-900/50 rounded-xl">
-                            <span class="block text-slate-400">Penulis</span>
-                            <strong class="text-emerald-700 dark:text-emerald-400 text-sm">JalonStarboy</strong>
-                        </div>
-                        <div class="p-2 bg-slate-50 dark:bg-slate-900/50 rounded-xl">
-                            <span class="block text-slate-400">Tokoh Utama</span>
-                            <strong class="text-slate-800 dark:text-slate-200 text-sm">Rizal & Aisyah</strong>
-                        </div>
-                        <div class="p-2 bg-slate-50 dark:bg-slate-900/50 rounded-xl">
-                            <span class="block text-slate-400">Jumlah Bab</span>
-                            <strong class="text-slate-800 dark:text-slate-200 text-sm">35 Bab Lengkap</strong>
-                        </div>
-                        <div class="p-2 bg-slate-50 dark:bg-slate-900/50 rounded-xl">
-                            <span class="block text-slate-400">Tema Main</span>
-                            <strong class="text-amber-600 dark:text-amber-400 text-sm">Perjuangan Halal</strong>
-                        </div>
-                    </div>
-
-                    <!-- Genre Badges -->
-                    <div class="flex flex-wrap justify-center gap-2">
-                        <span class="px-2.5 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-md text-xs font-medium">#RomanceIslami</span>
-                        <span class="px-2.5 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-md text-xs font-medium">#Persahabatan</span>
-                        <span class="px-2.5 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-md text-xs font-medium">#Takdir</span>
-                        <span class="px-2.5 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-md text-xs font-medium">#Kesetiaan</span>
-                        <span class="px-2.5 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-md text-xs font-medium">#MasjidAlFajar</span>
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <button onclick="readChapter(1)" class="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-emerald-700 to-emerald-600 hover:from-emerald-800 hover:to-emerald-700 text-white font-bold rounded-2xl shadow-lg shadow-emerald-700/30 transform hover:-translate-y-0.5 transition flex items-center justify-center space-x-2">
-                            <i class="fa-solid fa-book-open"></i>
-                            <span>Mulai Membaca Bab 1</span>
-                        </button>
-                        <button onclick="openDownloadModal()" class="w-full sm:w-auto px-6 py-3.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-400 font-semibold rounded-2xl border border-amber-500/30 transition flex items-center justify-center space-x-2">
-                            <i class="fa-solid fa-download"></i>
-                            <span>Unduh Novel Offline</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CHAPTER READER VIEW -->
-            <div id="readerView" class="hidden bg-white dark:bg-slate-800/90 rounded-3xl p-5 sm:p-10 shadow-lg border border-amber-500/15 transition-all">
-                
-                <!-- Chapter Reader Header -->
-                <div class="border-b border-slate-100 dark:border-slate-700/80 pb-6 mb-6">
-                    <div class="flex items-center justify-between text-xs text-amber-600 dark:text-amber-400 font-semibold tracking-wider uppercase mb-2">
-                        <span id="readerChapterNumber">BAB 1</span>
-                        <span class="bg-amber-100 dark:bg-amber-950/60 px-2.5 py-1 rounded-full text-[11px]">JalonStarboy</span>
-                    </div>
-                    <h2 id="readerChapterTitle" class="text-xl sm:text-3xl font-extrabold text-slate-900 dark:text-white leading-tight mb-3">
-                        Pertemuan di Tepi Sajadah
-                    </h2>
-                    
-                    <!-- Font & Style Toolbar for Reader -->
-                    <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs">
-                        <div class="flex items-center space-x-2 text-slate-500 dark:text-slate-400">
-                            <span>Gaya Font:</span>
-                            <button onclick="setFontFamily('sans')" class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 font-sans hover:text-emerald-600">Sans</button>
-                            <button onclick="setFontFamily('serif')" class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 font-serif hover:text-emerald-600">Serif</button>
-                            <button onclick="setFontFamily('arabic')" class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 font-arabic hover:text-emerald-600">Naskh</button>
-                        </div>
-
-                        <div class="flex items-center space-x-2">
-                            <button onclick="showChapterList()" class="text-emerald-700 dark:text-emerald-400 font-medium hover:underline flex items-center space-x-1">
-                                <i class="fa-solid fa-list text-xs"></i>
-                                <span>Daftar Bab</span>
+                        
+                        <div class="flex flex-wrap gap-3">
+                            <button onclick="openChapter(1)" class="bg-white text-emerald-900 font-bold px-6 py-3 rounded-xl shadow-lg hover:bg-emerald-50 transition flex items-center space-x-2">
+                                <i class="fa-solid fa-book-open-reader"></i>
+                                <span>Mulai Baca Bab 1</span>
+                            </button>
+                            <button onclick="toggleSidebar()" class="bg-emerald-700/80 hover:bg-emerald-700 border border-emerald-500/40 text-white font-medium px-5 py-3 rounded-xl transition flex items-center space-x-2">
+                                <i class="fa-solid fa-list-ul"></i>
+                                <span>Daftar Bab (35)</span>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Chapter Story Content -->
-                <div id="readerContent" class="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-200 leading-relaxed sm:leading-loose text-base font-reading-serif space-y-5 transition-all duration-200">
-                    <!-- Text inserted dynamically -->
+                <!-- Sinopsis Section -->
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-quote-left text-lg"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-bold">Sinopsis Menyentuh Hati</h2>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Kisah perjuangan cinta dalam balutan iman</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4 text-slate-600 dark:text-slate-300 leading-relaxed font-serif text-sm sm:text-base">
+                        <p>
+                            Di sudut desa yang tenang, Masjid Al Fajar menjadi saksi bisu pertemuan dua jiwa yang berjuang menjaga batas iman di tengah gemerlapnya dunia modern. Rizal, seorang pemuda yang mengabdikan hidupnya untuk memakmurkan masjid, memendam rasa cinta dalam diam kepada Aisyah, gadis salihah yang aktif dalam kegiatan sosial kemasyarakatan.
+                        </p>
+                        <p>
+                            Ujian demi ujian datang menguji kesetiaan, kesabaran, dan keikhlasan mereka. Ketika takdir seolah mempermainkan jarak, mampukah keduanya melewati liku-liku perjuangan menuju halal dengan rida Allah SWT? Sebuah kisah romansa Islami penuh inspirasi tentang ketulusan hati, doa-doa di sepertiga malam, dan janji suci yang dijaga dalam kesucian.
+                        </p>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-700 flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="flex items-center space-x-1 text-amber-500 text-sm">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="text-xs font-bold bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 px-3 py-1 rounded-full">
+                                Rating A+ (100% Recommended)
+                            </span>
+                        </div>
+                        <button onclick="openChapter(1)" class="text-emerald-600 dark:text-emerald-400 font-semibold text-sm hover:underline flex items-center space-x-1">
+                            <span>Baca Sekarang</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Chapter Footer / Nav Buttons -->
-                <div class="mt-10 pt-6 border-t border-slate-100 dark:border-slate-700/80 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <button id="btnPrevBab" onclick="navigateChapter(-1)" class="w-full sm:w-auto px-5 py-2.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-medium rounded-xl transition flex items-center justify-center space-x-2">
-                        <i class="fa-solid fa-arrow-left"></i>
-                        <span>Bab Sebelumnya</span>
-                    </button>
-
-                    <button onclick="showChapterList()" class="w-full sm:w-auto px-5 py-2.5 bg-amber-500/10 text-amber-700 dark:text-amber-400 hover:bg-amber-500/20 font-semibold rounded-xl transition flex items-center justify-center space-x-2">
-                        <i class="fa-solid fa-grid-2"></i>
-                        <span>Semua Bab</span>
-                    </button>
-
-                    <button id="btnNextBab" onclick="navigateChapter(1)" class="w-full sm:w-auto px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-medium rounded-xl transition flex items-center justify-center space-x-2">
-                        <span>Bab Selanjutnya</span>
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </button>
+                <!-- Quick Chapter Grid Preview -->
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="font-bold text-lg">Pilih Bab Cepat</h3>
+                        <button onclick="toggleSidebar()" class="text-xs text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">Lihat Semua (35 Bab)</button>
+                    </div>
+                    <div id="quick-chapter-grid" class="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 gap-2.5">
+                        <!-- Populated via JS -->
+                    </div>
                 </div>
             </div>
 
-        </main>
-    </div>
-
-    <!-- MODAL DOWNLOAD OPTIONS -->
-    <div id="downloadModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden p-4">
-        <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-amber-500/30 relative animate-fadeIn">
-            <button onclick="closeDownloadModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-
-            <div class="text-center space-y-3 mb-6">
-                <div class="w-12 h-12 bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 rounded-full flex items-center justify-center mx-auto text-xl">
-                    <i class="fa-solid fa-circle-down"></i>
+            <!-- READER VIEW -->
+            <div id="reader-view" class="hidden space-y-6 animate-fadeIn">
+                <!-- Navigation Bar Top Reader -->
+                <div class="flex items-center justify-between bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+                    <button onclick="showHome()" class="text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 flex items-center space-x-2">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Beranda</span>
+                    </button>
+                    <div class="text-center">
+                        <span id="reader-chapter-badge" class="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/40 px-3 py-1 rounded-full">Bab 1 dari 35</span>
+                    </div>
+                    <button onclick="toggleSidebar()" class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center space-x-1">
+                        <i class="fa-solid fa-list"></i>
+                        <span class="hidden sm:inline">Daftar Bab</span>
+                    </button>
                 </div>
-                <h3 class="text-xl font-bold text-slate-900 dark:text-white">Unduh Karya Novel</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400">
-                    Pilih format unduhan untuk menyimpan cerita karya <strong>JalonStarboy</strong> agar dapat dibaca offline tanpa koneksi internet.
-                </p>
+
+                <!-- Content Box -->
+                <article class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-12 shadow-sm border border-slate-200 dark:border-slate-700">
+                    <div class="text-center pb-8 border-b border-slate-100 dark:border-slate-700 mb-8">
+                        <span class="text-xs uppercase tracking-widest text-emerald-600 dark:text-emerald-400 font-bold">Takdir dan Kesetiaan di Masjid Al Fajar</span>
+                        <h2 id="reader-title" class="text-2xl sm:text-3xl font-extrabold mt-2 font-serif text-slate-800 dark:text-white">Judul Bab</h2>
+                        <p class="text-xs text-slate-400 mt-2">Oleh: JalonStarboy</p>
+                    </div>
+
+                    <!-- Story Text Body -->
+                    <div id="reader-content" class="space-y-6 font-serif leading-relaxed text-slate-700 dark:text-slate-200 text-base sm:text-lg">
+                        <!-- Populated via JS -->
+                    </div>
+
+                    <!-- Bottom Chapter Navigation -->
+                    <div class="mt-12 pt-8 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between">
+                        <button id="prev-btn" onclick="navigateChapter(-1)" class="px-4 sm:px-6 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-emerald-600 hover:text-white dark:hover:bg-emerald-600 text-slate-700 dark:text-slate-200 font-medium text-xs sm:text-sm transition flex items-center space-x-2">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            <span>Sebelumnya</span>
+                        </button>
+                        <button onclick="toggleSidebar()" class="px-4 py-2 text-xs font-bold text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition">
+                            <i class="fa-solid fa-grip"></i> Menu Bab
+                        </button>
+                        <button id="next-btn" onclick="navigateChapter(1)" class="px-4 sm:px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs sm:text-sm transition flex items-center space-x-2 shadow-md shadow-emerald-600/30">
+                            <span>Selanjutnya</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </article>
             </div>
 
-            <div class="space-y-3">
-                <!-- Option 1: Standalone HTML -->
-                <button onclick="downloadAsHTML()" class="w-full p-3.5 bg-slate-50 dark:bg-slate-700/50 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 border border-slate-200 dark:border-slate-600 hover:border-emerald-500 rounded-2xl flex items-center space-x-3 text-left transition group">
-                    <div class="p-2 bg-emerald-700 text-white rounded-xl">
-                        <i class="fa-solid fa-file-code text-lg"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-bold text-slate-800 dark:text-slate-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400">Website HTML Offline Lengkap</h4>
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400">Satu file web utuh yang bisa dibuka di browser HP/PC kapan saja.</p>
-                    </div>
-                </button>
-
-                <!-- Option 2: Plain Text / E-Book TXT -->
-                <button onclick="downloadAsTXT()" class="w-full p-3.5 bg-slate-50 dark:bg-slate-700/50 hover:bg-amber-50 dark:hover:bg-amber-950/40 border border-slate-200 dark:border-slate-600 hover:border-amber-500 rounded-2xl flex items-center space-x-3 text-left transition group">
-                    <div class="p-2 bg-amber-600 text-white rounded-xl">
-                        <i class="fa-solid fa-file-lines text-lg"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-bold text-slate-800 dark:text-slate-100 group-hover:text-amber-600 dark:group-hover:text-amber-400">Dokumen Teks Sederhana (.txt)</h4>
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400">Format teks ringkas Bab 1 - 35 cocok untuk aplikasi pembaca e-book.</p>
-                    </div>
-                </button>
-            </div>
-
-            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700 text-center">
-                <button onclick="closeDownloadModal()" class="text-xs text-slate-500 hover:underline">
-                    Batal
-                </button>
-            </div>
         </div>
-    </div>
+    </main>
 
-    <!-- FOOTER -->
-    <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm py-6">
-        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
-            <p class="text-xs text-slate-600 dark:text-slate-400">
-                <strong>Takdir dan Kesetiaan di Masjid Al Fajar</strong> &copy; Written by <span class="text-emerald-700 dark:text-emerald-400 font-semibold">JalonStarboy</span>.
-            </p>
-            <p class="text-[11px] text-slate-400 dark:text-slate-500">
-                Genre: Romance Islami &bull; Persahabatan &bull; Takdir &bull; Kesetiaan &bull; Perjuangan Menuju Halal
-            </p>
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 dark:text-slate-400 space-y-2">
+            <p>&copy; 2026 Novel Takdir dan Kesetiaan di Masjid Al Fajar. Karya JalonStarboy. Hak Cipta Dilindungi.</p>
+            <div class="flex items-center justify-center space-x-4">
+                <span class="inline-flex items-center text-emerald-600 dark:text-emerald-400 font-bold"><i class="fa-solid fa-circle-check mr-1"></i> 100% Berkualitas</span>
+                <span class="inline-flex items-center text-amber-500 font-bold"><i class="fa-solid fa-star mr-1"></i> Rating A+</span>
+            </div>
         </div>
     </footer>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- Settings Modal (Font Size) -->
+    <div id="settings-modal" class="fixed inset-0 z-50 bg-black/50 hidden backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-slate-200 dark:border-slate-700 space-y-6">
+            <div class="flex items-center justify-between">
+                <h3 class="font-bold text-lg">Pengaturan Tampilan</h3>
+                <button onclick="toggleSettingsModal()" class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-3">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Ukuran Huruf Teks</label>
+                <div class="grid grid-cols-3 gap-2">
+                    <button onclick="setFontSize('sm')" class="py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-medium hover:bg-emerald-50 dark:hover:bg-slate-700 transition">Kecil</button>
+                    <button onclick="setFontSize('base')" class="py-2.5 rounded-xl border border-emerald-500 bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-sm font-medium transition">Sedang</button>
+                    <button onclick="setFontSize('lg')" class="py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-lg font-medium hover:bg-emerald-50 dark:hover:bg-slate-700 transition">Besar</button>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Mode Baca</label>
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="setThemeMode('light')" class="py-2.5 rounded-xl bg-slate-100 text-slate-800 font-medium text-xs flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-sun text-amber-500"></i>
+                        <span>Terang</span>
+                    </button>
+                    <button onclick="setThemeMode('dark')" class="py-2.5 rounded-xl bg-slate-900 text-slate-100 font-medium text-xs flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-moon text-emerald-400"></i>
+                        <span>Gelap</span>
+                    </button>
+                </div>
+            </div>
+
+            <button onclick="toggleSettingsModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-xl text-sm transition">
+                Simpan & Tutup
+            </button>
+        </div>
+    </div>
+
+    <!-- Application Script -->
     <script>
-        // NOVEL DATA: 35 CHAPTERS
-        const chapters = [
+        // Database 35 Bab Novel "Takdir dan Kesetiaan di Masjid Al Fajar" oleh JalonStarboy
+        const chaptersData = [
             {
                 id: 1,
-                title: "Pertemuan di Tepi Sajadah",
-                content: `Hujan gerimis membungkus pelataran Masjid Al Fajar sore itu. Suara gemericik air yang jatuh dari talang berpadu dengan gema tilawah al-Qur'an dari dalam ruang utama. Rizal melangkah masuk dengan bahu sedikit basah, membawa tas ransel lusuh yang berisi buku-buku kuliah perancangan arsitektur.
-
-Di sudut serambi dekat rak kitab, seorang muslimah berkelembutan anggun sedang merapikan mushaf-mushaf yang berserakan. Aisyah, nama gadis itu, tidak sengaja menjatuhkan sebuah pembatas buku dari kayu ukir saat hendak berbalik.
-
-Rizal membungkuk memungutnya. "Afwan, ini milikmu?" ucap Rizal rendah, tetap menjaga pandangannya menunduk (*ghadul bashar*).
-
-Aisyah mengangguk pelan dari balik hijab selutut warna kremnya. "Jazakallahu khairan, Mas." 
-
-Hanya dua detik pertemuan itu terjadi, namun ketenangan Masjid Al Fajar menjadi saksi awal dari benih takdir yang belum mereka ketahui ujungnya.`
+                title: "Bab 1: Fajar Pertama di Masjid Al Fajar",
+                paragraphs: [
+                    "Suara azan subuh berkumandang merdu dari menara Masjid Al Fajar, membelah keheningan pagi di Desa Sukamaju. Udara sejuk pegunungan menyelimuti pelataran masjid yang bersih. Di sanalah Rizal, seorang pemuda berusia 26 tahun dengan peci putih lusuh namun rapi, membuka pintu utama masjid.",
+                    "Baginya, masjid bukan sekadar tempat salat, melainkan rumah kedua tempat ia mencurahkan segala harapan dan doa. Sebagai marbot sekaligus penggerak pemuda masjid, Rizal mendedikasikan hari-harinya untuk memakmurkan rumah Allah ini.",
+                    "Hari itu, langkah kaki lembut terdengar mendekati pelataran tempat wudu wanita. Aisyah, gadis salihah putri guru ngaji setempat, hadir dengan balutan jilbab abu-abu sederhana. Kehadirannya selalu membawa keteduhan, meskipun Rizal tidak pernah berani menatap wajahnya terlalu lama demi menjaga kesucian hati.",
+                    "Pertemuan singkat di pagi buta itu menjadi awal dari rajutan takdir yang tak pernah mereka duga sebelumnya. Di antara gemerincing air wudu dan kidung ayat suci Al-Qur'an, hati Rizal berbisik lirih dalam doa sepertiga malamnya."
+                ]
             },
             {
                 id: 2,
-                title: "Gema Suara Subuh",
-                content: `Setiap azan Subuh berkumandang di Masjid Al Fajar, Rizal hampir tidak pernah absen berada di barisan saf depan. Ia adalah pemuda pekerja keras yang membiayai kuliahnya sendiri dengan mengajar privat matematika dan menjadi juru gambar paruh waktu.
-
-Sementara Aisyah adalah relawan pengajar di TPQ Masjid Al Fajar. Suara Aisyah saat mengajari anak-anak mengaji di sore hari selalu membawa kedamaian tersendiri bagi siapapun yang mendengarnya dari kejauhan.
-
-Persahabatan mereka bermula dari kepengurusan remaja masjid. Rizal mengagumi keteguhan Aisyah yang santun namun tegas dalam memegang prinsip agama.`
+                title: "Bab 2: Senyum di Balik Kotak Amal",
+                paragraphs: [
+                    "Aktivitas sosial di Masjid Al Fajar selalu padat setiap hari Minggu. Aisyah memimpin divisi santunan anak yatim dan kaum dhuafa. Dengan telaten ia mendata bantuan sembako yang akan dibagikan kepada warga desa.",
+                    "Rizal datang membawa kardus-kardus tambahan dari gudang. Keringat membasahi keningnya, namun senyuman tulus tak pernah lepas dari wajahnya. Ketika tangan mereka tak sengaja hampir bersentuhan saat menyerahkan kotak donasi, debar jantung Rizal berdegup kencang.",
+                    "'Terima kasih banyak, Kang Rizal, atas bantuannya,' ucap Aisyah dengan suara lembut yang menyejukkan hati.",
+                    "'Sama-sama, Aisyah. Ini sudah kewajiban kita untuk saling meringankan beban saudara kita,' jawab Rizal sambil menundukkan pandangannya, menjaga kehormatan di antara mereka berdua."
+                ]
             },
             {
                 id: 3,
-                title: "Sahabat dalam Kebajikan",
-                content: `Bersama Hasan—sahabat dekat Rizal sejak masa sekolah—dan Sarah—karib Aisyah—keempatnya membentuk tim kepemudaan Masjid Al Fajar. 
-
-"Rizal itu kalau kerja ikhlas sekali, Sya," bisik Sarah suatu sore ketika mereka sedang menyiapkan paket santunan anak yatim.
-
-Aisyah tersenyum tipis tanpa menanggapi berlebihan. Namun di dalam hatinya, rasa hormat pada sosok Rizal yang berdikari dan taat beribadah kian bertumbuh. Persahabatan di antara mereka terjaga rapat dalam batasan syariat yang indah.`
+                title: "Bab 3: Ujian Niat dan Godaan Dunia",
+                paragraphs: [
+                    "Kehidupan tidak selamanya berjalan mulus. Di tengah keistiqamahan Rizal di masjid, datang tawaran pekerjaan menggiurkan dari seorang pengusaha kota besar bernama Pak Hartono. Gaji yang ditawarkan berlipat-lipat ganda.",
+                    "Namun, syaratnya adalah Rizal harus meninggalkan tugasnya di masjid dan ikut ke ibu kota. Rizal dihadapkan pada dilema besar antara kebutuhan finansial keluarganya dan kecintaannya pada Masjid Al Fajar.",
+                    "Malam itu, dalam keheningan sujud panjangnya, Rizal menangis memohon petunjuk. Ia tidak ingin dunia melalaikannya dari jalan Allah. Aisyah, yang tak sengaja mendengarkan percakapan ibunya tentang kegalauan Rizal, turut mendoakan pemuda itu dari kejauhan.",
+                    "'Ya Allah, tetapkanlah hati Rizal pada kebaikan, lindungi ia dari fitnah dunia,' doa Aisyah lirih di atas sajadah malamnya."
+                ]
             },
             {
                 id: 4,
-                title: "Ujian Kesederhanaan",
-                content: `Kehidupan Rizal tidaklah bergelimang harta. Sebagai anak yatim yang tinggal bersama ibunya di kontrakan kecil, Rizal harus menata mimpinya dengan cermat.
-
-Suatu hari, sepeda motor tua milik Rizal mogok di depan halaman masjid. Aisyah yang hendak pulang bersama ayahnya, Pak Farhan—seorang ustaz senior di kampung tersebut—melihat Rizal yang sibuk memperbaiki rantai yang putus.
-
-Pak Farhan menawari Rizal tumpangan. Di dalam mobil yang tenang itu, Rizal menjawab pertanyaan-pertanyaan Pak Farhan dengan kesantunan penuh kesederhanaan.`
+                title: "Bab 4: Pilihan Suci di Sepertiga Malam",
+                paragraphs: [
+                    "Fajar kembali menyapa. Setelah salat tahajud yang panjang, ketenangan merasuk ke dalam dada Rizal. Keputusan telah bulat diambilnya.",
+                    "Ia memilih untuk menolak tawaran kota besar dan tetap tinggal di desa demi merawat Masjid Al Fajar serta membimbing para remaja masjid. Bagi Rizal, kekayaan sejati adalah ketenangan hati yang dekat dengan Sang Pencipta.",
+                    "Ketika Aisyah mendengar kabar keputusan Rizal dari pengurus masjid, senyum bangga terukir di bibirnya. Kekaguman gadis itu pada keteguhan prinsip Rizal semakin dalam.",
+                    "Cinta mereka tumbuh bukan atas dasar rayuan gombal, melainkan atas dasar ketaatan dan kesamaan visi memperjuangkan ridanya."
+                ]
             },
             {
                 id: 5,
-                title: "Rintangan Pertama",
-                content: `Rizal mulai menyadari ada desir rasa di hatinya setiap kali mendengar nama Aisyah disebut. Namun rasa itu segera ditepisnya dengan kenyataan hidup. 
-
-Siapakah dirinya? Hanya seorang mahasiswa tingkat akhir yang belum berpenghasilan tetap. Sementara Aisyah adalah putri seorang ulama lokal yang dihormati dan lulusan terbaik sastra Arab.
-
-"Jangan minder sebelum berjuang, Zal. Allah tidak melihat seberapa kaya hartamu hari ini, tapi seberapa sungguh kesetiaanmu menjaga niat halal," tegas Hasan menyemangati sahabatnya itu.`
+                title: "Bab 5: Bayang-Bayang Restu Orang Tua",
+                paragraphs: [
+                    "Keluarga Aisyah tergolong terpandang di desa, sementara Rizal hidup sebagai pemuda mandiri yang sederhana. Perbedaan status sosial terkadang menjadi bisikan-bisikan sumbang di telinga tetangga.",
+                    "Ayah Aisyah, Kyai Mahmud, adalah sosok ulama kharismatik yang sangat selektif dalam memilih pendamping untuk putri kesayangannya. Beliau menginginkan seorang pria yang tidak hanya saleh, tetapi juga mampu membimbing dengan ilmu yang matang.",
+                    "Rizal menyadari batasan dirinya. Ia bertekad untuk memantaskan diri terlebih dahulu sebelum berani menghadap Kyai Mahmud secara jantan.",
+                    "Setiap bait doanya kini bertambah satu: 'Ya Allah, jika Aisyah adalah takdirku, dekatkan kami dalam jalan yang halal dan penuh berkah.'"
+                ]
             },
             {
                 id: 6,
-                title: "Impian Arsitek Masjid",
-                content: `Takdir membawa Rizal pada tugas akhir skripsi yang menantang: Merancang pemugaran dan perluasan Masjid Al Fajar tanpa menghilangkan nilai sejarahnya.
-
-Rizal menghabiskan malam-malamnya di perpustakaan masjid, menggambar desain kubah dan menara. Aisyah yang sering bertugas mencatat inventaris perpustakaan kadang menyediakan secangkir teh hangat di meja petugas tanpa banyak kata.
-
-Dukungan silently itu menjadi bahan bakar semangat bagi Rizal untuk menyelesaikan karya terbaiknya.`
+                title: "Bab 6: Senja di Teras Pesantren",
+                paragraphs: [
+                    "Sore itu gerimis turun membasahi halaman pesantren tempat Aisyah mengajar anak-anak mengaji. Rizal yang sedang mengantar pasokan buku-buku agama terjebak hujan di beranda.",
+                    "Mereka duduk berjarak di kursi kayu tua, menikmati secangkir teh hangat yang diseduh oleh pengurus pesantren.",
+                    "'Kang Rizal tidak menyesal menolak tawaran kerja kota?' tanya Aisyah memecah keheningan senja.",
+                    "'Tidak sama sekali, Aisyah. Rezeki Allah itu luas, bukan hanya tentang uang, tapi tentang keberkahan waktu dan kedamaian hati,' jawab Rizal mantap."
+                ]
             },
             {
                 id: 7,
-                title: "Bayang-Bayang Pria Lain",
-                content: `Ketenangan Rizal teruji ketika seorang pemuda bernama Rayhan—seorang pengusaha muda sukses putra kenalan Pak Farhan—mulai sering berkunjung ke rumah Aisyah.
-
-Isu bahwa Rayhan hendak meminang Aisyah berhembus cepat di kalangan pengurus masjid. Rizal merasa hatinya diuji hebat. Akankah ia mundur atau tetap mendoakan yang terbaik?
-
-Di sujud malamnya, Rizal berdoa: *'Ya Allah, jika Aisyah bukan takdirku, lapangkan hatiku. Namun jika ia ditakdirkan untukku, bimbinglah langkahku menuju halal.'*`
+                title: "Bab 7: Badai Fitnah dan Ujian Kesabaran",
+                paragraphs: [
+                    "Setiap perjuangan menuju kebaikan pasti memiliki rintangan. Muncul fitnah dari seseorang yang tidak suka dengan kedekatan program sosial Rizal dan Aisyah di desa.",
+                    "Desas-desus tidak sedap mulai beredar di antara warga desa, mencemarkan nama baik keduanya. Rizal merasa terpukul bukan karena dirinya, melainkan karena kehormatan Aisyah yang ikutikutan terseret.",
+                    "Namun, Aisyah menunjukkan kedewasaan iman yang luar biasa. Ia mengingatkan Rizal untuk bersabar dan menyerahkan segalanya kepada Allah.",
+                    "'Orang sabar kekasih Allah, Kang. Biarlah waktu dan kebenaran yang membuktikan semuanya,' ujar Aisyah menenangkan."
+                ]
             },
             {
                 id: 8,
-                title: "Musyawarah di Serambi",
-                content: `Aisyah sendiri berada dalam keraguan. Rayhan memang mapan secara materi, namun ada ketidakcocokan dalam visi dakwah dan kesederhanaan hidup yang Aisyah dambakan.
-
-Dalam musyawarah panitia kurban Masjid Al Fajar, Aisyah memperhatikan bagaimana Rizal memimpin dengan kelembutan, ketegasan, dan kejujuran tanpa pernah menyombongkan diri.
-
-Hati Aisyah semakin yakin bahwa kesalehan dan keteguhan iman adalah harga mutlak dalam memilih calon pelindung hidupnya.`
+                title: "Bab 8: Bukti Kebenaran di Masjid Al Fajar",
+                paragraphs: [
+                    "Kebenaran tidak akan pernah tertutupi selamanya. Saksi mata dan rekaman kegiatan masjid akhirnya membersihkan nama Rizal dan Aisyah dari segala tuduhan palsu.",
+                    "Warga desa yang sempat termakan isu merasa bersalah dan mendatangi Masjid Al Fajar untuk meminta maaf secara terbuka.",
+                    "Rizal dengan lapang dada memaafkan mereka semua. Peristiwa ini justru semakin mengangkat derajat dan kewibawaan Rizal di mata masyarakat.",
+                    "Kyai Mahmud yang mendengar kejadian tersebut mulai melirik Rizal dengan pandangan penuh apresiasi dan rasa hormat yang tinggi."
+                ]
             },
             {
                 id: 9,
-                title: "Jawaban Istikharah Aisyah",
-                content: `Malam demi malam Aisyah menggelar sajadahnya. Dalam istikharahnya, bayangan yang hadir bukanlah keindahan duniawi, melainkan suasana damai serambi Masjid Al Fajar dan sosok pria yang gigih berjuang menjaga kehormatannya.
-
-Aisyah memberanikan diri berbicara kepada ibunya bahwa ia belum siap menerima lamaran Rayhan karena merasa visi hidup mereka belum sejalan.`
+                title: "Bab 9: Langkah Berani Menuju Halal",
+                paragraphs: [
+                    "Melihat ketulusan dan keteguhan hati Rizal setelah melewati badai ujian, keberanian membuncah di dada pemuda itu.",
+                    "Didampingi oleh pamannya yang dituakan di desa, Rizal memberanikan diri bertamu ke kediaman Kyai Mahmud ba'da magrib.",
+                    "Jantung Rizal berdegup kencang saat Kyai Mahmud mempersilakan mereka duduk di ruang tamu yang dihiasi kaligrafi indah.",
+                    "Dengan suara tenang namun bergetar, Rizal menyampaikan niat tulusnya untuk meminang Aisyah."
+                ]
             },
             {
                 id: 10,
-                title: "Keberanian Rizal",
-                content: `Lulus dengan predikat *cumlaude* membawa Rizal diterima bekerja di sebuah perusahaan konsultan arsitektur terkemuka. Gaji pertamanya disisihkan untuk pengobatan ibunya dan tabungan niat mulia.
-
-Rizal menemui Hasan. "Aku ingin mengkhitbah Aisyah, Has. Tapi aku takut belum layak."
-
-"Niat baik tidak boleh ditunda jika engkau sudah berusaha, Rizal. Datanglah pada ayahnya secara jantan," jawab Hasan menguatkan.`
+                title: "Bab 10: Istikharah Kyai Mahmud",
+                paragraphs: [
+                    "Kyai Mahmud tidak langsung memberikan jawaban. Beliau tersenyum bijak dan meminta waktu tiga hari untuk melaksanakan salat istikharah memohon petunjuk Allah.",
+                    "Rizal dan keluarganya pulang dengan hati yang diliputi debar harap dan cemas bercampur tawakal.",
+                    "Di kamarnya, Aisyah terus berdoa memohon agar pilihan ayahnya adalah yang terbaik menurut rida Allah SWT.",
+                    "Hari-hari penantian terasa begitu panjang, diisi dengan zikir dan zikir penguat jiwa."
+                ]
             },
             {
                 id: 11,
-                title: "Silaturahmi Ke Rumah Ustaz Farhan",
-                content: `Dengan mengenakan baju koko putih bersih dan membawa ibunya, Rizal memberanikan diri menginjakkan kaki di kediaman Ustaz Farhan.
-
-Dengan suara bergetar namun tegas, Rizal menyampaikan niatnya: "Saya tidak membawa kemewahan hari ini, Ustaz. Namun saya berjanji akan menjaga Aisyah dengan al-Qur'an dan keringat halal saya."`
+                title: "Bab 11: Restu yang Menyejukkan Hati",
+                paragraphs: [
+                    "Hari ketiga tiba. Kyai Mahmud mengundang Rizal datang seorang diri ke teras belakang rumahnya yang menghadap kebun bunga mawar.",
+                    "Dengan senyuman hangat seorang ayah, Kyai Mahmud menepuk pundak Rizal. Beliau menyatakan menerima pinangan tersebut dengan restu penuh.",
+                    "Air mata kebahagiaan menetes di pipi Rizal. Sujud syukur seketika ia tunaikan di sudut ruangan rumah Kyai Mahmud.",
+                    "Kabar gembira itu menyebar dengan cepat ke seluruh pengurus Masjid Al Fajar, menyulut suka cita di antara para jamaah."
+                ]
             },
             {
                 id: 12,
-                title: "Pernyataan Syarat",
-                content: `Ustaz Farhan tersenyum penuh makna. Beliau telah lama mengamati keistiqamahan Rizal di Masjid Al Fajar.
-
-"Rizal, aku tidak meminta mahar berlimpah. Namun aku minta satu hal: Selesaikan hafalan Juz Amma dan bawa skripsi desain Masjid Al Fajar yang engkau buat sebagai bukti kesungguhanmu membela agama Allah," pinta Ustaz Farhan.`
+                title: "Bab 12: Pertemuan di Balik Tabir",
+                    paragraphs: [
+                    "Setelah resmi bertunangan secara syar'i namun tetap menjaga batasan pergaulan, Rizal dan Aisyah diizinkan berbicara sebentar dengan didampingi mahram.",
+                    "Di bawah naungan rindangnya pohon mangga di halaman masjid, mereka merencanakan masa depan.",
+                    "'Terima kasih telah menjaga kesucian penantian ini, Rizal,' ucap Aisyah malu-malu.",
+                    "'Dan terima kasih telah menjadi doa terindah di setiap sujudku, Aisyah,' balas Rizal tulus."
+                ]
             },
             {
                 id: 13,
-                title: "Malam-Malam Perjuangan",
-                content: `Persyaratan itu dibayar Rizal dengan perjuangan ekstra. Di tengah kesibukan kerjanya sebagai arsitek muda, Rizal tak pernah melepas mushafnya setiap malam.
-
-Aisyah selalu menyelipkan doa dalam setiap sujudnya agar Allah memudahkan jalan pemuda yang sedang berjuang demi menghalalkannya itu.`
+                title: "Bab 13: Persiapan Pernikahan yang Sederhana",
+                paragraphs: [
+                    "Pernikahan impian mereka bukanlah pesta mewah di gedung megah, melainkan akad suci yang diselenggarakan di serambi Masjid Al Fajar.",
+                    "Gotong royong warga desa terlihat sangat hangat. Ada yang menyumbang hasil panen, ada pula yang merias dekorasi masjid dengan dedaunan hijau dan bunga segar.",
+                    "Semua persiapan dilakukan dengan penuh keberkahan tanpa riba dan tanpa kemubaziran.",
+                    "Rizal bekerja keras siang malam merampungkan renovasi tempat wudu masjid sebagai hadiah pernikahan untuk Aisyah."
+                ]
             },
             {
                 id: 14,
-                title: "Badai Ujian Kesehatan",
-                content: `Di tengah perjuangannya, ibu Rizal jatuh sakit dan harus dirawat di rumah sakit. Seluruh tabungan Rizal teruras untuk biaya medis.
-
-Rizal hampir putus asa. Apakah ia harus menunda niat mulianya? Di sinilah nilai persahabatan diuji. Hasan dan rekan-rekan relawan Masjid Al Fajar bahu-membahu membantu Rizal.`
+                title: "Bab 14: Malam Bainai dan Doa Keluarga",
+                paragraphs: [
+                    "Malam menjelang akad, suasana rumah Aisyah dipenuhi keharuan. Ibu Aisyah memeluk putrinya sambil memberikan nasehat rumah tangga islami.",
+                    "Di masjid sebelah, Rizal bersama para pemuda mengadakan doa bersama dan zikir malam menyambut babak baru kehidupannya.",
+                    "Suasana desa terasa begitu damai, seolah bumi dan langit turut meridai ikatan suci yang akan segera disatukan.",
+                    "Malam itu menjadi malam terpanjang dalam penantian penuh kesabaran."
+                ]
             },
             {
                 id: 15,
-                title: "Kesetiaan Tanpa Syarat",
-                content: `Mendengar kabar musibah tersebut, Aisyah tidak berkecil hati. Justru kekagumannya pada Rizal kian bertambah melihat betapa berbaktinya Rizal pada ibunya.
-
-melalui Sarah, Aisyah menyampaikan pesan penguat: *"Kesetiaan diuji saat bergelombang, bukan saat laut tenang. Teruslah berjuang, Allah bersama orang-orang yang sabar."*`
+                title: "Bab 15: Hari Akad Nikah di Masjid Al Fajar",
+                paragraphs: [
+                    "Mentari pagi memancarkan sinarnya yang hangat. Masjid Al Fajar dipenuhi oleh para saksi, keluarga, dan jamaah desa.",
+                    "Rizal mengenakan busana muslim serba putih, duduk tegap di hadapan Kyai Mahmud yang bertindak langsung sebagai wali nikah.",
+                    "Dengan satu tarikan nafas yang lantang dan penuh keyakinan, Rizal mengucapkan ijab kabul.",
+                    "'Sah?' tanya penghulu kepada para saksi. 'Sah!' jawab mereka serempak disusul ucapan alhamdulillah yang bergemuruh."
+                ]
             },
             {
                 id: 16,
-                title: "Proyek Besar Pertama",
-                content: `Ketulusan berbuah manis. Perusahaan tempat Rizal bekerja memenangkan tender renovasi kawasan islami kota, dan Rizal ditunjuk sebagai ketua tim arsitek.
-
-Hasil kerjanya dipuji banyak pihak. Keuangan Rizal mulai membaik dan ibunya berangsur pulih dari sakitnya.`
+                title: "Bab 16: Air Mata Pengantin Baru",
+                paragraphs: [
+                    "Aisyah keluar dari ruang khusus pengantin wanita dengan anggun mengenakan gaun pernikahan putih berpadu jilbab syar'i yang elegan.",
+                    "Untuk pertama kalinya, Rizal menatap mata istrinya secara halal. Air mata haru menetes dari kedua mata mereka.",
+                    "Rizal melangkah mendekat, membacakan doa keberkahan di atas ubun-ubun Aisyah sambil meletakkan tangan kanannya dengan lembut.",
+                    "'Barakallahu laka wa baraka 'alaika wa jama'ah bainakuma fi khair,' ucap Rizal lirih penuh cinta."
+                ]
             },
             {
                 id: 17,
-                title: "Khitbah yang Diterima",
-                content: `Hari bahagia itu akhirnya tiba. Rizal kembali bertamu ke rumah Ustaz Farhan dengan membawa hafalan yang lancar dan rancangan maket masjid yang memukau.
-
-Dengan senyum haru, Ustaz Farhan dan Aisyah menerima lamaran resmi Rizal. Tangis syukur membuncah di ruangan kecil itu.`
+                title: "Bab 17: Resepsi Penuh Berkah",
+                paragraphs: [
+                    "Resepsi pernikahan dilangsungkan sederhana namun meriah di halaman Masjid Al Fajar. Tidak ada musik berlebihan, yang ada hanyalah lantunan nasyid islami dan senyum kebahagiaan para tamu undangan.",
+                    "Warga desa bergantian menyalami pengantin baru, memberikan doa restu agar rumah tangga mereka sakinah, mawaddah, wa rahmah.",
+                    "Hidangan tradisional tersaji melimpah, dinikmati bersama oleh kaya dan miskin tanpa ada perbedaan.",
+                    "Malam pertama mereka diisi dengan salat sunnah berjemaah dan tadarus Al-Qur'an bersama."
+                ]
             },
             {
                 id: 18,
-                title: "Persiapan Menuju Halal",
-                content: `Bulan-bulan berikutnya diisi dengan persiapan pernikahan yang sederhana namun penuh keberkahan. Rizal dan Aisyah sepakat menghindari pesta mewah yang berlebihan.
-
-Mereka lebih memilih menyalurkan sebagian anggaran nikah untuk renovasi fasilitas wudhu Masjid Al Fajar.`
+                title: "Bab 18: Awal Kehidupan Rumah Tangga",
+                paragraphs: [
+                    "Pagi pertama sebagai suami istri dimulai dengan suara alarm subuh dari Rizal. Ia membangunkan Aisyah dengan lembut, menyambut fajar bersama di saf pertama Masjid Al Fajar.",
+                    "Menyeduh teh hangat bersama di dapur mungil rumah baru mereka di dekat masjid menjadi rutinitas yang sangat menyenangkan.",
+                    "Aisyah melayani suaminya dengan penuh takzim, sementara Rizal memuliakan istrinya bagai ratu di istana kecil mereka.",
+                    "Kebahagiaan sederhana yang terpancar membuat tetangga iri dalam arti yang positif."
+                ]
             },
             {
                 id: 19,
-                title: "Ujian Terakhir Kesabaran",
-                content: `Seminggu menjelang akad, sebuah kesalahpahaman muncul akibat rumor tidak benar yang disebarkan pihak yang tidak menyukai hubungan mereka.
-
-Namun dengan kedewasaan, komunikasi yang terjaga melalui perantara, serta kepercayaan penuh, firnah itu berhasil dipatahkan tanpa menyisakan dendam.`
+                title: "Bab 19: Tantangan Ekonomi Pertama",
+                paragraphs: [
+                    "Kehidupan rumah tangga tidak selalu berjalan di atas bunga. Beberapa bulan setelah menikah, usaha kecil kerajinan tangan Rizal mengalami kelesuan pesanan.",
+                    "Tabungan mereka menipis. Aisyah dengan bijak menyarankan agar mereka memperbanyak sedekah subuh dan memperketat pengeluaran.",
+                    "'Allah Maha Pemberi Rezeki, Mas. Kita jalani ujian ini dengan sabar,' tutur Aisyah menyemangati suaminya yang sempat merasa cemas.",
+                    "Rizal bersyukur memiliki istri yang qana'ah dan senantiasa menjadi penyejuk di kala badai menerpa."
+                ]
             },
             {
                 id: 20,
-                title: "Hari Kebahagiaan di Masjid Al Fajar",
-                content: `Hari Jumat yang penuh berkah. Masjid Al Fajar dihiasi ornamen bunga putih yang harum melati.
-
-Rizal duduk berhadapan dengan Ustaz Farhan di depan saksi dan puluhan jamaah masjid yang menjadi saksi perjalanan panjang mereka.`
+                title: "Bab 20: Program Pemberdayaan Umat",
+                paragraphs: [
+                    "Di tengah kesusahan ekonomi, Rizal tidak tinggal diam. Bersama Aisyah, ia mendirikan koperasi syariah berbasis masjid untuk membantu ibu-ibu rumah tangga di desa.",
+                    "Program pelatihan menjahit dan pembuatan kue tradisional digalakkan. Usaha ini ternyata mendapat sambutan luar biasa dari warga desa.",
+                    "Perekonomian warga perlahan bangkit, dan Masjid Al Fajar semakin hidup sebagai pusat peradaban dan ekonomi umat.",
+                    "Rizal membuktikan bahwa kesulitan hidup dapat diatasi dengan kreativitas dan tawakal yang benar."
+                ]
             },
             {
                 id: 21,
-                title: "Janji Suci Akad Nikah",
-                content: `"Ananda Rizal Pratama bin Ahmad, saya nikahkan dan saya kawinkan engkau dengan putri kandung saya Aisyah Humaira..."
-
-Dengan satu tarikan napas mantap, Rizal mengucapkan: *"Saya terima nikahnya dan kawinnya Aisyah Humaira binti Farhan dengan mas kawin tersebut dibayar tunai!"*
-
-Kata 'Sah!' bergema menembus langit-langit Masjid Al Fajar.`
+                title: "Bab 21: Kehadiran Buah Hati",
+                paragraphs: [
+                    "Tahun kedua pernikahan mereka diwarnai berita gembira yang sangat dinantikan. Aisyah positif hamil.",
+                    "Rizal bersujud syukur begitu lama di lantai Masjid Al Fajar, menumpahkan rasa haru atas karunia besar dari Allah SWT.",
+                    "Selama masa kehamilan, Rizal menjadi suami yang sangat siaga. Ia membelikan makanan bergizi, memijat kaki istrinya yang lelah, dan rajin membacakan surah Maryam setiap malam.",
+                    "Ikatan cinta di antara mereka semakin erat dengan hadirnya jabang bayi dalam kandungan."
+                ]
             },
             {
                 id: 22,
-                title: "Senyum Pertama dalam Halal",
-                content: `Saat Aisyah mencium tangan Rizal untuk pertama kalinya sebagai suami, rasa canggung berpadu dengan keharuan mendalam.
-
-Tidak ada lagi jarak haram di antara mereka. Senyum Aisyah yang selama ini tertunduk malu kini hadir seutuhnya untuk Rizal.`
+                title: "Bab 22: Ujian Kesehatan Aisyah",
+                paragraphs: [
+                    "Di trimester akhir kehamilan, Aisyah mengalami komplikasi kesehatan yang membuat dokter menyarankan perawatan intensif di rumah sakit kabupaten.",
+                    "Rizal merasa dunianya seakan runtuh. Ia mondar-mandir antara menjaga istrinya di rumah sakit dan mengurus kegiatan di Masjid Al Fajar.",
+                    "Malam-malam di ruang rawat inap diisi dengan zikir tak putus dari bibir Rizal sambil menggenggam jemari Aisyah yang pucat.",
+                    "'Jangan tinggalkan aku, Aisyah,' bisik Rizal lirih penuh air mata."
+                ]
             },
             {
                 id: 23,
-                title: "Kehidupan Baru di Rumah Sederhana",
-                content: `Rizal memboyong Aisyah ke rumah kontrakan kecil yang telah dirapikannya sendiri. Meski sederhana, rumah itu terasa hangat dengan hiasan kaligrafi karya Aisyah dan maket arsitektur karya Rizal.`
+                title: "Bab 23: Keajaiban Doa di Sepertiga Malam",
+                paragraphs: [
+                    "Malam itu, kondisi Aisyah sempat kritis. Dokter mempersiapkan tindakan operasi darurat.",
+                    "Rizal keluar menuju musala rumah sakit, mengambil wudu, lalu melaksanakan salat hajat dua rakaat. Dalam sujud terakhirnya, ia menangis sekuat tenaga menyerahkan keselamatan istri dan buah hatinya kepada Sang Pemilik Nyawa.",
+                    "Keajaiban terjadi. Menjelang fajar, monitor menunjukkan kondisi stabil dan dokter mengabarkan operasi berjalan sukses.",
+                    "Tangis syukur meledak di pelukan Rizal dan keluarga besar yang datang mendampingi."
+                ]
             },
             {
                 id: 24,
-                title: "Keberkahan Salat Berjamaah",
-                content: `Setiap malam, suara merdu Rizal memimpin salat berjamaah di rumah mereka. Aisyah mengaminkan doa-doa suaminya dengan mata berembun penuh kesyukuran.`
+                title: "Bab 24: Lahirnya Sang Buah Hati",
+                paragraphs: [
+                    "Tangisan bayi mungil yang nyaring memecah keheningan pagi di ruang bersalin. Lahir seorang bayi laki-laki yang tampan dan sehat.",
+                    "Rizal segera mengazankan bayi tersebut di telinga kanannya dengan suara bergetar penuh haru.",
+                    "Mereka memberi nama bayi itu Muhammad Al Fatih, simbol perjuangan dan kemenangan iman dalam rumah tangga mereka.",
+                    "Aisyah tersenyum lemah namun bahagia, memeluk buah hati hasil dari kesabaran panjang mereka."
+                ]
             },
             {
                 id: 25,
-                title: "Mengabdi Kembali pada Masjid",
-                content: `Sebagai bentuk rasa syukur, Rizal dan Aisyah tetap aktif memakmurkan Masjid Al Fajar. Rizal mengarsiteki pembangunan perpustakaan baru, sementara Aisyah memperluas kelas pengajian muslimah.`
+                title: "Bab 25: Ayah dan Ibu Teladan",
+                paragraphs: [
+                    "Kehadiran Al Fatih membawa warna baru di rumah tangga Rizal dan Aisyah. Rizal menjadi ayah yang telaten membantu mengganti popok dan menimang bayi di malam hari.",
+                    "Aisyah tetap aktif membimbing majelis taklim ibu-ibu sambil mengasuh buah hati dengan penuh kasih sayang.",
+                    "Masjid Al Fajar kini sering diwarnai tawa riang anak-anak kecil yang ikut meramaikan saf belakang saat salat berjemaah.",
+                    "Keluarga kecil ini menjadi role model keharmonisan keluarga islami di desa."
+                ]
             },
             {
                 id: 26,
-                title: "Kabar Bahagia",
-                content: `Dua tahun mengarungi bahtera rumah tangga yang harmonis, Aisyah memberikan kejutan manis. Sebuah alat tes kehamilan garis dua diletakkan di atas sajadah Rizal usai salat Subuh.`
+                title: "Bab 26: Tantangan Pendidikan Zaman Modern",
+                paragraphs: [
+                    "Seiring bertambahnya usia Al Fatih dan anak-anak remaja di desa, tantangan zaman modern mulai masuk membawa pengaruh gadget dan pergaulan bebas.",
+                    "Rizal tidak tinggal diam. Ia memprakarsai gerakan 'Kampung Bebas Gadget saat Magrib' dan mendirikan rumah tahfiz di serambi masjid.",
+                    "Aisyah memimpin kelas parenting bagi para ibu agar paham cara mendidik anak di era digital tanpa meninggalkan nilai-nilai akhlak mulia.",
+                    "Desa Sukamaju menjadi percontohan nasional dalam pembinaan generasi muda berbasis masjid."
+                ]
             },
             {
                 id: 27,
-                title: "Menjaga Buah Hati",
-                content: `Kehamilan Aisyah menambah kebahagiaan keluarga kecil mereka. Rizal menjadi suami yang semakin siaga, menggantikan tugas-tugas rumah tangga tanpa pernah mengeluh.`
+                title: "Bab 27: Penghargaan Nasional untuk Masjid Al Fajar",
+                paragraphs: [
+                    "Kerja keras Rizal, Aisyah, dan seluruh warga desa terbayar lunas ketika Masjid Al Fajar dinobatkan sebagai Masjid Teladan Tingkat Nasional.",
+                    "Menteri Agama hadir langsung menyerahkan penghargaan di halaman masjid yang kini telah direnovasi megah namun tetap mempertahankan kesederhanaannya.",
+                    "Dalam pidatonya, Rizal dengan rendah hati mendedikasikan penghargaan tersebut untuk istrinya tercinta, Aisyah, dan seluruh jamaah yang setia memakmurkan masjid.",
+                    "Aisyah yang duduk di barisan penonton meneteskan air mata bangga atas pencapaian suaminya."
+                ]
             },
             {
                 id: 28,
-                title: "Karya Arsitektur Monumental",
-                content: `Proyek rancangan perluasan Masjid Al Fajar yang digarap Rizal akhirnya resmi dimulai pemancangan tiang pertamanya. Mimpi masa kuliah Rizal kini menjadi kenyataan di depan matanya sendiri.`
+                title: "Bab 28: Badai Kecil dalam Rumah Tangga",
+                paragraphs: [
+                    "Kesibukan Rizal yang semakin padat sebagai tokoh teladan nasional sempat memicu kesalahpahaman kecil dengan Aisyah.",
+                    "Aisyah merasa kurang mendapatkan waktu berkualitas bersama suami di tengah setumpuk undangan ceramah dan rapat sosial.",
+                    "Malam itu, alih-alih bertengkar, mereka duduk berdua setelah anak tidur. Dengan kepala dingin dan hati lapang, Rizal meminta maaf dan mengatur ulang jadwal kesibukannya.",
+                    "'Suami hebat adalah suami yang tetap memprioritaskan keluarganya di rumah,' ucap Aisyah lembut."
+                ]
             },
             {
                 id: 29,
-                title: "Kelahiran Sang Buah Hati",
-                content: `Tangis bayi mungil memecah keheningan malam rumah sakit. Aisyah melahirkan seorang putra yang sehat. Rizal membisikkan azan merdu di telinga kanan buah hati mereka.`
+                title: "Bab 29: Umroh Bersama Menuju Baitullah",
+                paragraphs: [
+                    "Berkat kerja sama dengan lembaga amal, Rizal dan Aisyah mendapatkan hadiah keberangkatan umroh gratis atas dedikasi dakwah mereka.",
+                    "Sujud syukur mereka tunaikan di depan Kakbah. Rizal memegang erat tangan Aisyah di tanah suci, memanjatkan doa agar cinta mereka disatukan hingga ke surga jannah.",
+                    "Momen di Madinah dan Mekkah memperkuat ikatan rohani di antara pasangan suami istri ini.",
+                    "Mereka pulang membawa energi dakwah yang semakin membara untuk desa tercinta."
+                ]
             },
             {
                 id: 30,
-                title: "Muhammad Al Fajar",
-                content: `Putra pertama mereka diberi nama Muhammad Al Fajar, sebagai pengingat akan tempat suci di mana takdir cinta orang tuanya pertama kali dipertemukan oleh Allah.`
+                title: "Bab 30: Regenerasi Pemuda Masjid",
+                paragraphs: [
+                    "Rizal sadar bahwa estafet kepemimpinan masjid harus segera diserahkan kepada generasi muda yang lebih segar.",
+                    "Ia mulai melatih pemuda-pemuda desa untuk mengelola administrasi, keuangan, dan kegiatan sosial Masjid Al Fajar secara profesional.",
+                    "Aisyah juga melatih kader-kader putri untuk melanjutkan pengajaran TPA anak-anak.",
+                    "Melihat semangat para pemuda penerus membuat Rizal merasa tenang dan bahagia."
+                ]
             },
             {
                 id: 31,
-                title: "Persahabatan yang Tak Memudar",
-                content: `Hasan dan Sarah yang juga telah menikah sering berkunjung. Kebersamaan empat sahabat ini tetap terjalin erat dalam bingkai ukhuwah islamiyah yang penuh keteladanan.`
+                title: "Bab 31: Ujian Kesehatan Kyai Mahmud",
+                paragraphs: [
+                    "Di tengah kebahagiaan dakwah, ujian datang ketika Kyai Mahmud jatuh sakit akibat usia senja.",
+                    "Rizal dan Aisyah bergantian merawat ayah tercinta dengan penuh ketulusan dan bakti seorang anak.",
+                    "Rizal menyuapi mertuanya dengan sabar, menunjukkan bahwa baktinya kepada orang tua tidak kalah besar dibandingkan baktinya pada masjid.",
+                    "Kyai Mahmud sering mendoakan keberkahan tiada henti untuk rumah tangga putri dan menantunya itu."
+                ]
             },
             {
                 id: 32,
-                title: "Peresmian Wajah Baru Masjid",
-                content: `Masjid Al Fajar kini berdiri megah dan indah hasil rancangan Rizal. Ribuan jamaah hadir dalam peresmiannya. Rizal tak henti menyunggingkan syukur atas nikmat bakat yang diberikan-Nya.`
+                title: "Bab 32: Pulangnya Sang Guru Bangsa",
+                paragraphs: [
+                    "Takdir berkata lain. Kyai Mahmud berpulang ke rahmatullah dengan tenang usai menunaikan salat dhuha di kamarnya.",
+                    "Seluruh desa berduka. Ribuan pelayat hadir mengantarkan jenazah ulama besar tersebut ke tempat peristirahatan terakhir.",
+                    "Rizal memimpin langsung salat jenazah dan ikut turun ke liang lafad menguburkan ayah mertuanya.",
+                    "Aisyah bersabar dan ikhlas melepas kepergian ayahnya dengan doa-doa terbaik yang terus mengalir."
+                ]
             },
             {
                 id: 33,
-                title: "Menua Bersama dalam Ketaatan",
-                content: `Tahun demi tahun berganti. Kesetiaan Rizal dan Aisyah tidak pernah pudar oleh waktu. Cinta mereka makin matang, didasari oleh ketakwaan bukan sekadar kepuasan fisik semata.`
+                title: "Bab 33: Meneruskan Estafet Dakwah",
+                paragraphs: [
+                    "Sepeninggal Kyai Mahmud, amanah kepemimpinan pesantren dan majelis taklim kini diemban oleh Rizal atas permintaan para santri dan tokoh masyarakat.",
+                    "Rizal memikul beban dakwah yang lebih besar dengan didampingi Aisyah yang setia di sampingnya.",
+                    "Mereka mendirikan yayasan sosial atas nama Kyai Mahmud untuk membantu anak-anak yatim piatu di seluruh kabupaten.",
+                    "Semangat perjuangan Islam terus menyala di Desa Sukamaju."
+                ]
             },
             {
                 id: 34,
-                title: "Warisan Keteladanan",
-                content: `Kisah perjuangan halal Rizal dan Aisyah menjadi inspirasi bagi banyak pemuda-pemudi di lingkungan Masjid Al Fajar tentang indahnya pacaran setelah menikah dan menjaga kesucian niat.`
+                title: "Bab 34: Senja Indah di Pelataran Masjid",
+                paragraphs: [
+                    "Beberapa tahun berlalu. Al Fatih telah tumbuh menjadi hafiz Al-Qur'an cilik yang cerdas. Sore hari menjelang magrib, Rizal dan Aisyah duduk berdua di bangku taman pelataran Masjid Al Fajar.",
+                    "Menatap cucuran air mancur mini dan anak-anak yang riang menghafal ayat suci di teras masjid.",
+                    "'Ingatkah kamu saat pertama kali kita bertemu di tempat wudu ini, Aisyah?' tanya Rizal tersenyum.",
+                    "'Mana mungkin aku lupa, Mas. Tempat di mana takdir mempertemukan dua hati dalam ikatan iman,' jawab Aisyah mesra."
+                ]
             },
             {
                 id: 35,
-                title: "Takdir Abadi Hingga Jannah",
-                content: `Sore itu, di serambi Masjid Al Fajar yang sama tempat mereka pertama kali bertemu, Rizal dan Aisyah duduk bersama melihat buah hati mereka berlari kecil di pelataran.
-
-"Terima kasih telah menungguku dengan sabar dan mendoakanku dalam diam, Aisyah," bisik Rizal lembut.
-
-Aisyah tersenyum menatap suaminya. "Bukan aku yang menunggu, Mas. Tapi takdir Allah yang telah menuliskan nama kita di Luh Mahfuz bahkan sebelum dunia ini ada."
-
-Kisah cinta mereka berawal dari Masjid Al Fajar, dan bertekad akan terus berlanjut hingga ke Jannah-Nya.
-
----
-**SELESAI**
-*Terima kasih telah membaca karya JalonStarboy.*`
+                title: "Bab 35: Janji Suci Menuju Jannah (Tamat)",
+                paragraphs: [
+                    "Kisah cinta Rizal dan Aisyah bukan tentang kemewahan dunia, melainkan tentang kesetiaan menjaga iman, kesabaran dalam menghadapi ujian, dan ketulusan doa di sepertiga malam.",
+                    "Masjid Al Fajar tetap berdiri kokoh sebagai saksi bisu perjalanan cinta sejati mereka hingga akhir hayat.",
+                    "Di bawah naungan rida Allah SWT, mereka berjanji untuk terus bersama saling membimbing menuju surga-Nya.",
+                    "Sebuah kisah romansa islami yang abadi, menutup lembar demi lembar perjalanan hidup dengan husnul khatimah. (Tamat)"
+                ]
             }
         ];
 
-        // STATE VARIABLES
-        let currentChapter = 1;
-        let fontSizePercent = 100; // Default 100%
-        let currentFontFamily = 'serif';
-        let readHistory = JSON.parse(localStorage.getItem('novel_read_history') || '[]');
+        let currentChapterId = 1;
+        let currentFontSize = 'base';
 
-        // INITIALIZATION
+        // Initialize App on Window Load
         window.onload = function() {
+            renderQuickGrid();
             renderChapterList();
-            
-            // Check if user previously saved chapter
-            const savedChapter = parseInt(localStorage.getItem('novel_last_chapter'));
-            if (savedChapter && savedChapter >= 1 && savedChapter <= 35) {
-                // Keep home screen, but update UI
-            }
-
-            // Check Dark Mode Preference
-            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-                document.getElementById('themeIcon').className = 'fa-solid fa-sun text-lg';
-            } else {
-                document.documentElement.classList.remove('dark');
-                document.getElementById('themeIcon').className = 'fa-solid fa-moon text-lg';
-            }
-
-            // Scroll progress listener
-            window.addEventListener('scroll', updateProgressBar);
+            checkSavedTheme();
         };
 
-        // RENDER CHAPTER LIST IN SIDEBAR
-        function renderChapterList(filterText = '') {
-            const container = document.getElementById('chapterListContainer');
-            container.innerHTML = '';
-
-            const filtered = chapters.filter(c => 
-                c.title.toLowerCase().includes(filterText.toLowerCase()) || 
-                `bab ${c.id}`.includes(filterText.toLowerCase())
-            );
-
-            if (filtered.length === 0) {
-                container.innerHTML = `<div class="text-center py-6 text-xs text-slate-400">Bab tidak ditemukan</div>`;
-                return;
-            }
-
-            filtered.forEach(ch => {
-                const isRead = readHistory.includes(ch.id);
-                const isActive = (currentChapter === ch.id && !document.getElementById('readerView').classList.contains('hidden'));
-
+        // Render Quick Chapter Grid on Home
+        function renderQuickGrid() {
+            const grid = document.getElementById('quick-chapter-grid');
+            grid.innerHTML = '';
+            chaptersData.forEach(ch => {
                 const btn = document.createElement('button');
-                btn.onclick = () => readChapter(ch.id);
-                btn.className = `w-full text-left p-2.5 rounded-xl text-xs flex items-center justify-between transition-all ${
-                    isActive 
-                    ? 'bg-emerald-700 text-white font-bold shadow-md' 
-                    : 'hover:bg-slate-100 dark:hover:bg-slate-700/60 text-slate-700 dark:text-slate-200'
-                }`;
-
-                btn.innerHTML = `
-                    <div class="flex items-center space-x-2.5 min-w-0 pr-2">
-                        <span class="w-6 h-6 rounded-lg ${isActive ? 'bg-amber-400 text-slate-900' : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300'} flex items-center justify-center font-mono font-bold text-[10px] flex-shrink-0">
-                            ${ch.id}
-                        </span>
-                        <span class="truncate ${isActive ? 'text-white' : ''}">${ch.title}</span>
-                    </div>
-                    ${isRead && !isActive ? '<i class="fa-solid fa-circle-check text-emerald-500 text-xs"></i>' : ''}
-                `;
-
-                container.appendChild(btn);
+                btn.className = 'h-10 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-emerald-600 hover:text-white dark:hover:bg-emerald-600 text-xs font-bold transition flex items-center justify-center';
+                btn.innerText = ch.id;
+                btn.onclick = () => openChapter(ch.id);
+                grid.appendChild(btn);
             });
         }
 
-        // FILTER CHAPTERS
-        function filterChapters() {
-            const val = document.getElementById('searchBab').value;
-            renderChapterList(val);
-        }
-
-        // READ SPECIFIC CHAPTER
-        function readChapter(id) {
-            if (id < 1 || id > 35) return;
-            currentChapter = id;
-
-            // Mark as read in history
-            if (!readHistory.includes(id)) {
-                readHistory.push(id);
-                localStorage.setItem('novel_read_history', JSON.stringify(readHistory));
+        // Render Sidebar Chapter List
+        function renderChapterList(filteredList = chaptersData) {
+            const listContainer = document.getElementById('chapter-list');
+            listContainer.innerHTML = '';
+            
+            if (filteredList.length === 0) {
+                listContainer.innerHTML = '<p class="text-xs text-center text-slate-400 py-4">Bab tidak ditemukan</p>';
+                return;
             }
-            localStorage.setItem('novel_last_chapter', id);
 
-            const chapter = chapters.find(c => c.id === id);
-
-            // Hide Home, Show Reader
-            document.getElementById('homeView').classList.add('hidden');
-            document.getElementById('readerView').classList.remove('hidden');
-
-            // Set Content
-            document.getElementById('readerChapterNumber').innerText = `BAB ${chapter.id} DARI 35`;
-            document.getElementById('readerChapterTitle').innerText = chapter.title;
-
-            // Format Paragraphs
-            const paragraphs = chapter.content.split('\n\n').map(p => `<p class="mb-4">${p.replace(/\n/g, '<br>')}</p>`).join('');
-            document.getElementById('readerContent').innerHTML = paragraphs;
-
-            // Update Nav Buttons
-            document.getElementById('btnPrevBab').disabled = (id === 1);
-            document.getElementById('btnPrevBab').style.opacity = (id === 1) ? '0.4' : '1';
-
-            document.getElementById('btnNextBab').disabled = (id === 35);
-            document.getElementById('btnNextBab').style.opacity = (id === 35) ? '0.4' : '1';
-
-            // Close mobile sidebar if open
-            closeSidebar();
-
-            // Refresh Chapter List Active State
-            renderChapterList();
-
-            // Scroll To Top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            filteredList.forEach(ch => {
+                const item = document.createElement('button');
+                item.className = `w-full text-left px-4 py-3 rounded-xl text-xs sm:text-sm font-medium transition flex items-center justify-between ${ch.id === currentChapterId ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30 font-bold' : 'hover:bg-emerald-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200'}`;
+                item.innerHTML = `<span>Bab ${ch.id}: ${ch.title.split(': ')[1]}</span> <i class="fa-solid fa-chevron-right text-xs opacity-60"></i>`;
+                item.onclick = () => {
+                    openChapter(ch.id);
+                    toggleSidebar();
+                };
+                listContainer.appendChild(item);
+            });
         }
 
-        // SHOW CHAPTER LIST / HOME
-        function showChapterList() {
-            document.getElementById('homeView').classList.remove('hidden');
-            document.getElementById('readerView').classList.add('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            renderChapterList();
+        // Filter Chapters in Sidebar
+        function filterChapters(query) {
+            const q = query.toLowerCase();
+            const filtered = chaptersData.filter(ch => 
+                ch.title.toLowerCase().includes(q) || ch.id.toString().includes(q)
+            );
+            renderChapterList(filtered);
         }
 
-        // NAVIGATE PREV / NEXT
+        // Open Chapter Reader View
+        function openChapter(id) {
+            currentChapterId = id;
+            const chapter = chaptersData.find(c => c.id === id);
+            if (!chapter) return;
+
+            document.getElementById('home-view').classList.add('hidden');
+            document.getElementById('reader-view').classList.remove('hidden');
+
+            document.getElementById('reader-chapter-badge').innerText = `Bab ${chapter.id} dari 35`;
+            document.getElementById('reader-title').innerText = chapter.title;
+
+            const contentContainer = document.getElementById('reader-content');
+            contentContainer.innerHTML = '';
+            chapter.paragraphs.forEach(p => {
+                const para = document.createElement('p');
+                para.className = 'leading-relaxed indent-8';
+                para.innerText = p;
+                contentContainer.appendChild(para);
+            });
+
+            // Update Navigation Button States
+            document.getElementById('prev-btn').disabled = id === 1;
+            document.getElementById('prev-btn').style.opacity = id === 1 ? '0.5' : '1';
+            document.getElementById('next-btn').disabled = id === 35;
+            document.getElementById('next-btn').style.opacity = id === 35 ? '0.5' : '1';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            updateActiveSidebarItem();
+        }
+
+        // Navigate Previous / Next Chapter
         function navigateChapter(direction) {
-            const target = currentChapter + direction;
-            if (target >= 1 && target <= 35) {
-                readChapter(target);
+            const newId = currentChapterId + direction;
+            if (newId >= 1 && newId <= 35) {
+                openChapter(newId);
             }
         }
 
-        // FONT SIZE CONTROLS
-        function changeFontSize(delta) {
-            // Delta: +1 or -1
-            if (delta === 1 && fontSizePercent < 160) {
-                fontSizePercent += 10;
-            } else if (delta === -1 && fontSizePercent > 70) {
-                fontSizePercent -= 10;
-            }
-            applyFontSize();
+        // Show Home View
+        function showHome() {
+            document.getElementById('reader-view').classList.add('hidden');
+            document.getElementById('home-view').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function resetFontSize() {
-            fontSizePercent = 100;
-            applyFontSize();
-        }
-
-        function applyFontSize() {
-            const content = document.getElementById('readerContent');
-            content.style.fontSize = `${fontSizePercent}%`;
-            
-            // Update labels
-            document.getElementById('btnResetFont').innerText = `${fontSizePercent}%`;
-            document.getElementById('mobileFontScale').innerText = `${fontSizePercent}%`;
-        }
-
-        // FONT FAMILY CONTROL
-        function setFontFamily(font) {
-            const content = document.getElementById('readerContent');
-            content.classList.remove('font-reading-sans', 'font-reading-serif', 'font-reading-arabic');
-            
-            if (font === 'sans') content.classList.add('font-reading-sans');
-            else if (font === 'arabic') content.classList.add('font-reading-arabic');
-            else content.classList.add('font-reading-serif');
-            
-            currentFontFamily = font;
-        }
-
-        // DARK MODE TOGGLE
-        function toggleDarkMode() {
-            const isDark = document.documentElement.classList.toggle('dark');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            document.getElementById('themeIcon').className = isDark ? 'fa-solid fa-sun text-lg' : 'fa-solid fa-moon text-lg';
-        }
-
-        // SIDEBAR DRAWER TOGGLE
+        // Toggle Sidebar Drawer
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            const backdrop = document.getElementById('sidebarBackdrop');
-            const isOpen = !sidebar.classList.contains('translate-x-full');
+            const overlay = document.getElementById('sidebar-overlay');
+            const isOpen = sidebar.classList.contains('translate-x-0');
 
             if (isOpen) {
-                closeSidebar();
+                sidebar.classList.remove('translate-x-0');
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
             } else {
-                sidebar.classList.remove('translate-x-full');
-                backdrop.classList.remove('hidden');
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('translate-x-0');
+                overlay.classList.remove('hidden');
             }
         }
 
-        function closeSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const backdrop = document.getElementById('sidebarBackdrop');
-            sidebar.classList.add('translate-x-full');
-            backdrop.classList.add('hidden');
+        // Update Active Item in Sidebar
+        function updateActiveSidebarItem() {
+            renderChapterList();
         }
 
-        // PROGRESS BAR
-        function updateProgressBar() {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById('progressBar').style.width = (scrolled || 0) + '%';
+        // Toggle Settings Modal
+        function toggleSettingsModal() {
+            const modal = document.getElementById('settings-modal');
+            modal.classList.toggle('hidden');
         }
 
-        // DOWNLOAD MODAL CONTROLS
-        function openDownloadModal() {
-            document.getElementById('downloadModal').classList.remove('hidden');
+        // Set Font Size
+        function setFontSize(size) {
+            currentFontSize = size;
+            const content = document.getElementById('reader-content');
+            content.classList.remove('text-sm', 'text-base', 'text-lg', 'text-xl');
+            if (size === 'sm') content.classList.add('text-sm');
+            if (size === 'base') content.classList.add('text-base');
+            if (size === 'lg') content.classList.add('text-lg');
+            showToast('Ukuran font diperbarui');
         }
 
-        function closeDownloadModal() {
-            document.getElementById('downloadModal').classList.add('hidden');
+        // Dark / Light Mode Toggle
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.className = 'fa-solid fa-moon';
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                icon.className = 'fa-solid fa-sun';
+                localStorage.setItem('theme', 'dark');
+            }
         }
 
-        // DOWNLOAD AS STANDALONE HTML FILE
-        function downloadAsHTML() {
+        function setThemeMode(mode) {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (mode === 'dark') {
+                html.classList.add('dark');
+                icon.className = 'fa-solid fa-sun';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.classList.remove('dark');
+                icon.className = 'fa-solid fa-moon';
+                localStorage.setItem('theme', 'light');
+            }
+            toggleSettingsModal();
+            showToast('Tema diubah ke ' + mode);
+        }
+
+        function checkSavedTheme() {
+            const saved = localStorage.getItem('theme');
+            const icon = document.getElementById('theme-icon');
+            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                icon.className = 'fa-solid fa-sun';
+            } else {
+                document.documentElement.classList.remove('dark');
+                icon.className = 'fa-solid fa-moon';
+            }
+        }
+
+        // Download Website File Feature
+        function downloadWebsite() {
             const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
             const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = "Takdir_dan_Kesetiaan_di_Masjid_Al_Fajar_JalonStarboy.html";
+            a.download = 'Takdir_dan_Kesetiaan_di_Masjid_Al_Fajar_JalonStarboy.html';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            closeDownloadModal();
+            showToast('File HTML berhasil diunduh untuk offline!');
         }
 
-        // DOWNLOAD AS PLAIN TEXT E-BOOK (.txt)
-        function downloadAsTXT() {
-            let txt = "====================================================\n";
-            txt += "TAKDIR DAN KESETIAAN DI MASJID AL FAJAR\n";
-            txt += "Karya: JalonStarboy\n";
-            txt += "Genre: Romance Islami • Persahabatan • Takdir • Kesetiaan • Perjuangan Menuju Halal\n";
-            txt += "Tokoh Utama: Rizal & Aisyah\n";
-            txt += "====================================================\n\n";
-
-            chapters.forEach(ch => {
-                txt += `----------------------------------------------------\n`;
-                txt += `BAB ${ch.id}: ${ch.title.toUpperCase()}\n`;
-                txt += `----------------------------------------------------\n\n`;
-                txt += `${ch.content}\n\n\n`;
-            });
-
-            txt += "====================================================\n";
-            txt += "TAMAT - Terima kasih telah membaca novel ini.\n";
-            txt += "====================================================\n";
-
-            const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = "Novel_Takdir_dan_Kesetiaan_JalonStarboy.txt";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            closeDownloadModal();
+        // Toast Notification Helper
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
         }
     </script>
 </body>
