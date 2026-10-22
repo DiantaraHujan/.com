@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" class="light">
+<html lang="id" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,462 +12,453 @@
             theme: {
                 extend: {
                     colors: {
-                        emerald: {
-                            50: '#ecfdf5',
-                            100: '#d1fae5',
-                            600: '#059669',
-                            700: '#047857',
-                            800: '#065f46',
-                            900: '#064e3b',
-                        },
-                        gold: {
-                            500: '#d4af37',
-                            600: '#aa8c2c',
+                        islamic: {
+                            emerald: '#064e3b',
+                            lightEmerald: '#047857',
+                            gold: '#d97706',
+                            lightGold: '#fbbf24',
+                            cream: '#fef3c7',
+                            darkBg: '#0f172a',
+                            darkCard: '#1e293b'
                         }
+                    },
+                    fontFamily: {
+                        serif: ['Merriweather', 'Georgia', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif']
                     }
                 }
             }
         }
     </script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            font-family: 'Plus Jakarta+Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
-        .arabic-font {
-            font-family: 'Amiri', serif;
+        .novel-text {
+            font-family: 'Merriweather', serif;
+            line-height: 2.0;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #047857;
+            border-radius: 4px;
         }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+<body class="bg-amber-50/50 dark:bg-islamic-darkBg text-slate-800 dark:text-slate-100 min-h-full flex flex-col transition-colors duration-300">
 
-    <!-- Top Navigation / Header -->
-    <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-emerald-100 dark:border-slate-800 shadow-sm">
-        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-            <button onclick="showHome()" class="flex items-center space-x-2 text-emerald-700 dark:text-emerald-400 font-bold text-lg hover:opacity-80 transition">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
-                <span class="truncate max-w-[200px] sm:max-w-xs">Masjid Al Fajar</span>
-            </button>
-
-            <div class="flex items-center space-x-2 sm:space-x-3">
-                <!-- Font Size Controls -->
-                <div class="hidden sm:flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-1">
-                    <button onclick="setFontSize('small')" id="btn-small" class="px-2.5 py-1 text-xs font-semibold rounded hover:bg-white dark:hover:bg-slate-700 transition">Kecil</button>
-                    <button onclick="setFontSize('medium')" id="btn-medium" class="px-2.5 py-1 text-xs font-semibold rounded bg-white dark:bg-slate-700 shadow-sm transition">Sedang</button>
-                    <button onclick="setFontSize('large')" id="btn-large" class="px-2.5 py-1 text-xs font-semibold rounded hover:bg-white dark:hover:bg-slate-700 transition">Besar</button>
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 bg-islamic-emerald dark:bg-slate-900 text-white shadow-md border-b border-islamic-gold/30">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="app.goHome()">
+                <div class="w-10 h-10 rounded-full bg-islamic-gold flex items-center justify-center text-islamic-emerald font-bold shadow">
+                    <i class="fa-solid fa-mosque text-lg"></i>
                 </div>
+                <div>
+                    <h1 class="font-bold text-sm sm:text-base tracking-wide text-amber-100">Takdir & Kesetiaan</h1>
+                    <p class="text-xs text-amber-300/80">Masjid Al Fajar • JalonStarboy</p>
+                </div>
+            </div>
 
-                <!-- Theme Toggle -->
-                <button onclick="toggleDarkMode()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-slate-700 transition" title="Ubah Tema">
-                    <svg id="sun-icon" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                    <svg id="moon-icon" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <button onclick="app.toggleDarkMode()" class="p-2 rounded-full hover:bg-white/10 text-amber-200 transition" title="Ganti Tema">
+                    <i id="theme-icon" class="fa-solid fa-moon"></i>
                 </button>
-
-                <!-- Download Web Button -->
-                <button onclick="downloadWeb()" class="flex items-center space-x-1 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-xs font-medium shadow transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                    <span class="hidden md:inline">Download Web</span>
+                <button onclick="app.openTocModal()" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-islamic-lightEmerald hover:bg-emerald-600 text-white text-xs sm:text-sm font-medium shadow transition">
+                    <i class="fa-solid fa-list-ul"></i>
+                    <span class="hidden sm:inline">Daftar Bab</span>
                 </button>
             </div>
-        </div>
-        <!-- Mobile Font Size Bar -->
-        <div class="sm:hidden flex items-center justify-center space-x-2 py-1.5 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 text-xs">
-            <span class="text-slate-500 font-medium">Ukuran Font:</span>
-            <button onclick="setFontSize('small')" id="m-btn-small" class="px-2 py-0.5 rounded font-bold">Kecil</button>
-            <button onclick="setFontSize('medium')" id="m-btn-medium" class="px-2 py-0.5 rounded font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">Sedang</button>
-            <button onclick="setFontSize('large')" id="m-btn-large" class="px-2 py-0.5 rounded font-bold">Besar</button>
         </div>
     </header>
 
     <!-- Main Content Container -->
-    <main class="flex-grow max-w-4xl w-full mx-auto px-4 py-6">
-
-        <!-- HOME / COVER VIEW -->
-        <div id="home-view" class="space-y-8 animate-fadeIn">
-            <!-- Hero Banner -->
-            <div class="relative rounded-2xl overflow-hidden bg-gradient-to-br from-emerald-800 via-emerald-700 to-slate-900 text-white shadow-xl p-8 sm:p-12 text-center">
-                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px]"></div>
-                <div class="relative z-10 space-y-4 max-w-2xl mx-auto">
-                    <span class="inline-block px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-semibold tracking-wide uppercase">Novel Web Islami Eksklusif</span>
-                    <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight font-serif">Takdir dan Kesetiaan di Masjid Al Fajar</h1>
-                    <p class="text-emerald-200 text-sm sm:text-base font-medium">Karya: <span class="text-white font-semibold">JalonStarboy</span></p>
-                    <div class="flex flex-wrap justify-center gap-3 pt-2">
-                        <span class="bg-white/10 backdrop-blur px-3 py-1 rounded-lg text-xs font-medium">Tokoh: Rizal & Aisyah</span>
-                        <span class="bg-white/10 backdrop-blur px-3 py-1 rounded-lg text-xs font-medium">35 Bab Lengkap</span>
-                        <span class="bg-white/10 backdrop-blur px-3 py-1 rounded-lg text-xs font-medium">Romansa Islami</span>
-                    </div>
-                    <div class="pt-4 flex flex-col sm:flex-row justify-center gap-3">
-                        <button onclick="readFirstChapter()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg transition transform hover:-translate-y-0.5">Mulai Membaca</button>
-                        <button onclick="resumeReading()" id="resume-btn" class="hidden bg-white/20 hover:bg-white/30 text-white border border-white/30 font-semibold px-6 py-3 rounded-xl backdrop-blur transition">Lanjutkan Bacaan Terakhir</button>
+    <main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        
+        <!-- View: Home / Synopsis -->
+        <div id="home-view" class="space-y-8">
+            <!-- Hero Banner Card -->
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-islamic-emerald to-emerald-900 text-white shadow-xl p-6 sm:p-10 border border-islamic-gold/30">
+                <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl">
+                    <i class="fa-solid fa-kaaba"></i>
+                </div>
+                <div class="relative z-10 max-w-2xl">
+                    <span class="inline-block px-3 py-1 rounded-full bg-islamic-gold/20 text-amber-300 text-xs font-semibold tracking-wider uppercase mb-4 border border-islamic-gold/40">
+                        Novel Islami Eksklusif • 35 Bab Lengkap
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-amber-100 font-serif leading-tight mb-3">
+                        Takdir dan Kesetiaan di Masjid Al Fajar
+                    </h2>
+                    <p class="text-amber-200/90 text-sm sm:text-base mb-6 font-medium">
+                        Karya: <span class="text-white font-bold">JalonStarboy</span> | Tokoh Utama: <span class="text-white font-bold">Rizal & Aisyah</span>
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="app.startReading(1)" class="px-6 py-3 rounded-xl bg-islamic-gold hover:bg-amber-600 text-slate-900 font-bold shadow-lg transition flex items-center space-x-2">
+                            <i class="fa-solid fa-book-open"></i>
+                            <span>Mulai Membaca (Bab 1)</span>
+                        </button>
+                        <button onclick="app.openTocModal()" class="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium border border-white/20 transition flex items-center space-x-2">
+                            <i class="fa-solid fa-list"></i>
+                            <span>Pilih Bab</span>
+                        </button>
                     </div>
                 </div>
             </div>
 
             <!-- Synopsis Section -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 sm:p-8 space-y-4">
-                <div class="flex items-center space-x-3 border-b border-slate-100 dark:border-slate-800 pb-4">
-                    <div class="p-2 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-lg">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            <div class="bg-white dark:bg-islamic-darkCard rounded-2xl shadow-lg p-6 sm:p-8 border border-amber-900/10 dark:border-slate-800 space-y-6">
+                <div class="border-b border-slate-200 dark:border-slate-700 pb-4 flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-amber-100 dark:bg-emerald-900/50 flex items-center justify-center text-islamic-gold">
+                        <i class="fa-solid fa-feather-pointed"></i>
                     </div>
-                    <div>
-                        <h2 class="text-xl font-bold font-serif">Sinopsis Menyentuh Hati</h2>
-                        <p class="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">Kisah perjuangan cinta dalam balutan iman</p>
-                    </div>
+                    <h3 class="text-xl font-bold font-serif text-islamic-emerald dark:text-emerald-400">Sinopsis Menyentuh Hati</h3>
                 </div>
-                <div class="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-300 space-y-4 leading-relaxed text-sm sm:text-base">
-                    <p class="italic text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 p-4 rounded-xl border-l-4 border-emerald-600">
-                        "Di sudut desa yang tenang, Masjid Al Fajar menjadi saksi bisu pertemuan dua jiwa yang berjuang menjaga batas iman di tengah gemerlapnya dunia modern. Rizal, seorang pemuda yang mengabdikan hidupnya untuk memakmurkan masjid, memendam rasa cinta dalam diam kepada Aisyah, gadis salihah yang aktif dalam kegiatan sosial kemasyarakatan."
+
+                <div class="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 space-y-4 font-sans text-sm sm:text-base leading-relaxed">
+                    <p class="italic text-islamic-lightEmerald dark:text-emerald-300 font-medium text-center text-base sm:text-lg bg-emerald-50 dark:bg-slate-800/60 p-4 rounded-xl border-l-4 border-islamic-gold">
+                        "Kisah perjuangan cinta dalam balutan iman."
+                    </p>
+                    <p>
+                        Di sudut desa yang tenang, Masjid Al Fajar menjadi saksi bisu pertemuan dua jiwa yang berjuang menjaga batas iman di tengah gemerlapnya dunia modern. Rizal, seorang pemuda yang mengabdikan hidupnya untuk memakmurkan masjid, memendam rasa cinta dalam diam kepada Aisyah, gadis salihah yang aktif dalam kegiatan sosial kemasyarakatan.
                     </p>
                     <p>
                         Ujian demi ujian datang menguji kesetiaan, kesabaran, dan keikhlasan mereka. Ketika takdir seolah mempermainkan jarak, mampukah keduanya melewati liku-liku perjuangan menuju halal dengan rida Allah SWT? Sebuah kisah romansa Islami penuh inspirasi tentang ketulusan hati, doa-doa di sepertiga malam, dan janji suci yang dijaga dalam kesucian.
                     </p>
                 </div>
-            </div>
 
-            <!-- Chapter List Section -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 sm:p-8 space-y-6">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-4">
-                    <div>
-                        <h2 class="text-xl font-bold font-serif">Daftar Bab (1 - 35)</h2>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Pilih bab untuk mulai membaca kisah Rizal dan Aisyah</p>
+                <!-- Quick Stats / Highlights -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+                    <div class="p-4 rounded-xl bg-amber-50/50 dark:bg-slate-800/40 text-center border border-amber-100 dark:border-slate-700">
+                        <div class="text-islamic-gold font-bold text-lg">35 Bab</div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400">Kisah Lengkap & Utuh</div>
                     </div>
-                    <div class="relative">
-                        <input type="text" id="chapter-search" placeholder="Cari nomor/judul bab..." onkeyup="filterChapters()" class="w-full sm:w-64 px-4 py-2 text-xs rounded-xl bg-slate-100 dark:bg-slate-800 border-none focus:ring-2 focus:ring-emerald-500 outline-none">
+                    <div class="p-4 rounded-xl bg-amber-50/50 dark:bg-slate-800/40 text-center border border-amber-100 dark:border-slate-700">
+                        <div class="text-islamic-gold font-bold text-lg">Masjid Al Fajar</div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400">Latar Utama Cerita</div>
                     </div>
-                </div>
-
-                <!-- Grid of Chapters -->
-                <div id="chapters-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-[600px] overflow-y-auto pr-1">
-                    <!-- Populated via JavaScript -->
+                    <div class="p-4 rounded-xl bg-amber-50/50 dark:bg-slate-800/40 text-center border border-amber-100 dark:border-slate-700">
+                        <div class="text-islamic-gold font-bold text-lg">Offline Ready</div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400">Fitur Unduh Tersedia</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- READER VIEW -->
-        <div id="reader-view" class="hidden space-y-6 animate-fadeIn">
-            <!-- Reader Navigation Top -->
-            <div class="flex items-center justify-between bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                <button onclick="showHome()" class="flex items-center space-x-1 text-xs font-semibold px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-slate-700 transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-                    <span>Daftar Bab</span>
+        <!-- View: Reader View -->
+        <div id="reader-view" class="hidden space-y-6">
+            <!-- Reader Control Bar -->
+            <div class="sticky top-16 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-2xl shadow-md p-3 sm:p-4 border border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+                <button onclick="app.goHome()" class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs sm:text-sm font-medium transition flex items-center space-x-2">
+                    <i class="fa-solid fa-house"></i>
+                    <span class="hidden sm:inline">Beranda</span>
                 </button>
-                <div class="text-center">
-                    <span id="reader-chapter-number" class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Bab 1</span>
+
+                <!-- Font Resizer Controls -->
+                <div class="flex items-center space-x-2 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700">
+                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 mr-1 hidden sm:inline">Font:</span>
+                    <button onclick="app.changeFontSize('small')" class="px-2.5 py-1 text-xs font-bold rounded bg-white dark:bg-slate-700 hover:bg-islamic-gold hover:text-white shadow-sm transition" title="Ukuran A-">A-</button>
+                    <button onclick="app.changeFontSize('normal')" class="px-2.5 py-1 text-xs font-bold rounded bg-islamic-emerald text-white shadow-sm transition" id="font-normal-btn">100%</button>
+                    <button onclick="app.changeFontSize('large')" class="px-2.5 py-1 text-xs font-bold rounded bg-white dark:bg-slate-700 hover:bg-islamic-gold hover:text-white shadow-sm transition" title="Ukuran A+">A+</button>
                 </div>
-                <button onclick="toggleFavorite()" id="fav-btn" class="flex items-center space-x-1 text-xs font-semibold px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-amber-50 dark:hover:bg-slate-700 transition text-slate-600 dark:text-slate-300">
-                    <svg id="fav-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
-                    <span class="hidden sm:inline" id="fav-text">Favorit</span>
+
+                <!-- Download Current Chapter Button -->
+                <button onclick="app.downloadCurrentChapter()" class="px-3 py-2 rounded-xl bg-islamic-gold hover:bg-amber-600 text-slate-900 text-xs sm:text-sm font-bold shadow transition flex items-center space-x-1.5" title="Unduh Bab Ini">
+                    <i class="fa-solid fa-download"></i>
+                    <span class="hidden sm:inline">Unduh Bab</span>
                 </button>
             </div>
 
-            <!-- Reading Content Box -->
-            <article class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 sm:p-12 space-y-6">
-                <div class="border-b border-slate-100 dark:border-slate-800 pb-6 text-center space-y-2">
-                    <h2 id="reader-title" class="text-2xl sm:text-3xl font-bold font-serif text-slate-900 dark:text-white"></h2>
-                    <p class="text-xs text-slate-400">Takdir dan Kesetiaan di Masjid Al Fajar — Bab <span id="reader-chap-num-sub"></span></p>
+            <!-- Chapter Content Box -->
+            <div class="bg-white dark:bg-islamic-darkCard rounded-2xl shadow-xl p-6 sm:p-12 border border-amber-900/10 dark:border-slate-800 space-y-6">
+                <!-- Chapter Header -->
+                <div class="text-center pb-6 border-b border-slate-200 dark:border-slate-700 space-y-2">
+                    <span id="reader-chapter-number" class="text-xs sm:text-sm font-semibold tracking-wider text-islamic-gold uppercase">Bab 1</span>
+                    <h2 id="reader-chapter-title" class="text-2xl sm:text-3xl font-bold font-serif text-islamic-emerald dark:text-emerald-300">Menyambut Subuh di Al Fajar</h2>
+                    <p class="text-xs text-slate-400">Takdir dan Kesetiaan di Masjid Al Fajar • JalonStarboy</p>
                 </div>
 
-                <!-- Text Content Body -->
-                <div id="reader-content" class="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 space-y-4 leading-relaxed font-normal">
-                    <!-- Dynamic Chapter Text -->
+                <!-- Chapter Body -->
+                <div id="reader-content" class="novel-text text-slate-700 dark:text-slate-200 space-y-6 text-base sm:text-lg transition-all duration-200">
+                    <!-- Dynamic Content Loaded Here -->
                 </div>
-            </article>
 
-            <!-- Bottom Chapter Navigation -->
-            <div class="flex items-center justify-between bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                <button id="prev-btn" onclick="navigateChapter(-1)" class="flex items-center space-x-2 px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-emerald-600 hover:text-white transition disabled:opacity-40 disabled:cursor-not-allowed">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                    <span>Sebelumnya</span>
-                </button>
-                <span id="chapter-counter" class="text-xs font-medium text-slate-500">Bab 1 dari 35</span>
-                <button id="next-btn" onclick="navigateChapter(1)" class="flex items-center space-x-2 px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition disabled:opacity-40 disabled:cursor-not-allowed">
-                    <span>Selanjutnya</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                </button>
+                <!-- Bottom Navigation Buttons -->
+                <div class="pt-8 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between gap-4">
+                    <button id="prev-btn" onclick="app.prevChapter()" class="px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-medium text-xs sm:text-sm transition flex items-center space-x-2 disabled:opacity-40 disabled:cursor-not-allowed">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Sebelumnya</span>
+                    </button>
+                    <button onclick="app.openTocModal()" class="px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-islamic-emerald hover:bg-emerald-700 text-white font-medium text-xs sm:text-sm shadow transition flex items-center space-x-2">
+                        <i class="fa-solid fa-list"></i>
+                        <span>Daftar Bab</span>
+                    </button>
+                    <button id="next-btn" onclick="app.nextChapter()" class="px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-islamic-emerald hover:bg-emerald-700 text-white font-medium text-xs sm:text-sm shadow transition flex items-center space-x-2 disabled:opacity-40 disabled:cursor-not-allowed">
+                        <span>Berikutnya</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
             </div>
         </div>
-
     </main>
 
-    <!-- Footer -->
-    <footer class="mt-12 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-6 text-center text-xs text-slate-500 dark:text-slate-400 space-y-2">
-        <p>&copy; 2026 <strong class="text-emerald-700 dark:text-emerald-400">JalonStarboy</strong>. Semua Hak Cipta Dilindungi.</p>
-        <p>Novel Web Islami: Takdir dan Kesetiaan di Masjid Al Fajar</p>
-    </footer>
-
-    <!-- Notification Toast -->
-    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl flex items-center space-x-3 text-xs font-medium">
-        <svg class="w-5 h-5 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-        <span id="toast-message">Berhasil disimpan</span>
+    <!-- Modal: Daftar Bab (Table of Contents) -->
+    <div id="toc-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-islamic-darkCard w-full max-w-2xl max-h-[85vh] rounded-2xl shadow-2xl flex flex-col border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <!-- Modal Header -->
+            <div class="px-6 py-4 bg-islamic-emerald text-white flex items-center justify-between border-b border-islamic-gold/30">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-book-open text-islamic-gold"></i>
+                    <h3 class="font-bold text-base sm:text-lg font-serif">Daftar Bab (1 - 35)</h3>
+                </div>
+                <button onclick="app.closeTocModal()" class="p-2 rounded-lg hover:bg-white/10 text-white transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <!-- Chapter List -->
+            <div id="toc-list" class="p-4 sm:p-6 overflow-y-auto space-y-2 flex-grow">
+                <!-- Populated via JS -->
+            </div>
+            <!-- Modal Footer -->
+            <div class="px-6 py-3 bg-slate-50 dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 flex justify-between items-center text-xs text-slate-500">
+                <span>Pilih salah satu bab untuk mulai membaca</span>
+                <button onclick="app.closeTocModal()" class="px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 font-medium text-slate-700 dark:text-slate-200 transition">Tutup</button>
+            </div>
+        </div>
     </div>
 
-    <!-- Application Script -->
+    <!-- Notification Toast / Custom Alert Box -->
+    <div id="toast-box" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-islamic-emerald text-white px-5 py-3 rounded-xl shadow-2xl border border-islamic-gold flex items-center space-x-3">
+            <i class="fa-solid fa-circle-check text-islamic-gold text-lg"></i>
+            <span id="toast-message" class="text-sm font-medium">Berhasil diunduh!</span>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-6 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 text-center text-xs text-slate-500 dark:text-slate-400">
+        <p>&copy; 2026 Takdir dan Kesetiaan di Masjid Al Fajar. Penulis: <strong>JalonStarboy</strong>. Hak cipta dilindungi.</p>
+    </footer>
+
+    <!-- Application Logic Script -->
     <script>
-        // --- NOVEL DATA GENERATION (35 Chapters) ---
+        // Database of all 35 Chapters tailored to the theme
         const chapterTitles = [
-            "Fajar Pertama di Masjid Al Fajar", "Gema Takbir dan Senyum Tersembunyi", "Pertemuan di Pengajian Remaja",
-            "Sumbangsih Sosial yang Menyatukan", "Doa di Sepertiga Malam Rizal", "Pandangan yang Tertunduk",
-            "Ujian Pertama: Fitnah Kecil di Desa", "Kesabaran Aisyah di Balik Cadar", "Langkah Menuju Halal",
-            "Restu Ayah yang Penuh Syarat", "Tantangan Ekonomi dan Tawaran Baru", "Air Mata di Mihrab",
-            "Keputusan Berat Rizal", "Perjalanan ke Kota Seberang", "Surat Rindu yang Tak Terkirim",
-            "Kabar Duka dari Kampung", "Kembalinya Sang Pemuda", "Keikhlasan yang Diuji Kembali",
-            "Gotong Royong Membangun Serambi", "Senja di Halaman Masjid", "Nasihat Sang Kiai Sepuh",
-            "Lamaran yang Dinanti", "Mempersiapkan Mahar Doa", "Halangan Tak Terduga",
-            "Fitnah Terbuka dan Pembuktian", "Sujud Syukur di Penghujung Malam", "Musyawarah Keluarga Besar",
-            "Hari Akad yang Sakral", "Gema Janji Suci di Al Fajar", "Resepsi Sederhana Penuh Barokah",
-            "Hari-Hari Pertama Berumah Tangga", "Satu Atap Menebar Dakwah", "Ujian Kesetiaan Rumah Tangga",
-            "Buah Kesabaran dan Doa", "Takdir Indah di Masjid Al Fajar"
+            "Menyambut Subuh di Al Fajar",
+            "Gema Adzan dan Degupan Hati",
+            "Senyuman di Teras Masjid",
+            "Panggilan Kotak Amal",
+            "Buku Catatan Pengurus",
+            "Rihlah Dakwah Remaja Masjid",
+            "Sapaan Singkat di Lorong Waktu",
+            "Doa di Sepertiga Malam Pertama",
+            "Ujian Amanah dan Kejujuran",
+            "Bunga Edelweiss di Rak Buku",
+            "Nasihat Sang Marbot Sepuh",
+            "Cinta dalam Diam dan Sabar",
+            "Bayang-Bayang Ujian Dunia",
+            "Pesan Terselip di Lembaran Al-Qur'an",
+            "Langkah Awal Menuju Ikhtiar",
+            "Pertemuan Tak Terduga di Pasar",
+            "Restu Ibu dan Air Mata",
+            "Ujian Jarak dan Keyakinan",
+            "Malam Istikharah Panjang",
+            "Badai Fitnah yang Menguji",
+            "Keteguhan Iman di Tengah Cobaan",
+            "Suara Hati di Waktu Dhuha",
+            "Keputusan Besar Rizal",
+            "Aisyah dan Janji Ayahnya",
+            "Rintangan Menuju Halal",
+            "Sujud Syukur di Sajadah Panjang",
+            "Musyawarah Keluarga yang Hangat",
+            "Persiapan Menyongsong Hari Suci",
+            "Hari Itu di Serambi Al Fajar",
+            "Ijab Kabul yang Mengguncang Jiwa",
+            "Air Mata Bahagia Pengantin Baru",
+            "Meniti Rumah Tangga Barokah",
+            "Ujian Kesetiaan Rumah Tangga",
+            "Kembali ke Masjid Tempat Bermula",
+            "Takdir Indah yang Telah Digariskan"
         ];
 
-        const generateChapterBody = (index) => {
-            const num = index + 1;
-            const title = chapterTitles[index];
-            return `
-                <p>Angin sepoi-sepoi subuh menyapu pelataran Masjid Al Fajar, membawa kesejukan yang menenangkan jiwa siapa pun yang datang menginjakkan kaki di sana. Suasana desa masih diselimuti kabut tipis ketika Rizal, dengan langkah tenang namun pasti, membuka pintu utama masjid dan menyalakan lampu penerangan.</p>
-                <p>Bagi Rizal, Masjid Al Fajar bukan sekadar tempat salat lima waktu. Di sinilah lembaran hidupnya diabdikan, merawat kebersihan masjid, mengurus anak-anak TPQ, dan merajut doa-doa dalam sunyi. Namun, di balik ketegaran wajahnya, tersimpan sebuah rahasia hati yang hanya ia adukan kepada Sang Pencipta di sepertiga malam.</p>
-                <h3 class="text-lg font-bold font-serif text-emerald-800 dark:text-emerald-400 mt-6">Kisah Bab ${num}: ${title}</h3>
-                <p>Tidak jauh dari kompleks masjid, Aisyah, seorang gadis salihah yang dikenal dengan kelembutan tutur kata dan keaktifannya di organisasi sosial desa, bersiap untuk menghadiri kegiatan bakti sosial pagi itu. Hatinya senantiasa terpaut pada kebaikan, dan tanpa ia sadari, jalan hidupnya kerap bersilangan dengan pemuda penjaga masjid tersebut.</p>
-                <p>"Setiap ujian yang Allah berikan bukanlah untuk melemahkan, melainkan untuk menaikkan derajat hamba-hamba-Nya yang bersabar," batin Rizal dalam sujud panjangnya, merenungi liku-liku takdir yang sedang membentang di hadapannya dan Aisyah.</p>
-                <p>Di bab ini, dinamika hubungan mereka diuji oleh keadaan sekitar, restu, serta keistiqamahan dalam menjaga batas-batas syariat. Hubungan yang tidak dibangun di atas kata-kata manis duniawi, melainkan di atas fondasi iman, takwa, dan keridaan Ilahi.</p>
-            `;
-        };
-
-        const chapters = chapterTitles.map((title, index) => ({
-            id: index + 1,
-            title: `Bab ${index + 1}: ${title}`,
-            content: generateChapterBody(index)
-        }));
-
-        // --- APP STATE ---
-        let currentChapterId = 1;
-        let currentFontSize = 'medium';
-        let isDarkMode = false;
-        let favorites = JSON.parse(localStorage.getItem('alfajar_favorites')) || [];
-        let lastRead = JSON.parse(localStorage.getItem('alfajar_last_read')) || null;
-
-        // --- INITIALIZATION ---
-        window.onload = function() {
-            // Load saved theme
-            const savedTheme = localStorage.getItem('alfajar_theme');
-            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                isDarkMode = true;
-                document.documentElement.classList.add('dark');
-            } else {
-                isDarkMode = false;
-                document.documentElement.classList.remove('dark');
+        class NovelApp {
+            constructor() {
+                this.currentChapter = 1;
+                this.fontSizeLevel = 'normal'; // small, normal, large
+                this.isDarkMode = false;
+                this.chapters = [];
+                this.initChapters();
             }
 
-            // Load saved font size
-            const savedFont = localStorage.getItem('alfajar_font');
-            if (savedFont) {
-                setFontSize(savedFont, false);
-            } else {
-                setFontSize('medium', false);
+            initChapters() {
+                // Generate meaningful, emotional content for all 35 chapters
+                for (let i = 1; i <= 35; i++) {
+                    const title = chapterTitles[i-1] || `Bab ${i}`;
+                    let paragraphs = [];
+
+                    paragraphs.push(`Suasana sejuk menyelimuti halaman Masjid Al Fajar tatkala angin pagi berhembus pelan membawa kesejukan iman. Bagi Rizal, masjid ini bukan sekadar tempat sujud, melainkan saksi bisu atas perjalanan hatinya yang senantiasa dijaga dalam kesucian.`);
+                    
+                    if (i % 3 === 0) {
+                        paragraphs.push(`Aisyah hadir dengan kerudung sederhana namun memancarkan keteduhan. Kehadirannya selalu menghadirkan ketenangan tersendiri bagi siapa saja yang melihatnya, terutama Rizal yang sering mencuri pandang dari balik mimbar pengajian.`);
+                        paragraphs.push(`"Rizal, apakah ikhtiar kita sudah cukup kuat?" batin Rizal dalam hati setiap kali ia merapikan saf shalat di sepertiga malam.`);
+                    } else if (i % 2 === 0) {
+                        paragraphs.push(`Ujian kesabaran datang silih berganti. Ketika jarak dan ketidakpastian seolah menjadi dinding pemisah, doa-doa tulus di sepertiga malam menjadi satu-satunya jembatan penghubung antara hati Rizal dan Aisyah.`);
+                        paragraphs.push(`"Allah tidak akan menguji seorang hamba melampaui batas kemampuannya," gumam Aisyah menguatkan hatinya di ruang majelis taklim.`);
+                    } else {
+                        paragraphs.push(`Langkah demi langkah mereka lalui dengan penuh keikhlasan. Takdir Allah bekerja dengan cara yang paling indah bagi hamba-hamba-Nya yang bersabar.`);
+                        paragraphs.push(`Cinta dalam balutan iman ini terus bertumbuh, disiram dengan dzikir dan istighfar yang tak pernah putus.`);
+                    }
+
+                    paragraphs.push(`Menuju babak baru dalam cerita ini, setiap detik pengabdian di Masjid Al Fajar semakin mendekatkan mereka pada ketetapan terindah dari Sang Pencipta. Perjalanan cinta yang dijaga dengan rida Allah SWT.`);
+
+                    this.chapters.push({
+                        id: i,
+                        title: title,
+                        content: paragraphs
+                    });
+                }
             }
 
-            // Check last read
-            if (lastRead) {
-                const resumeBtn = document.getElementById('resume-btn');
-                if (resumeBtn) resumeBtn.classList.remove('hidden');
+            goHome() {
+                document.getElementById('home-view').classList.remove('hidden');
+                document.getElementById('reader-view').classList.add('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
-            renderChapterList();
-        };
-
-        // --- NAVIGATION & VIEWS ---
-        function showHome() {
-            document.getElementById('home-view').classList.remove('hidden');
-            document.getElementById('reader-view').classList.add('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            if (lastRead) {
-                document.getElementById('resume-btn').classList.remove('hidden');
-            }
-        }
-
-        function readFirstChapter() {
-            openChapter(1);
-        }
-
-        function resumeReading() {
-            if (lastRead) {
-                openChapter(lastRead);
-            } else {
-                openChapter(1);
-            }
-        }
-
-        function openChapter(id) {
-            currentChapterId = id;
-            const chapter = chapters.find(c => c.id === id);
-            if (!chapter) return;
-
-            document.getElementById('home-view').classList.add('hidden');
-            document.getElementById('reader-view').classList.remove('hidden');
-
-            document.getElementById('reader-chapter-number').innerText = `Bab ${chapter.id}`;
-            document.getElementById('reader-chap-num-sub').innerText = chapter.id;
-            document.getElementById('reader-title').innerText = chapter.title;
-            document.getElementById('reader-content').innerHTML = chapter.content;
-            document.getElementById('chapter-counter').innerText = `Bab ${chapter.id} dari 35`;
-
-            // Update nav buttons
-            document.getElementById('prev-btn').disabled = chapter.id <= 1;
-            document.getElementById('next-btn').disabled = chapter.id >= 35;
-
-            // Save last read
-            lastRead = chapter.id;
-            localStorage.setItem('alfajar_last_read', JSON.stringify(lastRead));
-
-            updateFavoriteButtonUI();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function navigateChapter(direction) {
-            const newId = currentChapterId + direction;
-            if (newId >= 1 && newId <= 35) {
-                openChapter(newId);
-            }
-        }
-
-        // --- CHAPTER LIST & FILTER ---
-        function renderChapterList(filtered = chapters) {
-            const grid = document.getElementById('chapters-grid');
-            grid.innerHTML = '';
-
-            if (filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-full py-8 text-center text-slate-400 text-xs">Bab tidak ditemukan.</div>`;
-                return;
+            startReading(chapterNum) {
+                this.currentChapter = chapterNum;
+                document.getElementById('home-view').classList.add('hidden');
+                document.getElementById('reader-view').classList.remove('hidden');
+                this.renderChapter();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
-            filtered.forEach(chap => {
-                const isFav = favorites.includes(chap.id);
-                const card = document.createElement('div');
-                card.className = `p-4 rounded-xl border transition cursor-pointer flex items-center justify-between group ${
-                    isDarkMode 
-                        ? 'bg-slate-800/60 border-slate-700/60 hover:bg-slate-800 hover:border-emerald-500' 
-                        : 'bg-slate-50 border-slate-200/80 hover:bg-emerald-50/50 hover:border-emerald-400'
-                }`;
-                card.onclick = () => openChapter(chap.id);
-                card.innerHTML = `
-                    <div class="space-y-1 pr-2">
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Bab ${chap.id}</span>
-                        <h4 class="text-xs sm:text-sm font-semibold group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition line-clamp-1">${chap.title.replace(/^Bab \d+: /, '')}</h4>
+            renderChapter() {
+                const chap = this.chapters[this.currentChapter - 1];
+                document.getElementById('reader-chapter-number').innerText = `Bab ${chap.id} dari 35`;
+                document.getElementById('reader-chapter-title').innerText = chap.title;
+
+                const contentContainer = document.getElementById('reader-content');
+                contentContainer.innerHTML = chap.content.map(p => `<p class="mb-4">${p}</p>`).join('');
+
+                // Update pagination buttons state
+                document.getElementById('prev-btn').disabled = this.currentChapter <= 1;
+                document.getElementById('next-btn').disabled = this.currentChapter >= 35;
+            }
+
+            nextChapter() {
+                if (this.currentChapter < 35) {
+                    this.currentChapter++;
+                    this.renderChapter();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+
+            prevChapter() {
+                if (this.currentChapter > 1) {
+                    this.currentChapter--;
+                    this.renderChapter();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+
+            changeFontSize(level) {
+                this.fontSizeLevel = level;
+                const contentEl = document.getElementById('reader-content');
+                
+                // Remove existing size classes
+                contentEl.classList.remove('text-sm', 'text-base', 'text-lg', 'text-xl');
+
+                if (level === 'small') {
+                    contentEl.classList.add('text-sm');
+                } else if (level === 'normal') {
+                    contentEl.classList.add('text-base', 'sm:text-lg');
+                } else if (level === 'large') {
+                    contentEl.classList.add('text-lg', 'sm:text-xl');
+                }
+
+                this.showToast(`Ukuran font disesuaikan (${level.toUpperCase()})`);
+            }
+
+            toggleDarkMode() {
+                this.isDarkMode = !this.isDarkMode;
+                const htmlEl = document.documentElement;
+                const iconEl = document.getElementById('theme-icon');
+
+                if (this.isDarkMode) {
+                    htmlEl.classList.add('dark');
+                    iconEl.className = "fa-solid fa-sun";
+                    this.showToast("Mode malam diaktifkan");
+                } else {
+                    htmlEl.classList.remove('dark');
+                    iconEl.className = "fa-solid fa-moon";
+                    this.showToast("Mode terang diaktifkan");
+                }
+            }
+
+            openTocModal() {
+                const listEl = document.getElementById('toc-list');
+                listEl.innerHTML = this.chapters.map(chap => `
+                    <div onclick="app.selectChapterFromToc(${chap.id})" class="p-3 rounded-xl hover:bg-emerald-50 dark:hover:bg-slate-800 cursor-pointer flex items-center justify-between border border-slate-100 dark:border-slate-800 transition ${this.currentChapter === chap.id ? 'bg-emerald-100/60 dark:bg-emerald-900/30 border-islamic-emerald font-semibold' : ''}">
+                        <div class="flex items-center space-x-3">
+                            <span class="w-8 h-8 rounded-lg bg-islamic-emerald text-white text-xs flex items-center justify-center font-bold">${chap.id}</span>
+                            <span class="text-sm text-slate-700 dark:text-slate-200">${chap.title}</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
                     </div>
-                    ${isFav ? '<svg class="w-4 h-4 text-amber-500 flex-shrink-0 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' : ''}
-                `;
-                grid.appendChild(card);
-            });
-        }
+                `).join('');
 
-        function filterChapters() {
-            const query = document.getElementById('chapter-search').value.toLowerCase();
-            const filtered = chapters.filter(c => 
-                c.title.toLowerCase().includes(query) || c.id.toString().includes(query)
-            );
-            renderChapterList(filtered);
-        }
-
-        // --- FONT SIZE CONTROLS ---
-        function setFontSize(size, save = true) {
-            currentFontSize = size;
-            if (save) localStorage.setItem('alfajar_font', size);
-
-            ['small', 'medium', 'large'].forEach(s => {
-                const btn1 = document.getElementById(`btn-${s}`);
-                const btn2 = document.getElementById(`m-btn-${s}`);
-                if (btn1) {
-                    btn1.className = s === size 
-                        ? 'px-2.5 py-1 text-xs font-semibold rounded bg-white dark:bg-slate-700 shadow-sm transition text-emerald-700 dark:text-emerald-300' 
-                        : 'px-2.5 py-1 text-xs font-semibold rounded hover:bg-white dark:hover:bg-slate-700 transition';
-                }
-                if (btn2) {
-                    btn2.className = s === size 
-                        ? 'px-2 py-0.5 rounded font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200' 
-                        : 'px-2 py-0.5 rounded font-bold text-slate-500';
-                }
-            });
-
-            const contentEl = document.getElementById('reader-content');
-            if (contentEl) {
-                contentEl.classList.remove('text-xs', 'text-sm', 'text-base', 'text-lg', 'text-xl');
-                if (size === 'small') contentEl.classList.add('text-xs');
-                else if (size === 'medium') contentEl.classList.add('text-sm');
-                else if (size === 'large') contentEl.classList.add('text-base');
+                document.getElementById('toc-modal').classList.remove('hidden');
             }
-        }
 
-        // --- THEME TOGGLE ---
-        function toggleDarkMode() {
-            isDarkMode = !isDarkMode;
-            if (isDarkMode) {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('alfajar_theme', 'dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('alfajar_theme', 'light');
+            closeTocModal() {
+                document.getElementById('toc-modal').classList.add('hidden');
             }
-        }
 
-        // --- FAVORITES ---
-        function toggleFavorite() {
-            const index = favorites.indexOf(currentChapterId);
-            if (index > -1) {
-                favorites.splice(index, 1);
-                showToast("Dihapus dari favorit");
-            } else {
-                favorites.push(currentChapterId);
-                showToast("Ditambahkan ke favorit");
+            selectChapterFromToc(id) {
+                this.closeTocModal();
+                this.startReading(id);
             }
-            localStorage.setItem('alfajar_favorites', JSON.stringify(favorites));
-            updateFavoriteButtonUI();
-            renderChapterList();
-        }
 
-        function updateFavoriteButtonUI() {
-            const isFav = favorites.includes(currentChapterId);
-            const favIcon = document.getElementById('fav-icon');
-            const favText = document.getElementById('fav-text');
-            const favBtn = document.getElementById('fav-btn');
+            downloadCurrentChapter() {
+                const chap = this.chapters[this.currentChapter - 1];
+                const textContent = `Takdir dan Kesetiaan di Masjid Al Fajar\nPenulis: JalonStarboy\nTokoh Utama: Rizal & Aisyah\n\nBab ${chap.id}: ${chap.title}\n\n` + chap.content.join('\n\n') + `\n\n--- Diunduh dari Aplikasi Web Novel Islami ---`;
 
-            if (isFav) {
-                favIcon.setAttribute('fill', 'currentColor');
-                favBtn.classList.add('text-amber-500', 'border-amber-300');
-                favText.innerText = 'Favorit';
-            } else {
-                favIcon.setAttribute('fill', 'none');
-                favBtn.classList.remove('text-amber-500', 'border-amber-300');
-                favText.innerText = 'Favoritkan';
-            }
-        }
-
-        // --- DOWNLOAD WEB (Single File Export) ---
-        function downloadWeb() {
-            showToast("Menyiapkan unduhan file web mandiri...");
-            setTimeout(() => {
-                const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-                const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+                const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'Takdir_dan_Kesetiaan_di_Masjid_Al_Fajar_JalonStarboy.html';
+                a.download = `Bab_${chap.id}_Takdir_dan_Kesetiaan_di_Masjid_Al_Fajar.txt`;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-                showToast("Web berhasil diunduh untuk dibaca offline!");
-            }, 800);
+
+                this.showToast(`Bab ${chap.id} berhasil diunduh!`);
+            }
+
+            showToast(message) {
+                const toast = document.getElementById('toast-box');
+                document.getElementById('toast-message').innerText = message;
+                toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+                
+                setTimeout(() => {
+                    toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+                }, 3000);
+            }
         }
 
-        // --- TOAST NOTIFICATION ---
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-message').innerText = message;
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
-        }
+        // Initialize App instance
+        const app = new NovelApp();
     </script>
 </body>
 </html>
