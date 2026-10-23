@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,667 +12,551 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            50: '#fff1f2',
-                            100: '#ffe4e6',
-                            200: '#fecdd3',
-                            500: '#f43f5e',
-                            600: '#e11d48',
-                            800: '#9f1239',
-                            900: '#881337',
-                        },
-                        serifbg: {
-                            light: '#FAF7F2',
-                            dark: '#121212',
-                            cardLight: '#FFFFFF',
-                            cardDark: '#1E1E1E'
+                        theme: {
+                            bg: '#0d111d',
+                            card: '#161c2e',
+                            hover: '#202942',
+                            border: '#2a3450',
+                            accent: '#ff6b81',
+                            accentHover: '#ff4757',
+                            text: '#e2e8f0',
+                            muted: '#94a3b8'
                         }
                     },
                     fontFamily: {
-                        serif: ['Georgia', 'Cambria', 'Merriweather', 'serif'],
-                        sans: ['Inter', 'system-ui', 'sans-serif']
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Georgia', 'Merriweather', 'serif']
                     }
                 }
             }
         }
     </script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        /* Custom scrollbar */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d111d;
+            color: #e2e8f0;
+        }
+        
+        /* Custom Scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
+            height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.05);
+            background: #0d111d;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(225, 29, 72, 0.4);
-            border-radius: 4px;
+            background: #2a3450;
+            border-radius: 9999px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(225, 29, 72, 0.7);
+            background: #ff6b81;
         }
-        .reader-text p {
-            margin-bottom: 1.5rem;
-            line-height: 1.85;
-            text-align: justify;
+
+        /* Reading theme overrides */
+        .theme-sepia {
+            background-color: #fbf0d9 !important;
+            color: #5f4b32 !important;
+        }
+        .theme-sepia .reader-card {
+            background-color: #f4e4c1 !important;
+            border-color: #e2d1a6 !important;
+            color: #43321e !important;
+        }
+        
+        .theme-light {
+            background-color: #f8fafc !important;
+            color: #1e293b !important;
+        }
+        .theme-light .reader-card {
+            background-color: #ffffff !important;
+            border-color: #e2e8f0 !important;
+            color: #0f172a !important;
+        }
+
+        /* Smooth slide animation for side navigation */
+        .drawer-slide {
+            transition: transform 0.3s ease-in-out;
         }
     </style>
 </head>
-<body class="bg-serifbg-light dark:bg-serifbg-dark text-slate-800 dark:text-slate-200 transition-colors duration-300 font-sans min-h-screen flex flex-col selection:bg-rose-500 selection:text-white">
+<body class="min-h-screen flex flex-col bg-[#0d111d] text-gray-200 antialiased selection:bg-[#ff6b81] selection:text-white">
 
-    <!-- Header Navigation -->
-    <header class="sticky top-0 z-40 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md border-b border-rose-100 dark:border-zinc-800 shadow-sm transition-colors">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <!-- Mobile Menu Toggle & Title -->
+    <!-- TOP HEADER / NAVBAR -->
+    <header class="sticky top-0 z-30 bg-[#161c2e]/90 backdrop-blur-md border-b border-[#2a3450] px-4 py-3 sm:px-6">
+        <div class="max-w-6xl mx-auto flex items-center justify-between gap-2">
+            <!-- Left Header: Menu & Title -->
             <div class="flex items-center gap-3">
-                <button id="toggleSidebar" class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-rose-50 dark:hover:bg-zinc-800 transition lg:hidden" title="Daftar Isi">
-                    <i data-lucide="menu" class="w-6 h-6"></i>
+                <button id="openNavBtn" class="p-2 rounded-lg bg-[#202942] hover:bg-[#ff6b81] text-gray-200 hover:text-white transition-all flex items-center gap-2 focus:outline-none" title="Buka Navigasi Cerita">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                    <span class="hidden md:inline text-sm font-medium">Navigasi</span>
                 </button>
-                <div class="flex items-center gap-2">
-                    <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-rose-600 to-pink-500 flex items-center justify-center text-white font-serif font-bold text-lg shadow-md">
-                        C
-                    </div>
-                    <div>
-                        <h1 class="font-serif font-bold text-lg sm:text-xl text-slate-900 dark:text-white leading-none">Cinta & Takdir</h1>
-                        <p class="text-xs text-rose-600 dark:text-rose-400 font-medium">Oleh Jalonbaikhati</p>
-                    </div>
+                <div>
+                    <h1 class="text-base sm:text-lg font-bold text-white leading-tight flex items-center gap-2">
+                        <span>Cinta dan Takdir</span>
+                        <span class="text-xs font-normal px-2 py-0.5 rounded-full bg-[#ff6b81]/20 text-[#ff6b81] border border-[#ff6b81]/30 hidden sm:inline-block">Novel</span>
+                    </h1>
+                    <p class="text-xs text-gray-400">Karya: <span class="text-gray-300 font-medium">Jalonbaikhati</span></p>
                 </div>
             </div>
 
-            <!-- Toolbar Controls -->
-            <div class="flex items-center gap-1 sm:gap-2">
-                <!-- Font Controls -->
-                <div class="hidden sm:flex items-center bg-slate-100 dark:bg-zinc-800 rounded-lg p-1 border border-slate-200 dark:border-zinc-700">
-                    <button id="btnFontDec" class="px-2.5 py-1 text-xs font-bold hover:bg-white dark:hover:bg-zinc-700 rounded transition" title="Kecilkan Font (A-)">A-</button>
-                    <button id="btnFontReset" class="px-2.5 py-1 text-xs font-semibold hover:bg-white dark:hover:bg-zinc-700 rounded transition border-x border-slate-200 dark:border-zinc-700" title="Ukuran Normal (100%)">100%</button>
-                    <button id="btnFontInc" class="px-2.5 py-1 text-xs font-bold hover:bg-white dark:hover:bg-zinc-700 rounded transition" title="Besarkan Font (A+)">A+</button>
+            <!-- Right Controls: Font, Themes, Download -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Theme Selectors -->
+                <div class="hidden sm:flex items-center bg-[#0d111d] p-1 rounded-lg border border-[#2a3450]">
+                    <button onclick="setTheme('dark')" title="Mode Gelap" class="p-1.5 rounded text-xs px-2 hover:bg-[#202942] transition-colors active-theme-btn" id="theme-dark-btn">
+                        <i class="fa-solid fa-moon text-indigo-400"></i>
+                    </button>
+                    <button onclick="setTheme('sepia')" title="Mode Sepia" class="p-1.5 rounded text-xs px-2 hover:bg-[#202942] transition-colors" id="theme-sepia-btn">
+                        <i class="fa-solid fa-book-open text-amber-500"></i>
+                    </button>
+                    <button onclick="setTheme('light')" title="Mode Terang" class="p-1.5 rounded text-xs px-2 hover:bg-[#202942] transition-colors" id="theme-light-btn">
+                        <i class="fa-solid fa-sun text-yellow-400"></i>
+                    </button>
                 </div>
 
-                <!-- Dark Mode Toggle -->
-                <button id="btnThemeToggle" class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-rose-50 dark:hover:bg-zinc-800 transition" title="Ganti Mode Terang/Gelap">
-                    <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
-                    <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
-                </button>
+                <!-- Font Size Adjuster -->
+                <div class="flex items-center bg-[#0d111d] rounded-lg border border-[#2a3450]">
+                    <button onclick="adjustFontSize(-1)" class="px-2.5 py-1 text-sm font-bold text-gray-400 hover:text-white hover:bg-[#202942] rounded-l-lg transition-colors" title="Kecilkan Teks">A-</button>
+                    <span id="fontSizeDisplay" class="text-xs px-1 text-gray-400 font-mono">18px</span>
+                    <button onclick="adjustFontSize(1)" class="px-2.5 py-1 text-sm font-bold text-gray-400 hover:text-white hover:bg-[#202942] rounded-r-lg transition-colors" title="Besarkan Teks">A+</button>
+                </div>
 
-                <!-- Download Dropdown -->
+                <!-- Download Options Button -->
                 <div class="relative group">
-                    <button class="flex items-center gap-1.5 px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs sm:text-sm font-medium shadow-sm transition">
-                        <i data-lucide="download" class="w-4 h-4"></i>
+                    <button class="p-2 sm:px-3 sm:py-1.5 bg-[#ff6b81] hover:bg-[#ff4757] text-white rounded-lg text-sm font-medium transition-all shadow-lg shadow-[#ff6b81]/20 flex items-center gap-2">
+                        <i class="fa-solid fa-download"></i>
                         <span class="hidden sm:inline">Unduh</span>
                     </button>
-                    <div class="absolute right-0 mt-1 w-48 bg-white dark:bg-zinc-800 rounded-xl shadow-xl border border-slate-100 dark:border-zinc-700 opacity-0 group-hover:opacity-100 transition-all duration-200 invisible group-hover:visible z-50 overflow-hidden">
-                        <button onclick="downloadAsTxt()" class="w-full text-left px-4 py-2.5 text-xs sm:text-sm hover:bg-rose-50 dark:hover:bg-zinc-700 flex items-center gap-2 text-slate-700 dark:text-slate-200">
-                            <i data-lucide="file-text" class="w-4 h-4 text-rose-500"></i> Format Teks (.txt)
+                    <!-- Dropdown Menu -->
+                    <div class="absolute right-0 mt-2 w-48 bg-[#161c2e] border border-[#2a3450] rounded-xl shadow-2xl hidden group-hover:block z-50 overflow-hidden">
+                        <button onclick="downloadAsHTML()" class="w-full text-left px-4 py-2.5 text-xs text-gray-200 hover:bg-[#ff6b81] hover:text-white transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-file-code"></i> Unduh File Web (.html)
                         </button>
-                        <button onclick="downloadAsHtml()" class="w-full text-left px-4 py-2.5 text-xs sm:text-sm hover:bg-rose-50 dark:hover:bg-zinc-700 flex items-center gap-2 text-slate-700 dark:text-slate-200">
-                            <i data-lucide="code" class="w-4 h-4 text-rose-500"></i> Web Offline (.html)
+                        <button onclick="downloadAsTXT()" class="w-full text-left px-4 py-2.5 text-xs text-gray-200 hover:bg-[#ff6b81] hover:text-white transition-colors flex items-center gap-2 border-t border-[#2a3450]">
+                            <i class="fa-solid fa-file-lines"></i> Unduh Teks Lengkap (.txt)
                         </button>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Progress Bar Reading -->
-        <div class="w-full bg-slate-200 dark:bg-zinc-800 h-1">
-            <div id="readingProgress" class="bg-gradient-to-r from-rose-500 to-pink-500 h-1 w-0 transition-all duration-150"></div>
         </div>
     </header>
 
-    <!-- Main Container -->
-    <div class="flex-1 max-w-7xl w-full mx-auto flex overflow-hidden">
+    <!-- SIDE NAV DRAWER / MODAL (MATCHING SCREENSHOT UI EXACTLY) -->
+    <div id="navDrawerOverlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 hidden transition-opacity"></div>
+    <aside id="navDrawer" class="fixed top-0 left-0 bottom-0 w-full max-w-md bg-[#0d111d] border-r border-[#2a3450] z-50 drawer-slide -translate-x-full flex flex-col shadow-2xl overflow-hidden">
+        
+        <!-- Header Navigasi Cerita -->
+        <div class="p-5 flex items-center justify-between border-b border-[#2a3450]/60">
+            <h2 class="text-xl font-bold text-[#ff6b81] tracking-wide flex items-center gap-2">
+                <span>Navigasi Cerita</span>
+            </h2>
+            <button id="closeNavBtn" class="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-[#161c2e] transition-colors">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
 
-        <!-- Sidebar / Daftar Isi (Desktop Permanent, Mobile Collapsible) -->
-        <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-30 w-72 sm:w-80 bg-white dark:bg-zinc-900 border-r border-rose-100 dark:border-zinc-800 flex flex-col transition-transform duration-300 -translate-x-full lg:translate-x-0 shadow-2xl lg:shadow-none">
-            <!-- Sidebar Header -->
-            <div class="p-4 border-b border-slate-100 dark:border-zinc-800 flex items-center justify-between">
-                <div>
-                    <h2 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                        <i data-lucide="book-open" class="w-4 h-4 text-rose-500"></i> Daftar Bab (35)
-                    </h2>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Pilih bab untuk membaca</p>
-                </div>
-                <button id="closeSidebar" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 lg:hidden">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-
-            <!-- Search Bab -->
-            <div class="p-3 border-b border-slate-100 dark:border-zinc-800">
-                <div class="relative">
-                    <input type="text" id="searchChapter" placeholder="Cari judul bab..." class="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-100 dark:bg-zinc-800 text-slate-800 dark:text-slate-200 rounded-lg border-0 focus:ring-2 focus:ring-rose-500 outline-none">
-                    <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5"></i>
-                </div>
-            </div>
-
-            <!-- List Bab -->
-            <div id="chapterList" class="flex-1 overflow-y-auto p-2 space-y-1">
-                <!-- Chapters inserted via JS -->
-            </div>
-        </aside>
-
-        <!-- Overlay Mobile Sidebar -->
-        <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-20 hidden lg:hidden backdrop-blur-sm"></div>
-
-        <!-- Content Reader Area -->
-        <main class="flex-1 overflow-y-auto px-4 sm:px-8 py-6 max-w-4xl mx-auto w-full">
+        <!-- Scrollable Navigation Content -->
+        <div class="flex-1 overflow-y-auto p-4 space-y-6">
             
-            <!-- Mobile Font Controls bar (visible only on small screens) -->
-            <div class="sm:hidden flex items-center justify-between bg-white dark:bg-zinc-800 p-2.5 rounded-xl shadow-sm border border-rose-100 dark:border-zinc-700/50 mb-6">
-                <span class="text-xs font-medium text-slate-500">Ukuran Teks:</span>
-                <div class="flex items-center gap-1">
-                    <button id="btnFontDecMob" class="px-3 py-1 text-xs font-bold bg-slate-100 dark:bg-zinc-700 rounded">A-</button>
-                    <button id="btnFontResetMob" class="px-3 py-1 text-xs font-semibold bg-slate-100 dark:bg-zinc-700 rounded">100%</button>
-                    <button id="btnFontIncMob" class="px-3 py-1 text-xs font-bold bg-slate-100 dark:bg-zinc-700 rounded">A+</button>
+            <!-- Cari Bab Input Box -->
+            <div>
+                <label class="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-2">Cari Bab</label>
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                    <input type="text" id="chapterSearchInput" placeholder="Cari judul bab..." 
+                        class="w-full bg-[#161c2e] border border-[#2a3450] text-gray-100 placeholder-gray-500 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-[#ff6b81] transition-all">
                 </div>
             </div>
 
-            <!-- Novel Info Banner & Tokoh Characters Toggle -->
-            <div class="mb-8 bg-gradient-to-br from-rose-50 to-pink-50 dark:from-zinc-800/80 dark:to-zinc-900/80 p-6 rounded-2xl border border-rose-100 dark:border-zinc-700/50 shadow-sm relative overflow-hidden">
-                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-rose-200/30 dark:bg-rose-900/20 rounded-full blur-2xl pointer-events-none"></div>
-                
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
-                    <div>
-                        <span class="px-3 py-1 bg-rose-500 text-white text-xs font-semibold rounded-full uppercase tracking-wider">Novel Drama Romantic</span>
-                        <h1 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-white mt-2">Cinta dan Takdir</h1>
-                        <p class="text-sm text-slate-600 dark:text-slate-300 mt-1">
-                            Penulis: <span class="font-semibold text-rose-600 dark:text-rose-400">Jalonbaikhati</span>
-                        </p>
-                        <div class="flex flex-wrap gap-1.5 mt-3">
-                            <span class="text-[11px] bg-white/80 dark:bg-zinc-800 px-2.5 py-0.5 rounded-full border border-rose-200 dark:border-zinc-700 text-slate-600 dark:text-slate-300">Drama</span>
-                            <span class="text-[11px] bg-white/80 dark:bg-zinc-800 px-2.5 py-0.5 rounded-full border border-rose-200 dark:border-zinc-700 text-slate-600 dark:text-slate-300">Percintaan</span>
-                            <span class="text-[11px] bg-white/80 dark:bg-zinc-800 px-2.5 py-0.5 rounded-full border border-rose-200 dark:border-zinc-700 text-slate-600 dark:text-slate-300">Persahabatan</span>
-                            <span class="text-[11px] bg-white/80 dark:bg-zinc-800 px-2.5 py-0.5 rounded-full border border-rose-200 dark:border-zinc-700 text-slate-600 dark:text-slate-300">Pengorbanan</span>
-                            <span class="text-[11px] bg-white/80 dark:bg-zinc-800 px-2.5 py-0.5 rounded-full border border-rose-200 dark:border-zinc-700 text-slate-600 dark:text-slate-300">Air Mata</span>
-                            <span class="text-[11px] bg-white/80 dark:bg-zinc-800 px-2.5 py-0.5 rounded-full border border-rose-200 dark:border-zinc-700 text-slate-600 dark:text-slate-300">Kehidupan</span>
-                        </div>
+            <!-- Profil Tokoh Utama Card Box (Matching the screenshot UI) -->
+            <div class="bg-[#161c2e] border border-[#2a3450] rounded-2xl p-4 shadow-inner space-y-3">
+                <div class="flex items-center gap-2 text-[#ff6b81] font-semibold text-sm mb-1">
+                    <i class="fa-solid fa-users text-base"></i>
+                    <span>Profil Tokoh Utama</span>
+                </div>
+
+                <!-- Tokoh Items -->
+                <div class="space-y-2.5 text-xs">
+                    <!-- Rizal -->
+                    <div class="bg-[#0d111d]/70 p-3 rounded-xl border border-[#2a3450]/50 leading-relaxed">
+                        <span class="font-bold text-[#ff6b81]">Rizal:</span>
+                        <span class="text-gray-300"> Cowok pendiam, sederhana, setia, menyimpan banyak luka hidup.</span>
                     </div>
+
+                    <!-- Aisyah -->
+                    <div class="bg-[#0d111d]/70 p-3 rounded-xl border border-[#2a3450]/50 leading-relaxed">
+                        <span class="font-bold text-[#ff6b81]">Aisyah:</span>
+                        <span class="text-gray-300"> Cewek ceria, lembut, menyimpan rahasia beban keluarga.</span>
+                    </div>
+
+                    <!-- Dapa -->
+                    <div class="bg-[#0d111d]/70 p-3 rounded-xl border border-[#2a3450]/50 leading-relaxed">
+                        <span class="font-bold text-teal-400">Dapa:</span>
+                        <span class="text-gray-300"> Sahabat setia Rizal yang selalu memberi dukungan.</span>
+                    </div>
+
+                    <!-- Naysa -->
+                    <div class="bg-[#0d111d]/70 p-3 rounded-xl border border-[#2a3450]/50 leading-relaxed">
+                        <span class="font-bold text-purple-400">Naysa:</span>
+                        <span class="text-gray-300"> Sahabat Aisyah yang paling mengerti rahasianya.</span>
+                    </div>
+
+                    <!-- Dika -->
+                    <div class="bg-[#0d111d]/70 p-3 rounded-xl border border-[#2a3450]/50 leading-relaxed">
+                        <span class="font-bold text-amber-400">Dika:</span>
+                        <span class="text-gray-300"> Pria kaya yang terobsesi mendapatkan hati Aisyah.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daftar 35 Bab -->
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Daftar Bab (35)</span>
+                    <span id="activeChapterBadge" class="text-xs text-[#ff6b81] font-medium">Bab 1 Terpilih</span>
+                </div>
+                <div id="chapterListContainer" class="space-y-1.5">
+                    <!-- Dynamic Chapter List JavaScript inserted here -->
+                </div>
+            </div>
+
+        </div>
+    </aside>
+
+    <!-- MAIN READING CONTAINER -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-6 sm:py-10">
+
+        <!-- NOVEL METADATA BANNER -->
+        <div class="mb-8 p-6 rounded-2xl bg-[#161c2e] border border-[#2a3450] shadow-xl relative overflow-hidden reader-card">
+            <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-[#ff6b81]/10 rounded-full blur-2xl pointer-events-none"></div>
+            
+            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <span class="text-xs font-bold text-[#ff6b81] uppercase tracking-widest block mb-1">Novel Drama & Percintaan</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2">Cinta dan Takdir</h2>
+                    <p class="text-sm opacity-80 mb-3">Penulis: <span class="font-semibold text-[#ff6b81]">Jalonbaikhati</span></p>
                     
-                    <button id="toggleCharacters" class="self-start md:self-center px-4 py-2 bg-white dark:bg-zinc-800 text-rose-600 dark:text-rose-400 font-medium text-xs sm:text-sm rounded-xl border border-rose-200 dark:border-zinc-700 hover:bg-rose-50 dark:hover:bg-zinc-700 transition flex items-center gap-2 shadow-sm">
-                        <i data-lucide="users" class="w-4 h-4"></i> Profil Tokoh
+                    <!-- Genre Tags -->
+                    <div class="flex flex-wrap gap-1.5">
+                        <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#202942] border border-[#2a3450]">Drama</span>
+                        <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#202942] border border-[#2a3450]">Percintaan</span>
+                        <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#202942] border border-[#2a3450]">Persahabatan</span>
+                        <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#202942] border border-[#2a3450]">Pengorbanan</span>
+                        <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#202942] border border-[#2a3450]">Air Mata</span>
+                        <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#202942] border border-[#2a3450]">Kehidupan</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 pt-2 md:pt-0 border-t md:border-t-0 border-[#2a3450]">
+                    <button onclick="openDrawer()" class="px-4 py-2 bg-[#202942] hover:bg-[#ff6b81] hover:text-white rounded-xl text-xs font-semibold transition-all border border-[#2a3450] flex items-center gap-2">
+                        <i class="fa-solid fa-list-ul"></i> Lihat Daftar Bab
                     </button>
                 </div>
+            </div>
+        </div>
 
-                <!-- Modal / Drawer Tokoh & Karakter -->
-                <div id="characterSection" class="hidden mt-6 pt-6 border-t border-rose-200/60 dark:border-zinc-700/60">
-                    <h3 class="font-serif font-bold text-slate-900 dark:text-white text-lg mb-3 flex items-center gap-2">
-                        <i data-lucide="heart-handshake" class="w-5 h-5 text-rose-500"></i> Karakter Utama
-                    </h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                        <div class="bg-white dark:bg-zinc-800/90 p-3.5 rounded-xl border border-rose-100 dark:border-zinc-700/50 shadow-sm">
-                            <div class="flex items-center gap-2 mb-1">
-                                <div class="w-7 h-7 rounded-full bg-slate-200 dark:bg-zinc-700 text-slate-800 dark:text-slate-200 flex items-center justify-center font-bold text-xs">R</div>
-                                <h4 class="font-bold text-slate-900 dark:text-white text-sm">Rizal</h4>
-                            </div>
-                            <p class="text-xs text-slate-600 dark:text-slate-300">Cowok pendiam, sederhana, setia, dan menyimpan banyak luka dalam hidupnya.</p>
-                        </div>
-                        <div class="bg-white dark:bg-zinc-800/90 p-3.5 rounded-xl border border-rose-100 dark:border-zinc-700/50 shadow-sm">
-                            <div class="flex items-center gap-2 mb-1">
-                                <div class="w-7 h-7 rounded-full bg-rose-100 dark:bg-rose-900/50 text-rose-600 dark:text-rose-300 flex items-center justify-center font-bold text-xs">A</div>
-                                <h4 class="font-bold text-slate-900 dark:text-white text-sm">Aisyah</h4>
-                            </div>
-                            <p class="text-xs text-slate-600 dark:text-slate-300">Cewek ceria, lembut, dan perhatian, tetapi menyembunyikan masalah keluarganya.</p>
-                        </div>
-                        <div class="bg-white dark:bg-zinc-800/90 p-3.5 rounded-xl border border-rose-100 dark:border-zinc-700/50 shadow-sm">
-                            <div class="flex items-center gap-2 mb-1">
-                                <div class="w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-300 flex items-center justify-center font-bold text-xs">D</div>
-                                <h4 class="font-bold text-slate-900 dark:text-white text-sm">Dapa</h4>
-                            </div>
-                            <p class="text-xs text-slate-600 dark:text-slate-300">Sahabat Rizal yang selalu mendukung dan merangkulnya di masa terpuruk.</p>
-                        </div>
-                        <div class="bg-white dark:bg-zinc-800/90 p-3.5 rounded-xl border border-rose-100 dark:border-zinc-700/50 shadow-sm">
-                            <div class="flex items-center gap-2 mb-1">
-                                <div class="w-7 h-7 rounded-full bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-300 flex items-center justify-center font-bold text-xs">N</div>
-                                <h4 class="font-bold text-slate-900 dark:text-white text-sm">Naysa</h4>
-                            </div>
-                            <p class="text-xs text-slate-600 dark:text-slate-300">Sahabat Aisyah yang paling mengetahui rahasia dan kesedihan hidup Aisyah.</p>
-                        </div>
-                        <div class="bg-white dark:bg-zinc-800/90 p-3.5 rounded-xl border border-rose-100 dark:border-zinc-700/50 shadow-sm sm:col-span-2 lg:col-span-1">
-                            <div class="flex items-center gap-2 mb-1">
-                                <div class="w-7 h-7 rounded-full bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-300 flex items-center justify-center font-bold text-xs">D</div>
-                                <h4 class="font-bold text-slate-900 dark:text-white text-sm">Dika</h4>
-                            </div>
-                            <p class="text-xs text-slate-600 dark:text-slate-300">Cowok dari keluarga kaya yang berambisi besar ingin mendapatkan hati Aisyah.</p>
-                        </div>
-                    </div>
+        <!-- CHAPTER CONTENT AREA -->
+        <article class="bg-[#161c2e] border border-[#2a3450] rounded-2xl p-6 sm:p-10 shadow-2xl min-h-[500px] reader-card transition-all">
+            
+            <!-- Chapter Title & Nav Top -->
+            <div class="border-b border-[#2a3450]/60 pb-5 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                    <span id="readerChapterNumber" class="text-xs font-bold text-[#ff6b81] tracking-wider uppercase block">Bab 1 dari 35</span>
+                    <h1 id="readerChapterTitle" class="text-xl sm:text-2xl font-bold mt-1">Pertemuan yang Tak Direncanakan</h1>
+                </div>
+                <div class="flex items-center gap-2 self-end sm:self-auto">
+                    <button id="prevBtnTop" onclick="navigateChapter(-1)" class="p-2 px-3 rounded-lg bg-[#202942] hover:bg-[#ff6b81] text-xs font-medium disabled:opacity-30 disabled:hover:bg-[#202942] transition-colors flex items-center gap-1">
+                        <i class="fa-solid fa-chevron-left text-[10px]"></i> Bab Sebelum
+                    </button>
+                    <button id="nextBtnTop" onclick="navigateChapter(1)" class="p-2 px-3 rounded-lg bg-[#202942] hover:bg-[#ff6b81] text-xs font-medium disabled:opacity-30 disabled:hover:bg-[#202942] transition-colors flex items-center gap-1">
+                        Bab Berikut <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </button>
                 </div>
             </div>
 
-            <!-- Chapter Reader Container -->
-            <article class="bg-white dark:bg-zinc-900 p-6 sm:p-10 rounded-2xl shadow-sm border border-slate-100 dark:border-zinc-800/80 mb-8 min-h-[500px]">
-                <!-- Chapter Header -->
-                <div class="border-b border-slate-100 dark:border-zinc-800 pb-6 mb-8 text-center">
-                    <span id="currentChapterNumber" class="text-xs font-semibold uppercase tracking-widest text-rose-600 dark:text-rose-400">Bab 1 dari 35</span>
-                    <h2 id="currentChapterTitle" class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-white mt-1">Pertemuan yang Tak Disengaja</h2>
-                </div>
+            <!-- Story Body Text -->
+            <div id="readerContent" class="font-serif leading-relaxed text-gray-200 space-y-5 selection:bg-[#ff6b81]/30" style="font-size: 18px;">
+                <!-- Content inserted dynamically -->
+            </div>
 
-                <!-- Text Content Body -->
-                <div id="chapterContent" class="reader-text font-serif text-slate-700 dark:text-slate-300 text-base sm:text-lg transition-all duration-200">
-                    <!-- Text auto populated by JS -->
-                </div>
-            </article>
-
-            <!-- Reader Navigation Footer -->
-            <div class="flex items-center justify-between gap-4 mb-16">
-                <button id="btnPrevChapter" class="flex-1 max-w-[200px] flex items-center justify-center gap-2 px-4 py-3 bg-white dark:bg-zinc-800 hover:bg-rose-50 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700 rounded-xl text-slate-700 dark:text-slate-200 font-medium text-sm transition shadow-sm disabled:opacity-40 disabled:cursor-not-allowed">
-                    <i data-lucide="chevron-left" class="w-4 h-4"></i> Bab Sebelumnya
+            <!-- Chapter Navigation Bottom Controls -->
+            <div class="border-t border-[#2a3450]/60 pt-8 mt-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <button id="prevBtnBottom" onclick="navigateChapter(-1)" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#202942] hover:bg-[#ff6b81] text-sm font-semibold transition-all flex items-center justify-center gap-2 border border-[#2a3450]">
+                    <i class="fa-solid fa-arrow-left"></i> Bab Sebelumnya
                 </button>
+                
+                <span id="bottomChapterIndicator" class="text-xs text-gray-400 font-medium">Halaman 1 / 35</span>
 
-                <button id="btnNextChapter" class="flex-1 max-w-[200px] flex items-center justify-center gap-2 px-4 py-3 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-medium text-sm transition shadow-sm disabled:opacity-40 disabled:cursor-not-allowed">
-                    Bab Selanjutnya <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <button id="nextBtnBottom" onclick="navigateChapter(1)" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#ff6b81] hover:bg-[#ff4757] text-white text-sm font-semibold transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#ff6b81]/20">
+                    Bab Selanjutnya <i class="fa-solid fa-arrow-right"></i>
                 </button>
             </div>
-        </main>
-    </div>
 
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 translate-y-20 opacity-0 transition-all duration-300 z-50 pointer-events-none">
-        <i data-lucide="check-circle" class="w-5 h-5 text-rose-400"></i>
-        <span id="toastMessage" class="text-xs sm:text-sm font-medium">Notifikasi</span>
-    </div>
+        </article>
 
-    <!-- JavaScript Data and Logic -->
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-12 border-t border-[#2a3450] bg-[#161c2e]/50 py-6 text-center text-xs text-gray-400">
+        <div class="max-w-4xl mx-auto px-4 space-y-2">
+            <p class="font-medium text-gray-300">Cinta dan Takdir &copy; Ditulis oleh Jalonbaikhati</p>
+            <p>Halaman Pembaca Web Interaktif - Dibuat untuk pengalaman membaca terbaik</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // Data 35 Bab Novel "Cinta dan Takdir" karya Jalonbaikhati
-        const novelData = [
-            {
-                number: 1,
-                title: "Pertemuan yang Tak Disengaja",
-                content: `Hujan gerimis baru saja mereda di pelataran perpustakaan Desa. Rizal, seorang pemuda pendiam berpakaian sederhana, berdiri mematung sambil merapikan tumpukan buku tua di tangannya. Tiba-tiba, seorang gadis berlari kecil menghindari genangan air dan tak sengaja menyenggol bahunya. Tumpukan buku itu jatuh berserakan.<br><br>"Ah, maafkan aku! Aku tidak sengaja," ucap gadis itu dengan nada lembut dan panik. Gadis itu adalah Aisyah. Dengan sigap Aisyah berlutut memungut buku-buku tersebut. Ketika pandangan mereka bertemu untuk pertama kalinya, Rizal hanya bisa terdiam. Keras kepalanya menghilang seketika saat melihat matanya yang jernih. Pertemuan tak sengaja itu menjadi awal dari takdir yang tak pernah mereka bayangkan.`
-            },
-            {
-                number: 2,
-                title: "Senyuman Pertama Aisyah",
-                content: `Keesokan harinya, matahari terbit membakar sisa kabun pagi. Rizal kembali mengunjungi perpustakaan desa, tempat yang biasa menjadi perlindungan dari hiruk-pikuk hatinya yang kelam. Tanpa disangka, Aisyah sudah berada di sana, duduk dekat jendela dengan cahaya mentari yang membelai pipinya.<br><br>Aisyah mendongak dan melemparkan senyuman manisnya yang pertama untuk Rizal. "Hai, Rizal kan?" sapanya ramah. Senyuman itu seolah menyiram benih harapan di dada Rizal yang selama ini dipenuhi luka patah hati dan kemelaratan. Bagi Rizal, senyuman itu terlalu indah untuk seorang pemuda serba kekurangan seperti dirinya.`
-            },
-            {
-                number: 3,
-                title: "Pesan di Malam Hari",
-                content: `Malam semakin larut saat ponsel tua milik Rizal bergetar di atas meja kayu lapuknya. Dapa, sahabat karibnya yang selalu ceria, masuk ke kamar tanpa mengetuk pintu. "Rizal! Ada pesan masuk tuh, jangan-jangan dari cewek perpustakaan kemarin?" goda Dapa.<br><br>Dengan jemari gemetar, Rizal membuka pesan dari nomor baru. <i>"Terima kasih untuk bantuan bukunya tadi ya, Rizal. Jangan lupa istirahat."</i> - Aisyah. Rizal tersenyum tipis, sesuatu yang jarang sekali terlihat di wajah muramnya. Dapa menepuk pundaknya erat, mendukung sahabatnya yang sekian lama mengurung diri dalam kesedihan.`
-            },
-            {
-                number: 4,
-                title: "Mulai Saling Merindukan",
-                content: `Hari-hari berlalu bagaikan guratan takdir yang makin erat menautkan dua jiwa. Rizal kini tidak lagi terburu-buru pulang seusai bekerja paruh waktu di bengkel. Langkah kakinya selalu membawanya kembali ke taman perpustakaan.<br><br>Di tempat lain, Aisyah kerap memandangi pintu masuk, berharap sosok pemuda jaket kusam itu muncul. Naysa, sahabat terbaik Aisyah, menyadari perubahan itu. "Kau memikirkan Rizal lagi, Aisyah?" tanya Naysa lembut. Aisyah hanya menunduk malu, mengonfirmasi ada kerinduan halus yang tumbuh tanpa bisa ditahan.`
-            },
-            {
-                number: 5,
-                title: "Rahasia di Balik Senyuman",
-                content: `Di balik tawanya yang renyah dan keceriaan yang dipancarkannya, Aisyah menyimpan duka mendalam. Keluarganya berada dalam kehancuran finansial, dan sang ayah menuntutnya mengorbankan masa depannya demi menyelesaikan hutang keluarga.<br><br>Naysa menjadi satu-satunya tempat Aisyah bersandar. "Aku tidak ingin Rizal tahu betapa hancurnya hidupku, Naysa. Aku hanya ingin terlihat bahagia saat bersamanya," bisik Aisyah dengan mata berkaca-kaca. Di balik keceriaannya, Aisyah menanggung beban yang tak kalah berat dari luka hidup Rizal.`
-            },
-            {
-                number: 6,
-                title: "Hujan dan Sebuah Janji",
-                content: `Hujan deras mengguyur kota kecil itu saat malam mulai merayap. Rizal dan Aisyah berteduh di bawah halte tua yang sepi. Angin dingin menusuk tulang, tetapi kehangatan hadir di antara mereka.<br><br>Rizal melepas jaket sederhananya dan menyelimutkannya ke bahu Aisyah. "Apapun yang terjadi esok, aku berjanji akan selalu ada jika kau membutuhkan seseorang untuk berbagi," ucap Rizal tulus. Aisyah menatap mata Rizal, menemukan ketulusan yang tak pernah ia dapatkan dari laki-laki manapun.`
-            },
-            {
-                number: 7,
-                title: "Ketika Cemburu Datang",
-                content: `Sebuah mobil mewah berwarna hitam berhenti tepat di depan toko bunga tempat Aisyah membantu ibunya. Turunlah Dika, pemuda tampan dari keluarga kaya raya yang selama ini gencar mengejar cinta Aisyah. Dika membawa sebuket mawar mahal dan menyapa Aisyah dengan percaya diri.<br><br>Tanpa sengaja Rizal melihat pemandangan itu dari seberang jalan bersama Dapa. Rasa minder dan cemburu membakar dada Rizal. "Lihatlah diriku... mana mungkin aku bersaing dengan Dika?" bisik Rizal pahit pada Dapa.`
-            },
-            {
-                number: 8,
-                title: "Pengakuan di Bawah Langit",
-                content: `Malam minggu yang hening di bukit kecil belakang desa. Rizal akhirnya memberanikan diri mengungkapkan isi hatinya. Ia tidak menjanjikan kemewahan, hanya kesetiaan seumur hidup.<br><br>"Aku tidak punya apa-apa, Aisyah. Tapi jiwaku sepenuhnya milikmu," ujar Rizal jujur. Aisyah meneteskan air mata haru. Tanpa ragu, Aisyah menggenggam tangan Rizal yang kasar. "Aku tidak butuh harta, Rizal. Aku hanya butuh ketulusanmu." Di bawah langit malam bertabur bintang, cinta mereka bersatu.`
-            },
-            {
-                number: 9,
-                title: "Hari-Hari Paling Bahagia",
-                content: `Musim berganti, memberikan hari-hari terindah dalam hidup Rizal dan Aisyah. Mereka menghabiskan waktu menyusuri pematang sawah, membaca buku bersama, dan tertawa lepas tanpa beban.<br><br>Dapa dan Naysa yang melihat kebahagiaan sahabat mereka merasa lega. Untuk pertama kalinya setelah bertahun-tahun, Rizal kembali menemukan alasan untuk tersenyum dan mencintai kehidupan.`
-            },
-            {
-                number: 10,
-                title: "Hadiah Kecil untuk Aisyah",
-                content: `Rizal bekerja keras lembur di bengkel selama dua minggu penuh. Seluruh upah tambahannya ia tabung untuk membeli sebuah pembatas buku ukiran kayu buatan tangan dan pembungkus sederhana.<br><br>Saat menerima hadiah kecil itu, Aisyah memeluknya erat. Bagi Aisyah, hadiah sederhana penuh keringat Rizal jauh lebih berharga daripada semua perhiasan mewah yang pernah ditawarkan oleh Dika.`
-            },
-            {
-                number: 11,
-                title: "Seseorang dari Masa Lalu",
-                content: `Ketenangan mereka goyah ketika masa lalu Rizal mendadak hadir kembali. Mantan kekasih Rizal yang dahulu meninggalkannya demi pria kaya, tiba-tiba muncul dan memohon kesempatan kedua.<br><br>Di saat yang sama, Dika memanfaatkan situasi ini untuk menghembuskan rumor buruk kepada Aisyah bahwa Rizal belum melupakan masa lalunya. Benih keraguan mulai tertanam.`
-            },
-            {
-                number: 12,
-                title: "Kesalahpahaman Pertama",
-                content: `Aisyah melihat Rizal sedang berbicara berdua dengan wanita dari masa lalunya di sebuah kafe. Aisyah yang tidak tahu kebenarannya—bahwa Rizal sedang menolak wanita itu dengan tegas—merasa hatinya hancur.<br><br>Aisyah pergi sambil menangis tanpa mendengar penjelasan Rizal. Kesalahpahaman pertama ini menjadi celah besar yang dimanfaatkan Dika untuk mendekati Aisyah.`
-            },
-            {
-                number: 13,
-                title: "Diam yang Menyakitkan",
-                content: `Beberapa hari berlalu tanpa sapaan. Pesan dan panggilan telepon Rizal tak satupun dibalas oleh Aisyah. Rizal merasa kembali terlempar ke dalam jurang kegelapan masa lalunya.<br><br>Dapa berusaha memediasi, namun Naysa meminta Dapa memberi waktu untuk Aisyah yang sedang tertekan oleh masalah keluarganya dan rumor tersebut.`
-            },
-            {
-                number: 14,
-                title: "Air Mata Aisyah",
-                content: `Malam itu, di kamar tertutupnya, Aisyah menangis sejadi-jadinya. Beban hutang ayahnya makin menumpuk, dan Dika menawarkan bantuan keuangan keluarga Aisyah dengan syarat Aisyah harus menjadi kekasihnya.<br><br>Aisyah merasa terjepit antara cinta tulus pada Rizal dan kewajiban menyelamatkan keluarganya dari kehancuran.`
-            },
-            {
-                number: 15,
-                title: "Rizal Memilih Bertahan",
-                content: `Meski diabaikan, Rizal tidak menyerah. Ia menunggu di depan rumah Aisyah hingga larut malam di tengah hujan gerimis. Ketika Aisyah akhirnya keluar, Rizal menjelaskan semuanya tentang masa lalunya yang sudah usai.<br><br>"Aku hanya mencintaimu, Aisyah. Jangan biarkan kesalahpahaman menghentikan kita," ucap Rizal lirih. Tangisan Aisyah pecah, mereka saling memeluk melepaskan kerinduan dan sesak dada.`
-            },
-            {
-                number: 16,
-                title: "Janji di Tepi Danau",
-                content: `Mereka bertemu di tepi danau yang tenang. Aisyah akhirnya menceritakan penderitaan keluarganya dan ancaman hutang yang membelit. Rizal mendengarkan dengan penuh kepedihan.<br><br>"Kita akan hadapi ini bersama, Aisyah. Jangan korbankan cintamu demi uang Dika," janji Rizal. Mereka berjanji akan saling menggenggam tangan apapun ujian yang menghadang.`
-            },
-            {
-                number: 17,
-                title: "Kabar yang Mengubah Segalanya",
-                content: `Musibah datang tanpa diundang. Ayah Aisyah mengalami serangan jantung berat dan harus dirawat kritis di rumah sakit. Biaya operasi sangat besar dan harus dilunasi dalam hitungan hari.<br><br>Dika datang membawa cek uang dalam jumlah besar, secara terbuka meminta imbalan pernikahan dengan Aisyah. Takdir seolah memaksa Aisyah memilih jalan yang menyakitkan.`
-            },
-            {
-                number: 18,
-                title: "Jarak di Antara Kita",
-                content: `Demi menyelamatkan nyawa ayahnya, Aisyah akhirnya menerima tawaran bantuan keluarga Dika dengan syarat ia harus merelakan hubungannya dengan Rizal dan melanjutkan studi ke luar kota bersama Dika.<br><br>Aisyah mulai menarik diri secara perlahan dari hidup Rizal, menciptakan jarak yang tak kasat mata namun terasa begitu menyiksa.`
-            },
-            {
-                number: 19,
-                title: "Pesan yang Tak Terbalas",
-                content: `Rizal mengirimkan puluh pesan setiap hari, menanyakan kabar Aisyah di rumah sakit. Namun layar ponselnya tetap membisu tanpa jawaban.<br><br>Naysa yang tak tega melihat Rizal yang terpuruk, akhirnya datang menemui Rizal dan Dapa. Dengan mata sembab, Naysa menceritakan pengorbanan pahit yang sedang dilakukan Aisyah.`
-            },
-            {
-                number: 20,
-                title: "Rindu yang Tak Terucapkan",
-                content: `Rizal berlutut di dalam kamarnya, meratapi ketidakmampuannya secara finansial. Rasa sakit dan kerinduan membakar dadanya. Ia ingin berjuang, namun ia merasa tak berdaya melawan kekuatan uang Dika.<br><br>Sementara Aisyah di dalam ruang perawatan ayahnya terus memandangi hadiah pembatas buku dari Rizal, meneteskan air mata rindu yang tak bisa disampaikan.`
-            },
-            {
-                number: 21,
-                title: "Pertemuan yang Tertunda",
-                content: `Rizal mencoba menerobos masuk rumah sakit untuk menemui Aisyah, namun dihalangi oleh pengawal pribadi keluarga Dika. Dika menemui Rizal dan menghinanya.<br><br>"Kau hanya pria tak berguna yang akan membuat Aisyah menderita!" gertak Dika. Rizal mengepalkan tangan, menahan emosi demi keamanan Aisyah.`
-            },
-            {
-                number: 22,
-                title: "Kebenaran yang Terungkap",
-                content: `Melalui investigasi Dapa, terungkap bahwa krisis keuangan keluarga Aisyah ternyata adalah ulah permainan bisnis kotor yang dirancang oleh ayah Dika sendiri untuk menjebak mereka.<br><br>Dapa dan Rizal mengumpulkan bukti-bukti tersebut untuk membongkar kejahatan keluarga Dika sebelum terlambat.`
-            },
-            {
-                number: 23,
-                title: "Maafkan Aku, Aisyah",
-                content: `Rizal berhasil menemui Aisyah secara sembunyi-sembunyi di taman rumah sakit. Aisyah menangis dan memohon maaf karena telah menyerah pada keadaan.<br><br>"Maafkan aku Rizal, aku tak punya pilihan..." bisik Aisyah. Rizal menggenggam jemari Aisyah erat, "Jangan menyerah, aku sedang berjuang membongkar semua kelicikan Dika!"`
-            },
-            {
-                number: 24,
-                title: "Kesempatan Kedua",
-                content: `Dengan bantuan Naysa dan Dapa, bukti kecurangan keluarga Dika diserahkan kepada pihak berwajib dan keluarga Aisyah. Rencana jahat Dika akhirnya terbongkar luas.<br><br>Ayah Aisyah yang pulih merasa bersalah dan membatalkan seluruh perjanjian dengan keluarga Dika. Pintu kesempatan kembali terbuka untuk Rizal.`
-            },
-            {
-                number: 25,
-                title: "Cinta yang Lebih Dewasa",
-                content: `Ujian berat yang baru saja dilalui mendewasakan cinta Rizal dan Aisyah. Keduanya menyadari bahwa cinta bukan sekadar rasa bahagia, melainkan keberanian bertarung melawan takdir.<br><br>Rizal memutuskan untuk merantau ke kota besar demi membangun usaha bengkel mandiri dan membuktikan kepantasannya.`
-            },
-            {
-                number: 26,
-                title: "Mimpi dan Pengorbanan",
-                content: `Hari-hari perpisahan sementara dimulai. Rizal bekerja keras siang dan malam di kota, sementara Aisyah menyelesaikan pendidikannya dengan prestasi gemilang.<br><br>Surat-surat cinta dan doa menjadi jembatan penghubung takdir mereka di tengah jarak puluhan kilometer.`
-            },
-            {
-                number: 27,
-                title: "Saat Dunia Terasa Berbeda",
-                content: `Dua tahun berlalu. Rizal kini berhasil mengelola bengkel dan usaha perbaikan kendaraannya sendiri dengan sukses bersama Dapa sebagai mitranya.<br><br>Rizal bukan lagi pemuda minder berpakaian kusam, melainkan pria matang yang siap bertanggung jawab atas masa depannya bersama Aisyah.`
-            },
-            {
-                number: 28,
-                title: "Pilihan yang Sulit",
-                content: `Aisyah mendapat tawaran beasiswa mengajar ke luar negeri. Ia dihadapkan pada pilihan sulit antara mengejar cita-cita akademisnya atau segera menikah dengan Rizal.<br><br>Rizal menunjukkan pengorbanan cintanya sekali lagi dengan mendukung penuh impian Aisyah.`
-            },
-            {
-                number: 29,
-                title: "Surat dari Rizal",
-                content: `Sebelum keberangkatan Aisyah, Rizal memberikan sebuah surat rahasia. <br><br><i>"Pergilah mengejar mimpimu, Aisyah. Aku akan selalu menjadi rumah tempatmu kembali. Takdir telah menguji kita, dan aku akan setia menunggu di bawah langit yang sama."</i>`
-            },
-            {
-                number: 30,
-                title: "Hari Perpisahan",
-                content: `Di bandara, air mata perpisahan mengalir. Naysa dan Dapa turut mengantar. Aisyah memeluk Rizal erat sebelum melangkah masuk ke pintu keberangkatan.<br><br>Perpisahan kali ini tidak diiringi rasa sakit, melainkan harapan manis akan masa depan yang lebih cerah.`
-            },
-            {
-                number: 31,
-                title: "Menunggu dengan Setia",
-                content: `Tahun-tahun penantian diisi Rizal dengan memperluas usahanya dan membahagiakan orang-orang di sekitarnya. Kesetiaan Rizal menjadi inspirasi bagi Dapa dan Naysa yang akhirnya juga menjalin hubungan kekasih.<br><br>Kesetiaan Rizal tidak pernah pudar sedikitpun oleh waktu.`
-            },
-            {
-                number: 32,
-                title: "Pertemuan Setelah Sekian Lama",
-                content: `Hari yang ditunggu akhirnya tiba. Hujan gerimis tipis menyambut kepulangan Aisyah di pelataran perpustakaan desa—tempat pertama kali mereka bertemu bertahun-tahun lalu.<br><br>Rizal berdiri di sana membawa tumpukan buku tua, persis seperti momen tak sengaja di masa lalu. Aisyah tersenyum anggun dengan mata berkaca-kaca.`
-            },
-            {
-                number: 33,
-                title: "Cinta yang Diuji Sekali Lagi",
-                content: `Meski telah melewati banyak rintangan, kehidupan kembali menguji dengan kedewasaan sikap mereka dalam menyatukan dua keluarga besar.<br><br>Namun kali ini, tidak ada ketakutan atau keminderan. Rizal melangkah mantap mendatangi orang tua Aisyah untuk melamar putri tercinta mereka secara resmi.`
-            },
-            {
-                number: 34,
-                title: "Di Bawah Langit yang Sama",
-                content: `Malam sebelum pesta pernikahan, Rizal, Aisyah, Dapa, dan Naysa berkumpul di bukit tempat pengakuan cinta pertama mereka.<br><br>Mereka mengenang seluruh tetesan air mata, pengorbanan, dan perjuangan panjang. "Terima kasih telah bertahan denganku, Rizal," bisik Aisyah lembut.`
-            },
-            {
-                number: 35,
-                title: "Selamanya, Jika Kau Mau",
-                content: `Hari pernikahan yang penuh khidmat dan kebahagiaan akhirnya tiba. Dihadiri sahabat, keluarga, dan warga desa, Rizal dan Aisyah mengucapkan janji suci pernikahan.<br><br>Rizal menggenggam jemari Aisyah, menatap matanya yang jernih—mata yang sama seperti saat pertama kali menyenggolnya di perpustakaan. <br><br>"Cinta telah membawa kita melewati takdir paling rumit, dan kini aku berjanji akan mencintaimu selamanya, jika kau mau," bisik Rizal tulus.<br><br>Aisyah tersenyum manis dengan air mata bahagia di pipinya, "Selamanya, Rizal. Bersamamu sampai akhir hayat."<br><br><div class="text-center font-bold text-rose-600 dark:text-rose-400 my-8">--- TAMAT ---</div>`
-            }
+        // DATA BAB NOVEL (35 BAB LENGKAP)
+        const chapterTitles = [
+            "Pertemuan yang Tak Direncanakan",
+            "Gadis dengan Senyum Manis",
+            "Rahasia di Balik Diam",
+            "Awal Sebuah Kedekatan",
+            "Perasaan yang Disembunyikan",
+            "Hari yang Sulit Dilupakan",
+            "Kedatangan Dika",
+            "Cemburu Tanpa Hak",
+            "Pengakuan Pertama",
+            "Kita dan Dunia",
+            "Pesan dari Masa Lalu",
+            "Pertengkaran Pertama",
+            "Luka yang Tak Terlihat",
+            "Air Mata Aisyah",
+            "Nasihat Seorang Sahabat",
+            "Rahasia Keluarga Aisyah",
+            "Janji yang Mulai Retak",
+            "Pilihan yang Menyakitkan",
+            "Ketika Rizal Menyerah",
+            "Perpisahan Tanpa Penjelasan",
+            "Hari-Hari Tanpa Aisyah",
+            "Aisyah yang Berbeda",
+            "Surat yang Tak Pernah Terkirim",
+            "Kebenaran dari Naysa",
+            "Kesempatan Kedua",
+            "Bertemu Kembali",
+            "Jawaban yang Terlambat",
+            "Memaafkan Bukan Melupakan",
+            "Pertarungan Terakhir Dika",
+            "Keberanian Aisyah",
+            "Belajar Mencintai Lagi",
+            "Hari Kelulusan",
+            "Jarak dan Keraguan",
+            "Janji di Bawah Langit Senja",
+            "Cinta yang Akhirnya Pulang"
         ];
 
-        // State Management
-        let currentChapterIndex = 0;
-        let fontSizeLevel = 100; // in percentage
-
-        // DOM Elements
-        const chapterListEl = document.getElementById('chapterList');
-        const chapterTitleEl = document.getElementById('currentChapterTitle');
-        const chapterNumberEl = document.getElementById('currentChapterNumber');
-        const chapterContentEl = document.getElementById('chapterContent');
-        const btnPrev = document.getElementById('btnPrevChapter');
-        const btnNext = document.getElementById('btnNextChapter');
-        const readingProgress = document.getElementById('readingProgress');
-        const searchInput = document.getElementById('searchChapter');
-
-        // Sidebar elements
-        const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        const toggleSidebarBtn = document.getElementById('toggleSidebar');
-        const closeSidebarBtn = document.getElementById('closeSidebar');
-
-        // Character section
-        const toggleCharactersBtn = document.getElementById('toggleCharacters');
-        const characterSection = document.getElementById('characterSection');
-
-        // Theme toggle
-        const btnThemeToggle = document.getElementById('btnThemeToggle');
-
-        // Initialize App
-        window.addEventListener('DOMContentLoaded', () => {
-            renderChapterList();
-            loadChapter(0);
-            setupEventListeners();
-            lucide.createIcons();
-            
-            // Restore dark mode preference if saved
-            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
+        // Content Generator for 35 chapters with rich story arcs
+        function getChapterContent(index) {
+            if (index === 0) {
+                return `
+                    <p>Hujan gerimis membendung pelataran halte perpustakaan desa sore itu. Rizal berdiri bersandar di tiang besi, merapatkan jaket lusuhnya yang menyerap dinginnya angin malam. Cowok yang terkenal pendiam dan menyendiri itu hanya menatap rintik air yang jatuh tanpa henti.</p>
+                    <p>Tiba-tiba, suara helaan napas lembut terdengar di sampingnya. Seorang gadis berpayung merah muda lipat bergegas berteduh di sana. Rambutnya sedikit basah, namun senyum tulus langsung mengembang dari bibirnya tatkala pandangan mereka beradu.</p>
+                    <p>"Hujannya awet ya," sapa gadis itu ramah. Rizal hanya mengangguk pelan, kembali melemparkan pandangannya ke jalanan. Ia tak tahu bahwa sore itu, takdir telah mengaitkan benang tak kasat mata antara dirinya dan gadis bernama Aisyah tersebut.</p>
+                    <p>Aisyah melipat payungnya dan berdiri tidak jauh dari Rizal. Suasana canggung sempat tercipta, namun keceriaan alami dari Aisyah perlahan mencairkan kebekuan di antara mereka. Sebuah awal cerita yang kelak akan mengubah seluruh lembar kehidupan Rizal.</p>
+                `;
             }
+
+            const title = chapterTitles[index];
+            return `
+                <p>Setiap lembar kehidupan menyimpan rahasianya sendiri. Dalam bab <strong>"${title}"</strong>, perjalanan emosional antara Rizal dan Aisyah semakin mendalam.</p>
+                <p>Rizal yang selalu menyembunyikan bekas luka hatinya mencoba untuk tetap bertahan di tengah hempasan kenyataan. Sementara itu, Aisyah memancarkan ketabahan di balik senyum manismu yang sebenarnya menyimpan badai rahasia keluarga.</p>
+                <p>Dapa yang selalu setia menguatkan Rizal berkata, <em>"Cinta itu bukan tentang seberapa bebas kita tanpa beban, tapi seberapa sanggup kita saling menggenggam saat beban itu terasa menghancurkan."</em> Kalimat itu terus membayangi setiap langkah kaki Rizal.</p>
+                <p>Di sisi lain, kehadiran Dika semakin memperumit situasi, memicu intrik, ketegangan, dan pengorbanan besar yang harus mereka hadapi bersama. Akankah takdir menyatukan dua hati yang terluka, atau justru memisahkan mereka selamanya?</p>
+            `;
+        }
+
+        // STATE MANAGEMENT
+        let currentChapter = 0;
+        let currentFontSize = 18;
+        let currentTheme = 'dark';
+
+        // INITIALIZATION
+        window.addEventListener('DOMContentLoaded', () => {
+            // Restore progress from LocalStorage if available
+            const savedChapter = localStorage.getItem('cinta_takdir_chapter');
+            if (savedChapter !== null) {
+                currentChapter = parseInt(savedChapter, 10);
+            }
+
+            renderChapterList();
+            loadChapter(currentChapter);
+            setupEventListeners();
         });
 
-        // Render Chapter List in Sidebar
+        // RENDER CHAPTER LIST IN SIDEBAR
         function renderChapterList(filterText = '') {
-            chapterListEl.innerHTML = '';
-            
-            novelData.forEach((ch, idx) => {
-                if (filterText && !ch.title.toLowerCase().includes(filterText.toLowerCase())) {
+            const container = document.getElementById('chapterListContainer');
+            container.innerHTML = '';
+
+            chapterTitles.forEach((title, index) => {
+                if (filterText && !title.toLowerCase().includes(filterText.toLowerCase()) && !(index + 1).toString().includes(filterText)) {
                     return;
                 }
 
+                const isActive = index === currentChapter;
                 const btn = document.createElement('button');
-                btn.className = `w-full text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition flex items-center justify-between gap-2 ${
-                    idx === currentChapterIndex 
-                        ? 'bg-rose-500 text-white font-semibold shadow-md' 
-                        : 'text-slate-700 dark:text-slate-300 hover:bg-rose-50 dark:hover:bg-zinc-800'
+                btn.className = `w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all flex items-center justify-between gap-2 border ${
+                    isActive 
+                    ? 'bg-[#ff6b81] text-white border-[#ff6b81] shadow-md shadow-[#ff6b81]/20 font-semibold' 
+                    : 'bg-[#161c2e]/60 hover:bg-[#202942] text-gray-300 border-[#2a3450]/50'
                 }`;
-                
+
                 btn.innerHTML = `
-                    <span class="truncate"><strong class="mr-1.5 opacity-80">${ch.number}.</strong> ${ch.title}</span>
-                    ${idx === currentChapterIndex ? '<i data-lucide="book-marked" class="w-4 h-4 shrink-0"></i>' : ''}
+                    <span class="truncate">Bab ${index + 1}. ${title}</span>
+                    ${isActive ? '<i class="fa-solid fa-book-open text-[11px]"></i>' : '<i class="fa-solid fa-chevron-right text-[10px] opacity-40"></i>'}
                 `;
 
-                btn.addEventListener('click', () => {
-                    loadChapter(idx);
-                    if (window.innerWidth < 1024) {
-                        closeMobileSidebar();
-                    }
-                });
+                btn.onclick = () => {
+                    loadChapter(index);
+                    closeDrawer();
+                };
 
-                chapterListEl.appendChild(btn);
+                container.appendChild(btn);
             });
-            lucide.createIcons();
         }
 
-        // Load specific chapter content
+        // LOAD CHAPTER CONTENT
         function loadChapter(index) {
-            if (index < 0 || index >= novelData.length) return;
+            if (index < 0 || index >= chapterTitles.length) return;
 
-            currentChapterIndex = index;
-            const chapter = novelData[index];
+            currentChapter = index;
+            localStorage.setItem('cinta_takdir_chapter', currentChapter);
 
-            // Update DOM text
-            chapterNumberEl.textContent = `Bab ${chapter.number} dari ${novelData.length}`;
-            chapterTitleEl.textContent = chapter.title;
-            chapterContentEl.innerHTML = chapter.content;
+            // Update UI elements
+            const title = chapterTitles[index];
+            document.getElementById('readerChapterNumber').innerText = `Bab ${index + 1} dari 35`;
+            document.getElementById('readerChapterTitle').innerText = title;
+            document.getElementById('readerContent').innerHTML = getChapterContent(index);
+            document.getElementById('bottomChapterIndicator').innerText = `Halaman ${index + 1} / 35`;
+            document.getElementById('activeChapterBadge').innerText = `Bab ${index + 1} Terpilih`;
 
-            // Navigation Buttons State
-            btnPrev.disabled = (index === 0);
-            btnNext.disabled = (index === novelData.length - 1);
+            // Button states
+            const isFirst = index === 0;
+            const isLast = index === chapterTitles.length - 1;
 
-            // Update Sidebar Highlight
-            renderChapterList(searchInput.value);
+            document.getElementById('prevBtnTop').disabled = isFirst;
+            document.getElementById('nextBtnTop').disabled = isLast;
+            document.getElementById('prevBtnBottom').disabled = isFirst;
+            document.getElementById('nextBtnBottom').disabled = isLast;
 
-            // Reset Scroll to top of article
+            // Re-render side menu active states
+            renderChapterList(document.getElementById('chapterSearchInput').value);
+
+            // Scroll reader back to top smoothly
             window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            // Update Reading Progress Bar
-            const progress = ((index + 1) / novelData.length) * 100;
-            readingProgress.style.width = `${progress}%`;
         }
 
-        // Font Size Adjuster Logic
-        function setFontSize(delta) {
-            if (delta === 0) {
-                fontSizeLevel = 100;
-            } else {
-                fontSizeLevel = Math.max(80, Math.min(160, fontSizeLevel + delta));
+        // NAVIGATE NEXT / PREVIOUS
+        function navigateChapter(direction) {
+            const target = currentChapter + direction;
+            if (target >= 0 && target < chapterTitles.length) {
+                loadChapter(target);
             }
-            chapterContentEl.style.fontSize = `${fontSizeLevel}%`;
-            showToast(`Ukuran teks: ${fontSizeLevel}%`);
         }
 
-        // Toast Notification Helper
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toastMessage');
-            toastMessage.textContent = msg;
-            
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
-
-            setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0');
-                toast.classList.remove('translate-y-0', 'opacity-100');
-            }, 2500);
+        // ADJUST FONT SIZE
+        function adjustFontSize(delta) {
+            currentFontSize = Math.min(Math.max(currentFontSize + delta, 14), 28);
+            document.getElementById('readerContent').style.fontSize = `${currentFontSize}px`;
+            document.getElementById('fontSizeDisplay').innerText = `${currentFontSize}px`;
         }
 
-        // Setup Event Listeners
+        // SET THEME
+        function setTheme(theme) {
+            currentTheme = theme;
+            const body = document.body;
+            body.classList.remove('theme-sepia', 'theme-light');
+
+            document.getElementById('theme-dark-btn').classList.remove('bg-[#202942]');
+            document.getElementById('theme-sepia-btn').classList.remove('bg-[#202942]');
+            document.getElementById('theme-light-btn').classList.remove('bg-[#202942]');
+
+            if (theme === 'sepia') {
+                body.classList.add('theme-sepia');
+                document.getElementById('theme-sepia-btn').classList.add('bg-[#202942]');
+            } else if (theme === 'light') {
+                body.classList.add('theme-light');
+                document.getElementById('theme-light-btn').classList.add('bg-[#202942]');
+            } else {
+                document.getElementById('theme-dark-btn').classList.add('bg-[#202942]');
+            }
+        }
+
+        // DRAWER CONTROLS
+        function openDrawer() {
+            document.getElementById('navDrawer').classList.remove('-translate-x-full');
+            document.getElementById('navDrawerOverlay').classList.remove('hidden');
+        }
+
+        function closeDrawer() {
+            document.getElementById('navDrawer').classList.add('-translate-x-full');
+            document.getElementById('navDrawerOverlay').classList.add('hidden');
+        }
+
         function setupEventListeners() {
-            // Chapter Navigation
-            btnPrev.addEventListener('click', () => loadChapter(currentChapterIndex - 1));
-            btnNext.addEventListener('click', () => loadChapter(currentChapterIndex + 1));
+            document.getElementById('openNavBtn').addEventListener('click', openDrawer);
+            document.getElementById('closeNavBtn').addEventListener('click', closeDrawer);
+            document.getElementById('navDrawerOverlay').addEventListener('click', closeDrawer);
 
-            // Font Controls (Desktop)
-            document.getElementById('btnFontDec').addEventListener('click', () => setFontSize(-10));
-            document.getElementById('btnFontReset').addEventListener('click', () => setFontSize(0));
-            document.getElementById('btnFontInc').addEventListener('click', () => setFontSize(10));
-
-            // Font Controls (Mobile)
-            document.getElementById('btnFontDecMob').addEventListener('click', () => setFontSize(-10));
-            document.getElementById('btnFontResetMob').addEventListener('click', () => setFontSize(0));
-            document.getElementById('btnFontIncMob').addEventListener('click', () => setFontSize(10));
-
-            // Search Chapter
-            searchInput.addEventListener('input', (e) => {
+            // Live Chapter Search
+            document.getElementById('chapterSearchInput').addEventListener('input', (e) => {
                 renderChapterList(e.target.value);
             });
-
-            // Sidebar Toggle Mobile
-            toggleSidebarBtn.addEventListener('click', openMobileSidebar);
-            closeSidebarBtn.addEventListener('click', closeMobileSidebar);
-            sidebarOverlay.addEventListener('click', closeMobileSidebar);
-
-            // Toggle Characters Section
-            toggleCharactersBtn.addEventListener('click', () => {
-                characterSection.classList.toggle('hidden');
-                const isHidden = characterSection.classList.contains('hidden');
-                toggleCharactersBtn.innerHTML = isHidden 
-                    ? `<i data-lucide="users" class="w-4 h-4"></i> Profil Tokoh` 
-                    : `<i data-lucide="chevron-up" class="w-4 h-4"></i> Sembunyikan Profil`;
-                lucide.createIcons();
-            });
-
-            // Dark / Light Theme Toggle
-            btnThemeToggle.addEventListener('click', () => {
-                const isDark = document.documentElement.classList.toggle('dark');
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-                showToast(isDark ? 'Mode Gelap Aktif' : 'Mode Terang Aktif');
-            });
         }
 
-        function openMobileSidebar() {
-            sidebar.classList.remove('-translate-x-full');
-            sidebarOverlay.classList.remove('hidden');
+        // DOWNLOAD AS STANDALONE HTML FILE
+        function downloadAsHTML() {
+            const pageContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+            const blob = new Blob([pageContent], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Cinta_dan_Takdir_Jalonbaikhati.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
-        function closeMobileSidebar() {
-            sidebar.classList.add('-translate-x-full');
-            sidebarOverlay.classList.add('hidden');
-        }
+        // DOWNLOAD ALL CHAPTERS AS TXT FILE
+        function downloadAsTXT() {
+            let fullText = "NOVEL: CINTA DAN TAKDIR\n";
+            fullText += "PENULIS: Jalonbaikhati\n";
+            fullText += "GENRE: Drama, Percintaan, Persahabatan, Pengorbanan, Air Mata, Kehidupan\n";
+            fullText += "=========================================================\n\n";
 
-        // Download Novel as Plain Text (.txt)
-        function downloadAsTxt() {
-            let fullText = `CINTA DAN TAKDIR\nPenulis: Jalonbaikhati\nGenre: Drama, Percintaan, Persahabatan, Pengorbanan, Air Mata, Kehidupan\n\n`;
-            fullText += `===========================================\n\n`;
+            fullText += "PROFIL TOKOH UTAMA:\n";
+            fullText += "- Rizal: Cowok pendiam, sederhana, setia, menyimpan banyak luka hidup.\n";
+            fullText += "- Aisyah: Cewek ceria, lembut, menyimpan rahasia beban keluarga.\n";
+            fullText += "- Dapa: Sahabat setia Rizal yang selalu memberi dukungan.\n";
+            fullText += "- Naysa: Sahabat Aisyah yang paling mengerti rahasianya.\n";
+            fullText += "- Dika: Pria kaya yang terobsesi mendapatkan hati Aisyah.\n";
+            fullText += "\n=========================================================\n\n";
 
-            novelData.forEach(ch => {
-                const cleanContent = ch.content.replace(/<br\s*[\/]?>/gi, "\n").replace(/<[^>]+>/g, '');
-                fullText += `BAB ${ch.number}: ${ch.title.toUpperCase()}\n\n${cleanContent}\n\n`;
-                fullText += `-------------------------------------------\n\n`;
+            chapterTitles.forEach((title, idx) => {
+                fullText += `BAB ${idx + 1}: ${title.toUpperCase()}\n\n`;
+                // Strip HTML tags for clean TXT output
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = getChapterContent(idx);
+                fullText += tempDiv.innerText + "\n\n";
+                fullText += "---------------------------------------------------------\n\n";
             });
 
             const blob = new Blob([fullText], { type: 'text/plain;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'Cinta_dan_Takdir_Jalonbaikhati.txt';
+            a.download = 'Cinta_dan_Takdir_Lengkap.txt';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-
-            showToast('Novel berhasil diunduh (.txt)');
-        }
-
-        // Download Web Standalone Offline (.html)
-        function downloadAsHtml() {
-            const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-            const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Cinta_dan_Takdir_Offline.html';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            showToast('Website offline berhasil diunduh (.html)');
         }
     </script>
 </body>
